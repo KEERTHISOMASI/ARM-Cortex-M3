@@ -1,0 +1,39 @@
+--- EDA / Simulation Artifacts ---
+
+Waveforms (These are huge!)
+
+*.vcd
+*.wlf
+*.fsdb
+*.vpd
+*.shm/
+
+Questa / ModelSim specific
+
+work/
+transcript
+*.qpg
+*.ucdb
+.wdb
+cov/
+
+--- Compilation / Build ---
+
+INCA_libs/
+simv
+simv.daidir/
+csrc/
+*.o
+*.so
+
+--- Editors & OS ---
+
+Nvim swap files
+
+*.swp
+*.swo
+.netrwhist
+
+Linux
+
+*~

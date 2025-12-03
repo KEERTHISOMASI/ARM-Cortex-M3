@@ -1,0 +1,531 @@
+
+cxdt.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__isr_vector>:
+   0:	2000fc00 	.word	0x2000fc00
+   4:	00000125 	.word	0x00000125
+   8:	0000016d 	.word	0x0000016d
+   c:	0000016f 	.word	0x0000016f
+  10:	00000171 	.word	0x00000171
+  14:	00000173 	.word	0x00000173
+  18:	00000175 	.word	0x00000175
+	...
+  2c:	00000177 	.word	0x00000177
+  30:	00000179 	.word	0x00000179
+  34:	00000000 	.word	0x00000000
+  38:	0000017b 	.word	0x0000017b
+  3c:	0000017d 	.word	0x0000017d
+  40:	0000017f 	.word	0x0000017f
+  44:	00000181 	.word	0x00000181
+  48:	00000183 	.word	0x00000183
+  4c:	00000185 	.word	0x00000185
+  50:	00000187 	.word	0x00000187
+  54:	00000189 	.word	0x00000189
+  58:	0000018b 	.word	0x0000018b
+  5c:	0000018d 	.word	0x0000018d
+  60:	0000018f 	.word	0x0000018f
+  64:	00000191 	.word	0x00000191
+  68:	00000193 	.word	0x00000193
+  6c:	00000195 	.word	0x00000195
+  70:	00000197 	.word	0x00000197
+  74:	00000199 	.word	0x00000199
+  78:	0000019b 	.word	0x0000019b
+  7c:	0000019d 	.word	0x0000019d
+  80:	0000019f 	.word	0x0000019f
+  84:	000001a1 	.word	0x000001a1
+  88:	000001a3 	.word	0x000001a3
+  8c:	000001a5 	.word	0x000001a5
+  90:	000001a7 	.word	0x000001a7
+  94:	000001a9 	.word	0x000001a9
+  98:	000001ab 	.word	0x000001ab
+  9c:	000001ad 	.word	0x000001ad
+  a0:	000001af 	.word	0x000001af
+  a4:	000001b1 	.word	0x000001b1
+  a8:	000001b3 	.word	0x000001b3
+  ac:	000001b5 	.word	0x000001b5
+  b0:	000001b7 	.word	0x000001b7
+  b4:	000001b9 	.word	0x000001b9
+  b8:	000001bb 	.word	0x000001bb
+  bc:	000001bd 	.word	0x000001bd
+  c0:	000001bf 	.word	0x000001bf
+  c4:	000001c1 	.word	0x000001c1
+  c8:	000001c3 	.word	0x000001c3
+  cc:	000001c5 	.word	0x000001c5
+  d0:	000001c7 	.word	0x000001c7
+  d4:	000001c9 	.word	0x000001c9
+  d8:	000001cb 	.word	0x000001cb
+  dc:	000001cd 	.word	0x000001cd
+  e0:	000001cf 	.word	0x000001cf
+  e4:	000001d1 	.word	0x000001d1
+  e8:	000001d3 	.word	0x000001d3
+  ec:	000001d5 	.word	0x000001d5
+  f0:	000001d7 	.word	0x000001d7
+  f4:	000001d9 	.word	0x000001d9
+  f8:	000001db 	.word	0x000001db
+  fc:	000001dd 	.word	0x000001dd
+ 100:	000001df 	.word	0x000001df
+ 104:	000001e1 	.word	0x000001e1
+ 108:	000001e3 	.word	0x000001e3
+ 10c:	000001e5 	.word	0x000001e5
+ 110:	000001e7 	.word	0x000001e7
+ 114:	000001e9 	.word	0x000001e9
+ 118:	000001eb 	.word	0x000001eb
+ 11c:	000001ed 	.word	0x000001ed
+ 120:	000001ef 	.word	0x000001ef
+
+00000124 <Reset_Handler>:
+ *      linker script.
+ *      __etext: End of code section, i.e., begin of data sections to copy from.
+ *      __data_start__/__data_end__: RAM address range that data should be
+ *      copied to. Both must be aligned to 4 bytes boundary.  */
+
+    ldr    r1, =__etext
+ 124:	490b      	ldr	r1, [pc, #44]	; (154 <Reset_Handler+0x30>)
+    ldr    r2, =__data_start__
+ 126:	4a0c      	ldr	r2, [pc, #48]	; (158 <Reset_Handler+0x34>)
+    ldr    r3, =__data_end__
+ 128:	4b0c      	ldr	r3, [pc, #48]	; (15c <Reset_Handler+0x38>)
+
+    subs    r3, r2
+ 12a:	1a9b      	subs	r3, r3, r2
+    ble    .LC1
+ 12c:	dd03      	ble.n	136 <Reset_Handler+0x12>
+.LC0:
+    subs    r3, #4
+ 12e:	3b04      	subs	r3, #4
+    ldr    r0, [r1, r3]
+ 130:	58c8      	ldr	r0, [r1, r3]
+    str    r0, [r2, r3]
+ 132:	50d0      	str	r0, [r2, r3]
+    bgt    .LC0
+ 134:	dcfb      	bgt.n	12e <Reset_Handler+0xa>
+ *     Loop to zero out BSS section, which uses following symbols
+ *     in linker script:
+ *      __bss_start__: start of BSS section. Must align to 4
+ *      __bss_end__: end of BSS section. Must align to 4
+ */
+    ldr r1, =__bss_start__
+ 136:	490a      	ldr	r1, [pc, #40]	; (160 <Reset_Handler+0x3c>)
+    ldr r2, =__bss_end__
+ 138:	4a0a      	ldr	r2, [pc, #40]	; (164 <Reset_Handler+0x40>)
+
+    movs    r0, 0
+ 13a:	2000      	movs	r0, #0
+.LC2:
+    cmp     r1, r2
+ 13c:	4291      	cmp	r1, r2
+    itt    lt
+ 13e:	bfbc      	itt	lt
+    strlt   r0, [r1], #4
+ 140:	f841 0b04 	strlt.w	r0, [r1], #4
+    blt    .LC2
+ 144:	e7fa      	blt.n	13c <Reset_Handler+0x18>
+#endif /* __STARTUP_CLEAR_BSS */
+
+#ifndef __NO_SYSTEM_INIT
+    /* bl    SystemInit */
+    ldr     r0,=SystemInit
+ 146:	4808      	ldr	r0, [pc, #32]	; (168 <Reset_Handler+0x44>)
+    blx     r0
+ 148:	4780      	blx	r0
+#endif
+
+    bl    main
+ 14a:	f000 f85b 	bl	204 <main>
+    bl    exit
+ 14e:	f000 f87f 	bl	250 <exit>
+ 152:	0000      	.short	0x0000
+    ldr    r1, =__etext
+ 154:	00000288 	.word	0x00000288
+    ldr    r2, =__data_start__
+ 158:	20000000 	.word	0x20000000
+    ldr    r3, =__data_end__
+ 15c:	20000064 	.word	0x20000064
+    ldr r1, =__bss_start__
+ 160:	20000064 	.word	0x20000064
+    ldr r2, =__bss_end__
+ 164:	20000068 	.word	0x20000068
+    ldr     r0,=SystemInit
+ 168:	00000241 	.word	0x00000241
+
+0000016c <NMI_Handler>:
+    .size    \handler_name, . - \handler_name
+    .endm
+
+/* System Exception Handlers */
+
+    def_default_handler    NMI_Handler
+ 16c:	e7fe      	b.n	16c <NMI_Handler>
+
+0000016e <HardFault_Handler>:
+    def_default_handler    HardFault_Handler
+ 16e:	e7fe      	b.n	16e <HardFault_Handler>
+
+00000170 <MemManage_Handler>:
+    def_default_handler    MemManage_Handler
+ 170:	e7fe      	b.n	170 <MemManage_Handler>
+
+00000172 <BusFault_Handler>:
+    def_default_handler    BusFault_Handler
+ 172:	e7fe      	b.n	172 <BusFault_Handler>
+
+00000174 <UsageFault_Handler>:
+    def_default_handler    UsageFault_Handler
+ 174:	e7fe      	b.n	174 <UsageFault_Handler>
+
+00000176 <SVC_Handler>:
+    def_default_handler    SVC_Handler
+ 176:	e7fe      	b.n	176 <SVC_Handler>
+
+00000178 <DebugMon_Handler>:
+    def_default_handler    DebugMon_Handler
+ 178:	e7fe      	b.n	178 <DebugMon_Handler>
+
+0000017a <PendSV_Handler>:
+    def_default_handler    PendSV_Handler
+ 17a:	e7fe      	b.n	17a <PendSV_Handler>
+
+0000017c <SysTick_Handler>:
+    def_default_handler    SysTick_Handler
+ 17c:	e7fe      	b.n	17c <SysTick_Handler>
+
+0000017e <UART0_Handler>:
+
+/* IRQ Handlers */
+
+    def_default_handler    UART0_Handler
+ 17e:	e7fe      	b.n	17e <UART0_Handler>
+
+00000180 <Spare1_Handler>:
+    def_default_handler    Spare1_Handler
+ 180:	e7fe      	b.n	180 <Spare1_Handler>
+
+00000182 <UART1_Handler>:
+    def_default_handler    UART1_Handler
+ 182:	e7fe      	b.n	182 <UART1_Handler>
+
+00000184 <Spare3_Handler>:
+    def_default_handler    Spare3_Handler
+ 184:	e7fe      	b.n	184 <Spare3_Handler>
+
+00000186 <Spare4_Handler>:
+    def_default_handler    Spare4_Handler
+ 186:	e7fe      	b.n	186 <Spare4_Handler>
+
+00000188 <RTC_Handler>:
+    def_default_handler    RTC_Handler
+ 188:	e7fe      	b.n	188 <RTC_Handler>
+
+0000018a <PORT0_COMB_Handler>:
+    def_default_handler    PORT0_COMB_Handler
+ 18a:	e7fe      	b.n	18a <PORT0_COMB_Handler>
+
+0000018c <PORT1_COMB_Handler>:
+    def_default_handler    PORT1_COMB_Handler
+ 18c:	e7fe      	b.n	18c <PORT1_COMB_Handler>
+
+0000018e <TIMER0_Handler>:
+    def_default_handler    TIMER0_Handler
+ 18e:	e7fe      	b.n	18e <TIMER0_Handler>
+
+00000190 <TIMER1_Handler>:
+    def_default_handler    TIMER1_Handler
+ 190:	e7fe      	b.n	190 <TIMER1_Handler>
+
+00000192 <DUALTIMER_HANDLER>:
+    def_default_handler    DUALTIMER_HANDLER
+ 192:	e7fe      	b.n	192 <DUALTIMER_HANDLER>
+
+00000194 <Spare11_Handler>:
+    def_default_handler    Spare11_Handler
+ 194:	e7fe      	b.n	194 <Spare11_Handler>
+
+00000196 <UARTOVF_Handler>:
+    def_default_handler    UARTOVF_Handler
+ 196:	e7fe      	b.n	196 <UARTOVF_Handler>
+
+00000198 <Spare13_Handler>:
+    def_default_handler    Spare13_Handler
+ 198:	e7fe      	b.n	198 <Spare13_Handler>
+
+0000019a <Spare14_Handler>:
+    def_default_handler    Spare14_Handler
+ 19a:	e7fe      	b.n	19a <Spare14_Handler>
+
+0000019c <TSC_Handler>:
+    def_default_handler    TSC_Handler
+ 19c:	e7fe      	b.n	19c <TSC_Handler>
+
+0000019e <PORT0_0_Handler>:
+    def_default_handler    PORT0_0_Handler
+ 19e:	e7fe      	b.n	19e <PORT0_0_Handler>
+
+000001a0 <PORT0_1_Handler>:
+    def_default_handler    PORT0_1_Handler
+ 1a0:	e7fe      	b.n	1a0 <PORT0_1_Handler>
+
+000001a2 <PORT0_2_Handler>:
+    def_default_handler    PORT0_2_Handler
+ 1a2:	e7fe      	b.n	1a2 <PORT0_2_Handler>
+
+000001a4 <PORT0_3_Handler>:
+    def_default_handler    PORT0_3_Handler
+ 1a4:	e7fe      	b.n	1a4 <PORT0_3_Handler>
+
+000001a6 <PORT0_4_Handler>:
+    def_default_handler    PORT0_4_Handler
+ 1a6:	e7fe      	b.n	1a6 <PORT0_4_Handler>
+
+000001a8 <PORT0_5_Handler>:
+    def_default_handler    PORT0_5_Handler
+ 1a8:	e7fe      	b.n	1a8 <PORT0_5_Handler>
+
+000001aa <PORT0_6_Handler>:
+    def_default_handler    PORT0_6_Handler
+ 1aa:	e7fe      	b.n	1aa <PORT0_6_Handler>
+
+000001ac <PORT0_7_Handler>:
+    def_default_handler    PORT0_7_Handler
+ 1ac:	e7fe      	b.n	1ac <PORT0_7_Handler>
+
+000001ae <PORT0_8_Handler>:
+    def_default_handler    PORT0_8_Handler
+ 1ae:	e7fe      	b.n	1ae <PORT0_8_Handler>
+
+000001b0 <PORT0_9_Handler>:
+    def_default_handler    PORT0_9_Handler
+ 1b0:	e7fe      	b.n	1b0 <PORT0_9_Handler>
+
+000001b2 <PORT0_10_Handler>:
+    def_default_handler    PORT0_10_Handler
+ 1b2:	e7fe      	b.n	1b2 <PORT0_10_Handler>
+
+000001b4 <PORT0_11_Handler>:
+    def_default_handler    PORT0_11_Handler
+ 1b4:	e7fe      	b.n	1b4 <PORT0_11_Handler>
+
+000001b6 <PORT0_12_Handler>:
+    def_default_handler    PORT0_12_Handler
+ 1b6:	e7fe      	b.n	1b6 <PORT0_12_Handler>
+
+000001b8 <PORT0_13_Handler>:
+    def_default_handler    PORT0_13_Handler
+ 1b8:	e7fe      	b.n	1b8 <PORT0_13_Handler>
+
+000001ba <PORT0_14_Handler>:
+    def_default_handler    PORT0_14_Handler
+ 1ba:	e7fe      	b.n	1ba <PORT0_14_Handler>
+
+000001bc <PORT0_15_Handler>:
+    def_default_handler    PORT0_15_Handler
+ 1bc:	e7fe      	b.n	1bc <PORT0_15_Handler>
+
+000001be <SYSERROR_Handler>:
+    def_default_handler    SYSERROR_Handler          /* System Error Handler */
+ 1be:	e7fe      	b.n	1be <SYSERROR_Handler>
+
+000001c0 <EFLASH_Handler>:
+    def_default_handler    EFLASH_Handler            /* Embedded Flash Handler */
+ 1c0:	e7fe      	b.n	1c0 <EFLASH_Handler>
+
+000001c2 <CORDIO0_Handler>:
+    def_default_handler    CORDIO0_Handler           /* Cordio Handler */
+ 1c2:	e7fe      	b.n	1c2 <CORDIO0_Handler>
+
+000001c4 <CORDIO1_Handler>:
+    def_default_handler    CORDIO1_Handler           /* Cordio Handler */
+ 1c4:	e7fe      	b.n	1c4 <CORDIO1_Handler>
+
+000001c6 <CORDIO2_Handler>:
+    def_default_handler    CORDIO2_Handler           /* Cordio Handler */
+ 1c6:	e7fe      	b.n	1c6 <CORDIO2_Handler>
+
+000001c8 <CORDIO3_Handler>:
+    def_default_handler    CORDIO3_Handler           /* Cordio Handler */
+ 1c8:	e7fe      	b.n	1c8 <CORDIO3_Handler>
+
+000001ca <CORDIO4_Handler>:
+    def_default_handler    CORDIO4_Handler           /* Cordio Handler */
+ 1ca:	e7fe      	b.n	1ca <CORDIO4_Handler>
+
+000001cc <CORDIO5_Handler>:
+    def_default_handler    CORDIO5_Handler           /* Cordio Handler */
+ 1cc:	e7fe      	b.n	1cc <CORDIO5_Handler>
+
+000001ce <CORDIO6_Handler>:
+    def_default_handler    CORDIO6_Handler           /* Cordio Handler */
+ 1ce:	e7fe      	b.n	1ce <CORDIO6_Handler>
+
+000001d0 <CORDIO7_Handler>:
+    def_default_handler    CORDIO7_Handler           /* Cordio Handler */
+ 1d0:	e7fe      	b.n	1d0 <CORDIO7_Handler>
+
+000001d2 <PORT2_COMB_Handler>:
+    def_default_handler    PORT2_COMB_Handler        /* GPIO Port 2 Combined Handler */
+ 1d2:	e7fe      	b.n	1d2 <PORT2_COMB_Handler>
+
+000001d4 <PORT3_COMB_Handler>:
+    def_default_handler    PORT3_COMB_Handler        /* GPIO Port 3 Combined Handler */
+ 1d4:	e7fe      	b.n	1d4 <PORT3_COMB_Handler>
+
+000001d6 <TRNG_Handler>:
+    def_default_handler    TRNG_Handler              /* Random Number Handler */
+ 1d6:	e7fe      	b.n	1d6 <TRNG_Handler>
+
+000001d8 <UART2_Handler>:
+    def_default_handler    UART2_Handler             /* UART 2 RX and TX Handler */
+ 1d8:	e7fe      	b.n	1d8 <UART2_Handler>
+
+000001da <UART3_Handler>:
+    def_default_handler    UART3_Handler             /* UART 3 RX and TX Handler */
+ 1da:	e7fe      	b.n	1da <UART3_Handler>
+
+000001dc <ETHERNET_Handler>:
+    def_default_handler    ETHERNET_Handler          /* Ethernet Handler */
+ 1dc:	e7fe      	b.n	1dc <ETHERNET_Handler>
+
+000001de <I2S_Handler>:
+    def_default_handler    I2S_Handler               /* I2S Handler */
+ 1de:	e7fe      	b.n	1de <I2S_Handler>
+
+000001e0 <MPS2_SPI0_Handler>:
+    def_default_handler    MPS2_SPI0_Handler         /* SPI Handler (spi header) */
+ 1e0:	e7fe      	b.n	1e0 <MPS2_SPI0_Handler>
+
+000001e2 <MPS2_SPI1_Handler>:
+    def_default_handler    MPS2_SPI1_Handler         /* SPI Handler (clcd) */
+ 1e2:	e7fe      	b.n	1e2 <MPS2_SPI1_Handler>
+
+000001e4 <MPS2_SPI2_Handler>:
+    def_default_handler    MPS2_SPI2_Handler         /* SPI Handler (spi 1 ADC replacement) */
+ 1e4:	e7fe      	b.n	1e4 <MPS2_SPI2_Handler>
+
+000001e6 <MPS2_SPI3_Handler>:
+    def_default_handler    MPS2_SPI3_Handler         /* SPI Handler (spi 0 shield 0 replacement) */
+ 1e6:	e7fe      	b.n	1e6 <MPS2_SPI3_Handler>
+
+000001e8 <MPS2_SPI4_Handler>:
+    def_default_handler    MPS2_SPI4_Handler         /* SPI Handler */
+ 1e8:	e7fe      	b.n	1e8 <MPS2_SPI4_Handler>
+
+000001ea <PORT4_COMB_Handler>:
+    def_default_handler    PORT4_COMB_Handler        /* GPIO Port 4 Combined Handler */
+ 1ea:	e7fe      	b.n	1ea <PORT4_COMB_Handler>
+
+000001ec <PORT5_COMB_Handler>:
+    def_default_handler    PORT5_COMB_Handler        /* GPIO Port 5 Combined Handler */
+ 1ec:	e7fe      	b.n	1ec <PORT5_COMB_Handler>
+
+000001ee <UART4_Handler>:
+    def_default_handler    UART4_Handler             /* UART 4 RX and TX Handler */
+ 1ee:	e7fe      	b.n	1ee <UART4_Handler>
+
+000001f0 <address_test_write>:
+#else
+/* Test function for write - for gcc */
+void address_test_write(unsigned int addr, unsigned int wdata) __attribute__((naked));
+void address_test_write(unsigned int addr, unsigned int wdata)
+{
+  __asm("  str   r1,[r0]\n"
+ 1f0:	6001      	str	r1, [r0, #0]
+ 1f2:	f3bf 8f4f 	dsb	sy
+ 1f6:	4770      	bx	lr
+
+000001f8 <address_test_read>:
+#else
+/* Test function for read - for gcc */
+unsigned int  address_test_read(unsigned int addr) __attribute__((naked));
+unsigned int  address_test_read(unsigned int addr)
+{
+  __asm("  ldr   r1,[r0]\n"
+ 1f8:	6801      	ldr	r1, [r0, #0]
+ 1fa:	f3bf 8f4f 	dsb	sy
+ 1fe:	0008      	movs	r0, r1
+ 200:	4770      	bx	lr
+ 202:	bf00      	nop
+
+00000204 <main>:
+{
+ 204:	b510      	push	{r4, lr}
+  temp_data = address_test_read(DEMCR_ADDR);
+ 206:	4c08      	ldr	r4, [pc, #32]	; (228 <main+0x24>)
+ 208:	4620      	mov	r0, r4
+ 20a:	f7ff fff5 	bl	1f8 <address_test_read>
+ 20e:	4602      	mov	r2, r0
+ 210:	4b06      	ldr	r3, [pc, #24]	; (22c <main+0x28>)
+  address_test_write(DEMCR_ADDR, temp_data);
+ 212:	4620      	mov	r0, r4
+  temp_data = address_test_read(DEMCR_ADDR);
+ 214:	601a      	str	r2, [r3, #0]
+  temp_data = temp_data | DEMCR_TRCENA;
+ 216:	681a      	ldr	r2, [r3, #0]
+ 218:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
+ 21c:	601a      	str	r2, [r3, #0]
+  address_test_write(DEMCR_ADDR, temp_data);
+ 21e:	6819      	ldr	r1, [r3, #0]
+ 220:	f7ff ffe6 	bl	1f0 <address_test_write>
+}
+ 224:	2000      	movs	r0, #0
+ 226:	bd10      	pop	{r4, pc}
+ 228:	e000edfc 	.word	0xe000edfc
+ 22c:	20000064 	.word	0x20000064
+
+00000230 <SystemCoreClockUpdate>:
+ 230:	4b01      	ldr	r3, [pc, #4]	; (238 <SystemCoreClockUpdate+0x8>)
+ 232:	4a02      	ldr	r2, [pc, #8]	; (23c <SystemCoreClockUpdate+0xc>)
+ 234:	601a      	str	r2, [r3, #0]
+ 236:	4770      	bx	lr
+ 238:	20000000 	.word	0x20000000
+ 23c:	017d7840 	.word	0x017d7840
+
+00000240 <SystemInit>:
+
+#ifdef UNALIGNED_SUPPORT_DISABLE
+  SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
+#endif
+
+  SystemCoreClock = __SYSTEM_CLOCK;
+ 240:	4b01      	ldr	r3, [pc, #4]	; (248 <SystemInit+0x8>)
+ 242:	4a02      	ldr	r2, [pc, #8]	; (24c <SystemInit+0xc>)
+ 244:	601a      	str	r2, [r3, #0]
+
+}
+ 246:	4770      	bx	lr
+ 248:	20000000 	.word	0x20000000
+ 24c:	017d7840 	.word	0x017d7840
+
+00000250 <exit>:
+ 250:	b508      	push	{r3, lr}
+ 252:	4b07      	ldr	r3, [pc, #28]	; (270 <exit+0x20>)
+ 254:	4604      	mov	r4, r0
+ 256:	b113      	cbz	r3, 25e <exit+0xe>
+ 258:	2100      	movs	r1, #0
+ 25a:	f3af 8000 	nop.w
+ 25e:	4b05      	ldr	r3, [pc, #20]	; (274 <exit+0x24>)
+ 260:	6818      	ldr	r0, [r3, #0]
+ 262:	6a83      	ldr	r3, [r0, #40]	; 0x28
+ 264:	b103      	cbz	r3, 268 <exit+0x18>
+ 266:	4798      	blx	r3
+ 268:	4620      	mov	r0, r4
+ 26a:	f000 f805 	bl	278 <_exit>
+ 26e:	bf00      	nop
+ 270:	00000000 	.word	0x00000000
+ 274:	00000284 	.word	0x00000284
+
+00000278 <_exit>:
+ 278:	e7fe      	b.n	278 <_exit>
+ 27a:	bf00      	nop
+
+0000027c <_init>:
+ 27c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 27e:	bf00      	nop
+
+00000280 <_fini>:
+ 280:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 282:	bf00      	nop
+
+00000284 <_global_impure_ptr>:
+ 284:	0004 2000                                   ... 

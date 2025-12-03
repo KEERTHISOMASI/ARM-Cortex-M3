@@ -1,0 +1,51 @@
+// =================== Defines =================
++define+SIMULATION=1
++define+ARM_DSM=0
+
+// ============= Verilog library extensions ===========
++libext+.v+.vlib
+
+// ================= Top Level Module ===================
+// Pointing directly to the IoT subsystem
+../../../../m3designstart_iot/logical/m3ds_iot_top/verilog/m3ds_iot_top.v
+
+// ================= Dependencies for m3ds_iot_top =============
+
+// 1. Cortex-M3 Integration Layer (The CPU Wrapper)
+//-y ../../../../cortexm3_model/verilog
+//-y ../../cortexm3integration_ds/verilog/
+-y ../../cortexm3integration_ds_obs/verilog/
+
+
+
+// 2. Interconnect (Bus Matrix)
+-y ../../../../m3designstart_iot/logical/models/modules/generic
+-y ../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog
+-y ../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog
+
+// 3. Internal Peripherals (Timers)
+-y ../../../../m3designstart_iot/logical/p_beid_peripheral_f0/verilog
+-y ../../models/generic
+// 4. Generic Models (Register models, etc.)
+-y ../../../../m3designstart_iot/logical/models/modules/generic
+
+// 5. CMSDK Components (Used by Interconnect/Peripherals)
+//    These are needed because the interconnect and peripherals instantiate them.
+-y ../../../../cmsdk/logical/cmsdk_ahb_slave_mux/verilog
+-y ../../../../cmsdk/logical/cmsdk_ahb_default_slave/verilog
+-y ../../../../cmsdk/logical/cmsdk_ahb_to_apb/verilog
+-y ../../../../cmsdk/logical/cmsdk_ahb_to_sram/verilog
+-y ../../../../cmsdk/logical/cmsdk_apb_subsystem/verilog
+-y ../../../../cmsdk/logical/cmsdk_apb_slave_mux/verilog
+-y ../../../../smm/logical/smm_common_fpga/verilog
+-y ../../m3ds_user_partition/verilog
+ 
+// ================= Include Directories =============
+// These are needed for header files included in the Verilog source
++incdir+../../../../m3designstart_iot/logical/m3ds_iot_top/verilog
++incdir+../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog
++incdir+../../../../m3designstart_iot/logical/p_beid_peripheral_f0/verilog
++incdir+../../fpga_top/verilog
+
+../verilog/tb_m3ds_iot_top.sv
+

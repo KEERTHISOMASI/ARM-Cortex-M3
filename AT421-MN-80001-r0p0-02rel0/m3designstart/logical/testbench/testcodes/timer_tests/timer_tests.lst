@@ -1,0 +1,2278 @@
+
+timer_tests.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__isr_vector>:
+   0:	2000fc00 	.word	0x2000fc00
+   4:	00000125 	.word	0x00000125
+   8:	0000016d 	.word	0x0000016d
+   c:	0000016f 	.word	0x0000016f
+  10:	00000171 	.word	0x00000171
+  14:	00000173 	.word	0x00000173
+  18:	00000175 	.word	0x00000175
+	...
+  2c:	00000177 	.word	0x00000177
+  30:	00000179 	.word	0x00000179
+  34:	00000000 	.word	0x00000000
+  38:	0000017b 	.word	0x0000017b
+  3c:	00000ab5 	.word	0x00000ab5
+  40:	0000017f 	.word	0x0000017f
+  44:	00000181 	.word	0x00000181
+  48:	00000183 	.word	0x00000183
+  4c:	00000185 	.word	0x00000185
+  50:	00000187 	.word	0x00000187
+  54:	00000189 	.word	0x00000189
+  58:	0000018b 	.word	0x0000018b
+  5c:	0000018d 	.word	0x0000018d
+  60:	00000a79 	.word	0x00000a79
+  64:	00000a95 	.word	0x00000a95
+  68:	00000193 	.word	0x00000193
+  6c:	00000195 	.word	0x00000195
+  70:	00000197 	.word	0x00000197
+  74:	00000199 	.word	0x00000199
+  78:	0000019b 	.word	0x0000019b
+  7c:	0000019d 	.word	0x0000019d
+  80:	0000019f 	.word	0x0000019f
+  84:	000001a1 	.word	0x000001a1
+  88:	000001a3 	.word	0x000001a3
+  8c:	000001a5 	.word	0x000001a5
+  90:	000001a7 	.word	0x000001a7
+  94:	000001a9 	.word	0x000001a9
+  98:	000001ab 	.word	0x000001ab
+  9c:	000001ad 	.word	0x000001ad
+  a0:	000001af 	.word	0x000001af
+  a4:	000001b1 	.word	0x000001b1
+  a8:	000001b3 	.word	0x000001b3
+  ac:	000001b5 	.word	0x000001b5
+  b0:	000001b7 	.word	0x000001b7
+  b4:	000001b9 	.word	0x000001b9
+  b8:	000001bb 	.word	0x000001bb
+  bc:	000001bd 	.word	0x000001bd
+  c0:	000001bf 	.word	0x000001bf
+  c4:	000001c1 	.word	0x000001c1
+  c8:	000001c3 	.word	0x000001c3
+  cc:	000001c5 	.word	0x000001c5
+  d0:	000001c7 	.word	0x000001c7
+  d4:	000001c9 	.word	0x000001c9
+  d8:	000001cb 	.word	0x000001cb
+  dc:	000001cd 	.word	0x000001cd
+  e0:	000001cf 	.word	0x000001cf
+  e4:	000001d1 	.word	0x000001d1
+  e8:	000001d3 	.word	0x000001d3
+  ec:	000001d5 	.word	0x000001d5
+  f0:	000001d7 	.word	0x000001d7
+  f4:	000001d9 	.word	0x000001d9
+  f8:	000001db 	.word	0x000001db
+  fc:	000001dd 	.word	0x000001dd
+ 100:	000001df 	.word	0x000001df
+ 104:	000001e1 	.word	0x000001e1
+ 108:	000001e3 	.word	0x000001e3
+ 10c:	000001e5 	.word	0x000001e5
+ 110:	000001e7 	.word	0x000001e7
+ 114:	000001e9 	.word	0x000001e9
+ 118:	000001eb 	.word	0x000001eb
+ 11c:	000001ed 	.word	0x000001ed
+ 120:	000001ef 	.word	0x000001ef
+
+00000124 <Reset_Handler>:
+ *      linker script.
+ *      __etext: End of code section, i.e., begin of data sections to copy from.
+ *      __data_start__/__data_end__: RAM address range that data should be
+ *      copied to. Both must be aligned to 4 bytes boundary.  */
+
+    ldr    r1, =__etext
+ 124:	490b      	ldr	r1, [pc, #44]	; (154 <Reset_Handler+0x30>)
+    ldr    r2, =__data_start__
+ 126:	4a0c      	ldr	r2, [pc, #48]	; (158 <Reset_Handler+0x34>)
+    ldr    r3, =__data_end__
+ 128:	4b0c      	ldr	r3, [pc, #48]	; (15c <Reset_Handler+0x38>)
+
+    subs    r3, r2
+ 12a:	1a9b      	subs	r3, r3, r2
+    ble    .LC1
+ 12c:	dd03      	ble.n	136 <Reset_Handler+0x12>
+.LC0:
+    subs    r3, #4
+ 12e:	3b04      	subs	r3, #4
+    ldr    r0, [r1, r3]
+ 130:	58c8      	ldr	r0, [r1, r3]
+    str    r0, [r2, r3]
+ 132:	50d0      	str	r0, [r2, r3]
+    bgt    .LC0
+ 134:	dcfb      	bgt.n	12e <Reset_Handler+0xa>
+ *     Loop to zero out BSS section, which uses following symbols
+ *     in linker script:
+ *      __bss_start__: start of BSS section. Must align to 4
+ *      __bss_end__: end of BSS section. Must align to 4
+ */
+    ldr r1, =__bss_start__
+ 136:	490a      	ldr	r1, [pc, #40]	; (160 <Reset_Handler+0x3c>)
+    ldr r2, =__bss_end__
+ 138:	4a0a      	ldr	r2, [pc, #40]	; (164 <Reset_Handler+0x40>)
+
+    movs    r0, 0
+ 13a:	2000      	movs	r0, #0
+.LC2:
+    cmp     r1, r2
+ 13c:	4291      	cmp	r1, r2
+    itt    lt
+ 13e:	bfbc      	itt	lt
+    strlt   r0, [r1], #4
+ 140:	f841 0b04 	strlt.w	r0, [r1], #4
+    blt    .LC2
+ 144:	e7fa      	blt.n	13c <Reset_Handler+0x18>
+#endif /* __STARTUP_CLEAR_BSS */
+
+#ifndef __NO_SYSTEM_INIT
+    /* bl    SystemInit */
+    ldr     r0,=SystemInit
+ 146:	4808      	ldr	r0, [pc, #32]	; (168 <Reset_Handler+0x44>)
+    blx     r0
+ 148:	4780      	blx	r0
+#endif
+
+    bl    main
+ 14a:	f000 fce3 	bl	b14 <main>
+    bl    exit
+ 14e:	f000 fd13 	bl	b78 <exit>
+ 152:	0000      	.short	0x0000
+    ldr    r1, =__etext
+ 154:	00000bb0 	.word	0x00000bb0
+    ldr    r2, =__data_start__
+ 158:	20000000 	.word	0x20000000
+    ldr    r3, =__data_end__
+ 15c:	20000064 	.word	0x20000064
+    ldr r1, =__bss_start__
+ 160:	20000064 	.word	0x20000064
+    ldr r2, =__bss_end__
+ 164:	20000078 	.word	0x20000078
+    ldr     r0,=SystemInit
+ 168:	00000b69 	.word	0x00000b69
+
+0000016c <NMI_Handler>:
+    .size    \handler_name, . - \handler_name
+    .endm
+
+/* System Exception Handlers */
+
+    def_default_handler    NMI_Handler
+ 16c:	e7fe      	b.n	16c <NMI_Handler>
+
+0000016e <HardFault_Handler>:
+    def_default_handler    HardFault_Handler
+ 16e:	e7fe      	b.n	16e <HardFault_Handler>
+
+00000170 <MemManage_Handler>:
+    def_default_handler    MemManage_Handler
+ 170:	e7fe      	b.n	170 <MemManage_Handler>
+
+00000172 <BusFault_Handler>:
+    def_default_handler    BusFault_Handler
+ 172:	e7fe      	b.n	172 <BusFault_Handler>
+
+00000174 <UsageFault_Handler>:
+    def_default_handler    UsageFault_Handler
+ 174:	e7fe      	b.n	174 <UsageFault_Handler>
+
+00000176 <SVC_Handler>:
+    def_default_handler    SVC_Handler
+ 176:	e7fe      	b.n	176 <SVC_Handler>
+
+00000178 <DebugMon_Handler>:
+    def_default_handler    DebugMon_Handler
+ 178:	e7fe      	b.n	178 <DebugMon_Handler>
+
+0000017a <PendSV_Handler>:
+    def_default_handler    PendSV_Handler
+ 17a:	e7fe      	b.n	17a <PendSV_Handler>
+    def_default_handler    SysTick_Handler
+ 17c:	e7fe      	b.n	17c <PendSV_Handler+0x2>
+
+0000017e <UART0_Handler>:
+
+/* IRQ Handlers */
+
+    def_default_handler    UART0_Handler
+ 17e:	e7fe      	b.n	17e <UART0_Handler>
+
+00000180 <Spare1_Handler>:
+    def_default_handler    Spare1_Handler
+ 180:	e7fe      	b.n	180 <Spare1_Handler>
+
+00000182 <UART1_Handler>:
+    def_default_handler    UART1_Handler
+ 182:	e7fe      	b.n	182 <UART1_Handler>
+
+00000184 <Spare3_Handler>:
+    def_default_handler    Spare3_Handler
+ 184:	e7fe      	b.n	184 <Spare3_Handler>
+
+00000186 <Spare4_Handler>:
+    def_default_handler    Spare4_Handler
+ 186:	e7fe      	b.n	186 <Spare4_Handler>
+
+00000188 <RTC_Handler>:
+    def_default_handler    RTC_Handler
+ 188:	e7fe      	b.n	188 <RTC_Handler>
+
+0000018a <PORT0_COMB_Handler>:
+    def_default_handler    PORT0_COMB_Handler
+ 18a:	e7fe      	b.n	18a <PORT0_COMB_Handler>
+
+0000018c <PORT1_COMB_Handler>:
+    def_default_handler    PORT1_COMB_Handler
+ 18c:	e7fe      	b.n	18c <PORT1_COMB_Handler>
+    def_default_handler    TIMER0_Handler
+ 18e:	e7fe      	b.n	18e <PORT1_COMB_Handler+0x2>
+    def_default_handler    TIMER1_Handler
+ 190:	e7fe      	b.n	190 <PORT1_COMB_Handler+0x4>
+
+00000192 <DUALTIMER_HANDLER>:
+    def_default_handler    DUALTIMER_HANDLER
+ 192:	e7fe      	b.n	192 <DUALTIMER_HANDLER>
+
+00000194 <Spare11_Handler>:
+    def_default_handler    Spare11_Handler
+ 194:	e7fe      	b.n	194 <Spare11_Handler>
+
+00000196 <UARTOVF_Handler>:
+    def_default_handler    UARTOVF_Handler
+ 196:	e7fe      	b.n	196 <UARTOVF_Handler>
+
+00000198 <Spare13_Handler>:
+    def_default_handler    Spare13_Handler
+ 198:	e7fe      	b.n	198 <Spare13_Handler>
+
+0000019a <Spare14_Handler>:
+    def_default_handler    Spare14_Handler
+ 19a:	e7fe      	b.n	19a <Spare14_Handler>
+
+0000019c <TSC_Handler>:
+    def_default_handler    TSC_Handler
+ 19c:	e7fe      	b.n	19c <TSC_Handler>
+
+0000019e <PORT0_0_Handler>:
+    def_default_handler    PORT0_0_Handler
+ 19e:	e7fe      	b.n	19e <PORT0_0_Handler>
+
+000001a0 <PORT0_1_Handler>:
+    def_default_handler    PORT0_1_Handler
+ 1a0:	e7fe      	b.n	1a0 <PORT0_1_Handler>
+
+000001a2 <PORT0_2_Handler>:
+    def_default_handler    PORT0_2_Handler
+ 1a2:	e7fe      	b.n	1a2 <PORT0_2_Handler>
+
+000001a4 <PORT0_3_Handler>:
+    def_default_handler    PORT0_3_Handler
+ 1a4:	e7fe      	b.n	1a4 <PORT0_3_Handler>
+
+000001a6 <PORT0_4_Handler>:
+    def_default_handler    PORT0_4_Handler
+ 1a6:	e7fe      	b.n	1a6 <PORT0_4_Handler>
+
+000001a8 <PORT0_5_Handler>:
+    def_default_handler    PORT0_5_Handler
+ 1a8:	e7fe      	b.n	1a8 <PORT0_5_Handler>
+
+000001aa <PORT0_6_Handler>:
+    def_default_handler    PORT0_6_Handler
+ 1aa:	e7fe      	b.n	1aa <PORT0_6_Handler>
+
+000001ac <PORT0_7_Handler>:
+    def_default_handler    PORT0_7_Handler
+ 1ac:	e7fe      	b.n	1ac <PORT0_7_Handler>
+
+000001ae <PORT0_8_Handler>:
+    def_default_handler    PORT0_8_Handler
+ 1ae:	e7fe      	b.n	1ae <PORT0_8_Handler>
+
+000001b0 <PORT0_9_Handler>:
+    def_default_handler    PORT0_9_Handler
+ 1b0:	e7fe      	b.n	1b0 <PORT0_9_Handler>
+
+000001b2 <PORT0_10_Handler>:
+    def_default_handler    PORT0_10_Handler
+ 1b2:	e7fe      	b.n	1b2 <PORT0_10_Handler>
+
+000001b4 <PORT0_11_Handler>:
+    def_default_handler    PORT0_11_Handler
+ 1b4:	e7fe      	b.n	1b4 <PORT0_11_Handler>
+
+000001b6 <PORT0_12_Handler>:
+    def_default_handler    PORT0_12_Handler
+ 1b6:	e7fe      	b.n	1b6 <PORT0_12_Handler>
+
+000001b8 <PORT0_13_Handler>:
+    def_default_handler    PORT0_13_Handler
+ 1b8:	e7fe      	b.n	1b8 <PORT0_13_Handler>
+
+000001ba <PORT0_14_Handler>:
+    def_default_handler    PORT0_14_Handler
+ 1ba:	e7fe      	b.n	1ba <PORT0_14_Handler>
+
+000001bc <PORT0_15_Handler>:
+    def_default_handler    PORT0_15_Handler
+ 1bc:	e7fe      	b.n	1bc <PORT0_15_Handler>
+
+000001be <SYSERROR_Handler>:
+    def_default_handler    SYSERROR_Handler          /* System Error Handler */
+ 1be:	e7fe      	b.n	1be <SYSERROR_Handler>
+
+000001c0 <EFLASH_Handler>:
+    def_default_handler    EFLASH_Handler            /* Embedded Flash Handler */
+ 1c0:	e7fe      	b.n	1c0 <EFLASH_Handler>
+
+000001c2 <CORDIO0_Handler>:
+    def_default_handler    CORDIO0_Handler           /* Cordio Handler */
+ 1c2:	e7fe      	b.n	1c2 <CORDIO0_Handler>
+
+000001c4 <CORDIO1_Handler>:
+    def_default_handler    CORDIO1_Handler           /* Cordio Handler */
+ 1c4:	e7fe      	b.n	1c4 <CORDIO1_Handler>
+
+000001c6 <CORDIO2_Handler>:
+    def_default_handler    CORDIO2_Handler           /* Cordio Handler */
+ 1c6:	e7fe      	b.n	1c6 <CORDIO2_Handler>
+
+000001c8 <CORDIO3_Handler>:
+    def_default_handler    CORDIO3_Handler           /* Cordio Handler */
+ 1c8:	e7fe      	b.n	1c8 <CORDIO3_Handler>
+
+000001ca <CORDIO4_Handler>:
+    def_default_handler    CORDIO4_Handler           /* Cordio Handler */
+ 1ca:	e7fe      	b.n	1ca <CORDIO4_Handler>
+
+000001cc <CORDIO5_Handler>:
+    def_default_handler    CORDIO5_Handler           /* Cordio Handler */
+ 1cc:	e7fe      	b.n	1cc <CORDIO5_Handler>
+
+000001ce <CORDIO6_Handler>:
+    def_default_handler    CORDIO6_Handler           /* Cordio Handler */
+ 1ce:	e7fe      	b.n	1ce <CORDIO6_Handler>
+
+000001d0 <CORDIO7_Handler>:
+    def_default_handler    CORDIO7_Handler           /* Cordio Handler */
+ 1d0:	e7fe      	b.n	1d0 <CORDIO7_Handler>
+
+000001d2 <PORT2_COMB_Handler>:
+    def_default_handler    PORT2_COMB_Handler        /* GPIO Port 2 Combined Handler */
+ 1d2:	e7fe      	b.n	1d2 <PORT2_COMB_Handler>
+
+000001d4 <PORT3_COMB_Handler>:
+    def_default_handler    PORT3_COMB_Handler        /* GPIO Port 3 Combined Handler */
+ 1d4:	e7fe      	b.n	1d4 <PORT3_COMB_Handler>
+
+000001d6 <TRNG_Handler>:
+    def_default_handler    TRNG_Handler              /* Random Number Handler */
+ 1d6:	e7fe      	b.n	1d6 <TRNG_Handler>
+
+000001d8 <UART2_Handler>:
+    def_default_handler    UART2_Handler             /* UART 2 RX and TX Handler */
+ 1d8:	e7fe      	b.n	1d8 <UART2_Handler>
+
+000001da <UART3_Handler>:
+    def_default_handler    UART3_Handler             /* UART 3 RX and TX Handler */
+ 1da:	e7fe      	b.n	1da <UART3_Handler>
+
+000001dc <ETHERNET_Handler>:
+    def_default_handler    ETHERNET_Handler          /* Ethernet Handler */
+ 1dc:	e7fe      	b.n	1dc <ETHERNET_Handler>
+
+000001de <I2S_Handler>:
+    def_default_handler    I2S_Handler               /* I2S Handler */
+ 1de:	e7fe      	b.n	1de <I2S_Handler>
+
+000001e0 <MPS2_SPI0_Handler>:
+    def_default_handler    MPS2_SPI0_Handler         /* SPI Handler (spi header) */
+ 1e0:	e7fe      	b.n	1e0 <MPS2_SPI0_Handler>
+
+000001e2 <MPS2_SPI1_Handler>:
+    def_default_handler    MPS2_SPI1_Handler         /* SPI Handler (clcd) */
+ 1e2:	e7fe      	b.n	1e2 <MPS2_SPI1_Handler>
+
+000001e4 <MPS2_SPI2_Handler>:
+    def_default_handler    MPS2_SPI2_Handler         /* SPI Handler (spi 1 ADC replacement) */
+ 1e4:	e7fe      	b.n	1e4 <MPS2_SPI2_Handler>
+
+000001e6 <MPS2_SPI3_Handler>:
+    def_default_handler    MPS2_SPI3_Handler         /* SPI Handler (spi 0 shield 0 replacement) */
+ 1e6:	e7fe      	b.n	1e6 <MPS2_SPI3_Handler>
+
+000001e8 <MPS2_SPI4_Handler>:
+    def_default_handler    MPS2_SPI4_Handler         /* SPI Handler */
+ 1e8:	e7fe      	b.n	1e8 <MPS2_SPI4_Handler>
+
+000001ea <PORT4_COMB_Handler>:
+    def_default_handler    PORT4_COMB_Handler        /* GPIO Port 4 Combined Handler */
+ 1ea:	e7fe      	b.n	1ea <PORT4_COMB_Handler>
+
+000001ec <PORT5_COMB_Handler>:
+    def_default_handler    PORT5_COMB_Handler        /* GPIO Port 5 Combined Handler */
+ 1ec:	e7fe      	b.n	1ec <PORT5_COMB_Handler>
+
+000001ee <UART4_Handler>:
+    def_default_handler    UART4_Handler             /* UART 4 RX and TX Handler */
+ 1ee:	e7fe      	b.n	1ee <UART4_Handler>
+
+000001f0 <address_test_write>:
+#else
+/* Test function for write - for gcc */
+void address_test_write(unsigned int addr, unsigned int wdata) __attribute__((naked));
+void address_test_write(unsigned int addr, unsigned int wdata)
+{
+  __asm("  str   r1,[r0]\n"
+ 1f0:	6001      	str	r1, [r0, #0]
+ 1f2:	f3bf 8f4f 	dsb	sy
+ 1f6:	4770      	bx	lr
+
+000001f8 <address_test_read>:
+#else
+/* Test function for read - for gcc */
+unsigned int  address_test_read(unsigned int addr) __attribute__((naked));
+unsigned int  address_test_read(unsigned int addr)
+{
+  __asm("  push  {r1, r2}   \n"
+ 1f8:	b406      	push	{r1, r2}
+ 1fa:	6801      	ldr	r1, [r0, #0]
+ 1fc:	f3bf 8f4f 	dsb	sy
+ 200:	0008      	movs	r0, r1
+ 202:	bc06      	pop	{r1, r2}
+ 204:	4770      	bx	lr
+        "  dsb          \n"
+        "  movs  r0, r1 \n"
+        "  pop   {r1, r2}   \n"
+        "  bx    lr     \n"
+  );
+}
+ 206:	bf00      	nop
+
+00000208 <timer_register_rw_test>:
+
+/* --------------------------------------------------------------- */
+/*  Timer register read/write tests                                */
+/* --------------------------------------------------------------- */
+
+int timer_register_rw_test(CM3DS_MPS2_TIMER_TypeDef *CM3DS_MPS2_TIMER){
+ 208:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+
+    \param [in]      IRQn  External interrupt number. Value cannot be negative.
+ */
+__STATIC_INLINE void NVIC_DisableIRQ(IRQn_Type IRQn)
+{
+  NVIC->ICER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* disable interrupt */
+ 20c:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 210:	f44f 7480 	mov.w	r4, #256	; 0x100
+ 214:	4603      	mov	r3, r0
+ 216:	4a8d      	ldr	r2, [pc, #564]	; (44c <timer_register_rw_test+0x244>)
+ 218:	b083      	sub	sp, #12
+ 21a:	f8c2 4080 	str.w	r4, [r2, #128]	; 0x80
+ 21e:	f8c2 1080 	str.w	r1, [r2, #128]	; 0x80
+  //puts("- initial values");
+
+  NVIC_DisableIRQ(TIMER0_IRQn);
+  NVIC_DisableIRQ(TIMER1_IRQn);
+
+  if (CM3DS_MPS2_TIMER->CTRL      != 0) { err_code += (1<<0); }
+ 222:	6800      	ldr	r0, [r0, #0]
+  if (CM3DS_MPS2_TIMER->VALUE     != 0) { err_code += (1<<1); }
+ 224:	685a      	ldr	r2, [r3, #4]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0) { err_code += (1<<0); }
+ 226:	3800      	subs	r0, #0
+ 228:	bf18      	it	ne
+ 22a:	2001      	movne	r0, #1
+  if (CM3DS_MPS2_TIMER->VALUE     != 0) { err_code += (1<<1); }
+ 22c:	b102      	cbz	r2, 230 <timer_register_rw_test+0x28>
+ 22e:	3002      	adds	r0, #2
+  if (CM3DS_MPS2_TIMER->RELOAD    != 0) { err_code += (1<<2); }
+ 230:	689a      	ldr	r2, [r3, #8]
+ 232:	b102      	cbz	r2, 236 <timer_register_rw_test+0x2e>
+ 234:	3004      	adds	r0, #4
+  if (CM3DS_MPS2_TIMER->INTSTATUS != 0) { err_code += (1<<3); }
+ 236:	68da      	ldr	r2, [r3, #12]
+ 238:	b102      	cbz	r2, 23c <timer_register_rw_test+0x34>
+ 23a:	3008      	adds	r0, #8
+
+  timer_base = CM3DS_MPS2_TIMER0_BASE;
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1) {timer_base = CM3DS_MPS2_TIMER1_BASE;}
+ 23c:	4984      	ldr	r1, [pc, #528]	; (450 <timer_register_rw_test+0x248>)
+ 23e:	4c85      	ldr	r4, [pc, #532]	; (454 <timer_register_rw_test+0x24c>)
+ 240:	428b      	cmp	r3, r1
+ 242:	4a85      	ldr	r2, [pc, #532]	; (458 <timer_register_rw_test+0x250>)
+ 244:	bf18      	it	ne
+ 246:	4622      	movne	r2, r4
+ 248:	f1a1 0108 	sub.w	r1, r1, #8
+ 24c:	4694      	mov	ip, r2
+ 24e:	4a83      	ldr	r2, [pc, #524]	; (45c <timer_register_rw_test+0x254>)
+ 250:	bf18      	it	ne
+ 252:	460a      	movne	r2, r1
+ 254:	f1a4 0408 	sub.w	r4, r4, #8
+ 258:	9200      	str	r2, [sp, #0]
+ 25a:	4a81      	ldr	r2, [pc, #516]	; (460 <timer_register_rw_test+0x258>)
+ 25c:	bf18      	it	ne
+ 25e:	4622      	movne	r2, r4
+ 260:	4611      	mov	r1, r2
+ 262:	9201      	str	r2, [sp, #4]
+ 264:	4a7f      	ldr	r2, [pc, #508]	; (464 <timer_register_rw_test+0x25c>)
+ 266:	f1a4 0404 	sub.w	r4, r4, #4
+ 26a:	bf08      	it	eq
+ 26c:	4696      	moveq	lr, r2
+ 26e:	f1a2 0204 	sub.w	r2, r2, #4
+ 272:	bf18      	it	ne
+ 274:	46a6      	movne	lr, r4
+ 276:	f1a4 0404 	sub.w	r4, r4, #4
+ 27a:	bf08      	it	eq
+ 27c:	4614      	moveq	r4, r2
+ 27e:	f1a2 0204 	sub.w	r2, r2, #4
+ 282:	4d79      	ldr	r5, [pc, #484]	; (468 <timer_register_rw_test+0x260>)
+ 284:	bf08      	it	eq
+ 286:	4615      	moveq	r5, r2
+ 288:	f1a2 0204 	sub.w	r2, r2, #4
+ 28c:	4e77      	ldr	r6, [pc, #476]	; (46c <timer_register_rw_test+0x264>)
+ 28e:	bf08      	it	eq
+ 290:	4616      	moveq	r6, r2
+ 292:	f1a2 0204 	sub.w	r2, r2, #4
+ 296:	4f76      	ldr	r7, [pc, #472]	; (470 <timer_register_rw_test+0x268>)
+ 298:	bf08      	it	eq
+ 29a:	4617      	moveq	r7, r2
+ 29c:	f1a2 0204 	sub.w	r2, r2, #4
+ 2a0:	f8df 81d0 	ldr.w	r8, [pc, #464]	; 474 <timer_register_rw_test+0x26c>
+ 2a4:	bf08      	it	eq
+ 2a6:	4690      	moveq	r8, r2
+ 2a8:	f1a2 0204 	sub.w	r2, r2, #4
+ 2ac:	f8df 91c8 	ldr.w	r9, [pc, #456]	; 478 <timer_register_rw_test+0x270>
+ 2b0:	bf08      	it	eq
+ 2b2:	4691      	moveq	r9, r2
+ 2b4:	f1a2 0204 	sub.w	r2, r2, #4
+ 2b8:	f8df a1c0 	ldr.w	sl, [pc, #448]	; 47c <timer_register_rw_test+0x274>
+ 2bc:	bf08      	it	eq
+ 2be:	4692      	moveq	sl, r2
+ 2c0:	f1a2 0204 	sub.w	r2, r2, #4
+ 2c4:	f8df b1b8 	ldr.w	fp, [pc, #440]	; 480 <timer_register_rw_test+0x278>
+ 2c8:	bf08      	it	eq
+ 2ca:	4693      	moveq	fp, r2
+
+  // Perform a write access to all PIDs
+  HW32_REG(timer_base + 0xFD0) = 0xFFFFFFFF;
+ 2cc:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
+ 2d0:	f8cb 2000 	str.w	r2, [fp]
+  HW32_REG(timer_base + 0xFD4) = 0xFFFFFFFF;
+ 2d4:	f8ca 2000 	str.w	r2, [sl]
+  HW32_REG(timer_base + 0xFD8) = 0xFFFFFFFF;
+ 2d8:	f8c9 2000 	str.w	r2, [r9]
+  HW32_REG(timer_base + 0xFDC) = 0xFFFFFFFF;
+ 2dc:	f8c8 2000 	str.w	r2, [r8]
+  HW32_REG(timer_base + 0xFE0) = 0xFFFFFFFF;
+ 2e0:	603a      	str	r2, [r7, #0]
+  HW32_REG(timer_base + 0xFE4) = 0xFFFFFFFF;
+ 2e2:	6032      	str	r2, [r6, #0]
+  HW32_REG(timer_base + 0xFE8) = 0xFFFFFFFF;
+ 2e4:	602a      	str	r2, [r5, #0]
+  HW32_REG(timer_base + 0xFEC) = 0xFFFFFFFF;
+ 2e6:	6022      	str	r2, [r4, #0]
+  HW32_REG(timer_base + 0xFF0) = 0xFFFFFFFF;
+ 2e8:	f8ce 2000 	str.w	r2, [lr]
+  HW32_REG(timer_base + 0xFF4) = 0xFFFFFFFF;
+ 2ec:	600a      	str	r2, [r1, #0]
+  HW32_REG(timer_base + 0xFF8) = 0xFFFFFFFF;
+ 2ee:	9900      	ldr	r1, [sp, #0]
+ 2f0:	600a      	str	r2, [r1, #0]
+  HW32_REG(timer_base + 0xFFC) = 0xFFFFFFFF;
+ 2f2:	f8cc 2000 	str.w	r2, [ip]
+
+  if (HW32_REG(timer_base + 0xFD0) != APB_TIMER_PID4) {err_code += (1<<4); }
+ 2f6:	f8db 2000 	ldr.w	r2, [fp]
+ 2fa:	2a04      	cmp	r2, #4
+  if (HW32_REG(timer_base + 0xFD4) != APB_TIMER_PID5) {err_code += (1<<5); }
+ 2fc:	f8da 2000 	ldr.w	r2, [sl]
+  if (HW32_REG(timer_base + 0xFD0) != APB_TIMER_PID4) {err_code += (1<<4); }
+ 300:	bf18      	it	ne
+ 302:	3010      	addne	r0, #16
+  if (HW32_REG(timer_base + 0xFD4) != APB_TIMER_PID5) {err_code += (1<<5); }
+ 304:	b102      	cbz	r2, 308 <timer_register_rw_test+0x100>
+ 306:	3020      	adds	r0, #32
+  if (HW32_REG(timer_base + 0xFD8) != APB_TIMER_PID6) {err_code += (1<<6); }
+ 308:	f8d9 2000 	ldr.w	r2, [r9]
+ 30c:	b102      	cbz	r2, 310 <timer_register_rw_test+0x108>
+ 30e:	3040      	adds	r0, #64	; 0x40
+  if (HW32_REG(timer_base + 0xFDC) != APB_TIMER_PID7) {err_code += (1<<7); }
+ 310:	f8d8 2000 	ldr.w	r2, [r8]
+ 314:	b102      	cbz	r2, 318 <timer_register_rw_test+0x110>
+ 316:	3080      	adds	r0, #128	; 0x80
+  if (HW32_REG(timer_base + 0xFE0) != APB_TIMER_PID0) {err_code += (1<<8); }
+ 318:	683a      	ldr	r2, [r7, #0]
+ 31a:	2a22      	cmp	r2, #34	; 0x22
+  if (HW32_REG(timer_base + 0xFE4) != APB_TIMER_PID1) {err_code += (1<<9); }
+ 31c:	6832      	ldr	r2, [r6, #0]
+  if (HW32_REG(timer_base + 0xFE0) != APB_TIMER_PID0) {err_code += (1<<8); }
+ 31e:	bf18      	it	ne
+ 320:	f500 7080 	addne.w	r0, r0, #256	; 0x100
+  if (HW32_REG(timer_base + 0xFE4) != APB_TIMER_PID1) {err_code += (1<<9); }
+ 324:	2ab8      	cmp	r2, #184	; 0xb8
+  if (HW32_REG(timer_base + 0xFE8) != APB_TIMER_PID2) {err_code += (1<<10); }
+ 326:	682a      	ldr	r2, [r5, #0]
+  if (HW32_REG(timer_base + 0xFE4) != APB_TIMER_PID1) {err_code += (1<<9); }
+ 328:	bf18      	it	ne
+ 32a:	f500 7000 	addne.w	r0, r0, #512	; 0x200
+  if (HW32_REG(timer_base + 0xFE8) != APB_TIMER_PID2) {err_code += (1<<10); }
+ 32e:	2a1b      	cmp	r2, #27
+  if (HW32_REG(timer_base + 0xFEC) != APB_TIMER_PID3) {err_code += (1<<11); }
+ 330:	6822      	ldr	r2, [r4, #0]
+  if (HW32_REG(timer_base + 0xFE8) != APB_TIMER_PID2) {err_code += (1<<10); }
+ 332:	bf18      	it	ne
+ 334:	f500 6080 	addne.w	r0, r0, #1024	; 0x400
+  if (HW32_REG(timer_base + 0xFEC) != APB_TIMER_PID3) {err_code += (1<<11); }
+ 338:	b10a      	cbz	r2, 33e <timer_register_rw_test+0x136>
+ 33a:	f500 6000 	add.w	r0, r0, #2048	; 0x800
+  if (HW32_REG(timer_base + 0xFF0) != APB_TIMER_CID0) {err_code += (1<<12); }
+ 33e:	f8de 2000 	ldr.w	r2, [lr]
+ 342:	2a0d      	cmp	r2, #13
+  if (HW32_REG(timer_base + 0xFF4) != APB_TIMER_CID1) {err_code += (1<<13); }
+ 344:	9a01      	ldr	r2, [sp, #4]
+  if (HW32_REG(timer_base + 0xFF0) != APB_TIMER_CID0) {err_code += (1<<12); }
+ 346:	bf18      	it	ne
+ 348:	f500 5080 	addne.w	r0, r0, #4096	; 0x1000
+  if (HW32_REG(timer_base + 0xFF4) != APB_TIMER_CID1) {err_code += (1<<13); }
+ 34c:	6812      	ldr	r2, [r2, #0]
+ 34e:	2af0      	cmp	r2, #240	; 0xf0
+  if (HW32_REG(timer_base + 0xFF8) != APB_TIMER_CID2) {err_code += (1<<14); }
+ 350:	9a00      	ldr	r2, [sp, #0]
+  if (HW32_REG(timer_base + 0xFF4) != APB_TIMER_CID1) {err_code += (1<<13); }
+ 352:	bf18      	it	ne
+ 354:	f500 5000 	addne.w	r0, r0, #8192	; 0x2000
+  if (HW32_REG(timer_base + 0xFF8) != APB_TIMER_CID2) {err_code += (1<<14); }
+ 358:	6812      	ldr	r2, [r2, #0]
+ 35a:	2a05      	cmp	r2, #5
+ 35c:	d066      	beq.n	42c <timer_register_rw_test+0x224>
+  if (HW32_REG(timer_base + 0xFFC) != APB_TIMER_CID3) {err_code += (1<<15); }
+ 35e:	4662      	mov	r2, ip
+
+
+  if (err_code != 0) {
+    //printf ("ERROR : initial value failed (0x%x)\n", err_code);
+    return_val=1;
+ 360:	2001      	movs	r0, #1
+  if (HW32_REG(timer_base + 0xFFC) != APB_TIMER_CID3) {err_code += (1<<15); }
+ 362:	6812      	ldr	r2, [r2, #0]
+    err_code = 0;
+    }
+  //puts("- read/write");
+
+  CM3DS_MPS2_TIMER->VALUE = 0x3355AAFF;
+ 364:	4947      	ldr	r1, [pc, #284]	; (484 <timer_register_rw_test+0x27c>)
+  if (CM3DS_MPS2_TIMER->VALUE     != 0x3355AAFF) { err_code += (1<<0); }
+  CM3DS_MPS2_TIMER->VALUE = 0xCCAA5500;
+ 366:	4a48      	ldr	r2, [pc, #288]	; (488 <timer_register_rw_test+0x280>)
+  CM3DS_MPS2_TIMER->VALUE = 0x3355AAFF;
+ 368:	6059      	str	r1, [r3, #4]
+  if (CM3DS_MPS2_TIMER->VALUE     != 0x3355AAFF) { err_code += (1<<0); }
+ 36a:	685c      	ldr	r4, [r3, #4]
+  CM3DS_MPS2_TIMER->VALUE = 0xCCAA5500;
+ 36c:	605a      	str	r2, [r3, #4]
+  if (CM3DS_MPS2_TIMER->VALUE     != 0x3355AAFF) { err_code += (1<<0); }
+ 36e:	1a61      	subs	r1, r4, r1
+  if (CM3DS_MPS2_TIMER->VALUE     != 0xCCAA5500) { err_code += (1<<1); }
+ 370:	685c      	ldr	r4, [r3, #4]
+  if (CM3DS_MPS2_TIMER->VALUE     != 0x3355AAFF) { err_code += (1<<0); }
+ 372:	bf18      	it	ne
+ 374:	2101      	movne	r1, #1
+  if (CM3DS_MPS2_TIMER->VALUE     != 0xCCAA5500) { err_code += (1<<1); }
+ 376:	4294      	cmp	r4, r2
+  CM3DS_MPS2_TIMER->VALUE = 0x00000000;
+ 378:	f04f 0200 	mov.w	r2, #0
+ 37c:	605a      	str	r2, [r3, #4]
+  if (CM3DS_MPS2_TIMER->VALUE     != 0x00000000) { err_code += (1<<2); }
+ 37e:	685a      	ldr	r2, [r3, #4]
+  if (CM3DS_MPS2_TIMER->VALUE     != 0xCCAA5500) { err_code += (1<<1); }
+ 380:	bf18      	it	ne
+ 382:	3102      	addne	r1, #2
+  if (CM3DS_MPS2_TIMER->VALUE     != 0x00000000) { err_code += (1<<2); }
+ 384:	b102      	cbz	r2, 388 <timer_register_rw_test+0x180>
+ 386:	3104      	adds	r1, #4
+
+  CM3DS_MPS2_TIMER->RELOAD = 0x3355AAFF;
+ 388:	4a3e      	ldr	r2, [pc, #248]	; (484 <timer_register_rw_test+0x27c>)
+ 38a:	609a      	str	r2, [r3, #8]
+  if (CM3DS_MPS2_TIMER->RELOAD    != 0x3355AAFF) { err_code += (1<<3); }
+ 38c:	689c      	ldr	r4, [r3, #8]
+ 38e:	4294      	cmp	r4, r2
+  CM3DS_MPS2_TIMER->RELOAD = 0xCCAA5500;
+ 390:	4a3d      	ldr	r2, [pc, #244]	; (488 <timer_register_rw_test+0x280>)
+  if (CM3DS_MPS2_TIMER->RELOAD    != 0x3355AAFF) { err_code += (1<<3); }
+ 392:	bf18      	it	ne
+ 394:	3108      	addne	r1, #8
+  CM3DS_MPS2_TIMER->RELOAD = 0xCCAA5500;
+ 396:	609a      	str	r2, [r3, #8]
+  if (CM3DS_MPS2_TIMER->RELOAD    != 0xCCAA5500) { err_code += (1<<4); }
+ 398:	689c      	ldr	r4, [r3, #8]
+ 39a:	4294      	cmp	r4, r2
+  CM3DS_MPS2_TIMER->RELOAD = 0x00000000;
+ 39c:	f04f 0200 	mov.w	r2, #0
+ 3a0:	609a      	str	r2, [r3, #8]
+  if (CM3DS_MPS2_TIMER->RELOAD    != 0x00000000) { err_code += (1<<5); }
+ 3a2:	689a      	ldr	r2, [r3, #8]
+  if (CM3DS_MPS2_TIMER->RELOAD    != 0xCCAA5500) { err_code += (1<<4); }
+ 3a4:	bf18      	it	ne
+ 3a6:	3110      	addne	r1, #16
+  if (CM3DS_MPS2_TIMER->RELOAD    != 0x00000000) { err_code += (1<<5); }
+ 3a8:	b102      	cbz	r2, 3ac <timer_register_rw_test+0x1a4>
+ 3aa:	3120      	adds	r1, #32
+
+  CM3DS_MPS2_TIMER->CTRL = 0x01; /* Set enable */
+ 3ac:	2201      	movs	r2, #1
+ 3ae:	601a      	str	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x01) { err_code += (1<<6); }
+ 3b0:	681a      	ldr	r2, [r3, #0]
+ 3b2:	2a01      	cmp	r2, #1
+  CM3DS_MPS2_TIMER->CTRL = 0x02; /* external select */
+ 3b4:	f04f 0202 	mov.w	r2, #2
+ 3b8:	601a      	str	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x02) { err_code += (1<<7); }
+ 3ba:	681a      	ldr	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x01) { err_code += (1<<6); }
+ 3bc:	bf18      	it	ne
+ 3be:	3140      	addne	r1, #64	; 0x40
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x02) { err_code += (1<<7); }
+ 3c0:	2a02      	cmp	r2, #2
+  CM3DS_MPS2_TIMER->CTRL = 0x04; /* external clock select */
+ 3c2:	f04f 0204 	mov.w	r2, #4
+ 3c6:	601a      	str	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x04) { err_code += (1<<8); }
+ 3c8:	681a      	ldr	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x02) { err_code += (1<<7); }
+ 3ca:	bf18      	it	ne
+ 3cc:	3180      	addne	r1, #128	; 0x80
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x04) { err_code += (1<<8); }
+ 3ce:	2a04      	cmp	r2, #4
+  CM3DS_MPS2_TIMER->CTRL = 0x08; /* external clock select */
+ 3d0:	f04f 0208 	mov.w	r2, #8
+ 3d4:	601a      	str	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x08) { err_code += (1<<9); }
+ 3d6:	681a      	ldr	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x04) { err_code += (1<<8); }
+ 3d8:	bf18      	it	ne
+ 3da:	f501 7180 	addne.w	r1, r1, #256	; 0x100
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x08) { err_code += (1<<9); }
+ 3de:	2a08      	cmp	r2, #8
+  CM3DS_MPS2_TIMER->CTRL = 0x00; /* all clear */
+ 3e0:	f04f 0200 	mov.w	r2, #0
+ 3e4:	601a      	str	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x00) { err_code += (1<<10); }
+ 3e6:	681a      	ldr	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x08) { err_code += (1<<9); }
+ 3e8:	bf18      	it	ne
+ 3ea:	f501 7100 	addne.w	r1, r1, #512	; 0x200
+  if (CM3DS_MPS2_TIMER->CTRL      != 0x00) { err_code += (1<<10); }
+ 3ee:	b10a      	cbz	r2, 3f4 <timer_register_rw_test+0x1ec>
+ 3f0:	f501 6180 	add.w	r1, r1, #1024	; 0x400
+
+  /* Trigger timer interrupt status */
+  CM3DS_MPS2_TIMER->RELOAD = 0x3;
+ 3f4:	2203      	movs	r2, #3
+  CM3DS_MPS2_TIMER->VALUE  = 0x3;
+  CM3DS_MPS2_TIMER->CTRL   = 0x9; /* enable with internal clock as source */
+ 3f6:	2409      	movs	r4, #9
+  CM3DS_MPS2_TIMER->RELOAD = 0x3;
+ 3f8:	609a      	str	r2, [r3, #8]
+  CM3DS_MPS2_TIMER->VALUE  = 0x3;
+ 3fa:	605a      	str	r2, [r3, #4]
+  CM3DS_MPS2_TIMER->CTRL   = 0x9; /* enable with internal clock as source */
+ 3fc:	601c      	str	r4, [r3, #0]
+  while ( CM3DS_MPS2_TIMER->INTSTATUS == 0);
+ 3fe:	68da      	ldr	r2, [r3, #12]
+ 400:	2a00      	cmp	r2, #0
+ 402:	d0fc      	beq.n	3fe <timer_register_rw_test+0x1f6>
+  CM3DS_MPS2_TIMER->CTRL   = 0x0; /* disable timer */
+ 404:	2200      	movs	r2, #0
+ 406:	601a      	str	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->INTSTATUS  != 0x01) { err_code += (1<<11); }
+ 408:	68da      	ldr	r2, [r3, #12]
+ 40a:	2a01      	cmp	r2, #1
+ 40c:	d016      	beq.n	43c <timer_register_rw_test+0x234>
+  CM3DS_MPS2_TIMER->INTCLEAR = 0x1; /* clear timer interrupt */
+ 40e:	2001      	movs	r0, #1
+ 410:	60d8      	str	r0, [r3, #12]
+  if (CM3DS_MPS2_TIMER->INTSTATUS  != 0x00) { err_code += (1<<12); }
+ 412:	68db      	ldr	r3, [r3, #12]
+
+    \param [in]      IRQn  External interrupt number. Value cannot be negative.
+ */
+__STATIC_INLINE void NVIC_ClearPendingIRQ(IRQn_Type IRQn)
+{
+  NVIC->ICPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* Clear pending interrupt */
+ 414:	f44f 7180 	mov.w	r1, #256	; 0x100
+ 418:	f44f 7200 	mov.w	r2, #512	; 0x200
+ 41c:	4b0b      	ldr	r3, [pc, #44]	; (44c <timer_register_rw_test+0x244>)
+ 41e:	f8c3 1180 	str.w	r1, [r3, #384]	; 0x180
+ 422:	f8c3 2180 	str.w	r2, [r3, #384]	; 0x180
+
+  NVIC_ClearPendingIRQ(TIMER0_IRQn);
+  NVIC_ClearPendingIRQ(TIMER1_IRQn);
+
+  return(return_val);
+}
+ 426:	b003      	add	sp, #12
+ 428:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+  if (HW32_REG(timer_base + 0xFFC) != APB_TIMER_CID3) {err_code += (1<<15); }
+ 42c:	f8dc 2000 	ldr.w	r2, [ip]
+ 430:	2ab1      	cmp	r2, #177	; 0xb1
+ 432:	d109      	bne.n	448 <timer_register_rw_test+0x240>
+  if (err_code != 0) {
+ 434:	3800      	subs	r0, #0
+ 436:	bf18      	it	ne
+ 438:	2001      	movne	r0, #1
+ 43a:	e793      	b.n	364 <timer_register_rw_test+0x15c>
+  CM3DS_MPS2_TIMER->INTCLEAR = 0x1; /* clear timer interrupt */
+ 43c:	60da      	str	r2, [r3, #12]
+  if (CM3DS_MPS2_TIMER->INTSTATUS  != 0x00) { err_code += (1<<12); }
+ 43e:	68db      	ldr	r3, [r3, #12]
+    return_val=1;
+ 440:	430b      	orrs	r3, r1
+ 442:	bf18      	it	ne
+ 444:	2001      	movne	r0, #1
+ 446:	e7e5      	b.n	414 <timer_register_rw_test+0x20c>
+    return_val=1;
+ 448:	2001      	movs	r0, #1
+ 44a:	e78b      	b.n	364 <timer_register_rw_test+0x15c>
+ 44c:	e000e100 	.word	0xe000e100
+ 450:	40001000 	.word	0x40001000
+ 454:	40000ffc 	.word	0x40000ffc
+ 458:	40001ffc 	.word	0x40001ffc
+ 45c:	40001ff8 	.word	0x40001ff8
+ 460:	40001ff4 	.word	0x40001ff4
+ 464:	40001ff0 	.word	0x40001ff0
+ 468:	40000fe8 	.word	0x40000fe8
+ 46c:	40000fe4 	.word	0x40000fe4
+ 470:	40000fe0 	.word	0x40000fe0
+ 474:	40000fdc 	.word	0x40000fdc
+ 478:	40000fd8 	.word	0x40000fd8
+ 47c:	40000fd4 	.word	0x40000fd4
+ 480:	40000fd0 	.word	0x40000fd0
+ 484:	3355aaff 	.word	0x3355aaff
+ 488:	ccaa5500 	.word	0xccaa5500
+
+0000048c <timer_start_stop_test>:
+  A polling loop is then use to wait until timer reach zero and reloaded
+  (by checking interrupt status register).  The current value of the timer
+  is then checked to make sure it is in the expected value range.
+
+*/
+int timer_start_stop_test(CM3DS_MPS2_TIMER_TypeDef *CM3DS_MPS2_TIMER){
+ 48c:	b4f0      	push	{r4, r5, r6, r7}
+  NVIC->ICER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* disable interrupt */
+ 48e:	f44f 7280 	mov.w	r2, #256	; 0x100
+  //puts("- timer enable");
+
+  NVIC_DisableIRQ(TIMER0_IRQn);
+  NVIC_DisableIRQ(TIMER1_IRQn);
+
+  CM3DS_MPS2_TIMER->RELOAD = 0x1000;
+ 492:	f44f 5480 	mov.w	r4, #4096	; 0x1000
+ 496:	f44f 7700 	mov.w	r7, #512	; 0x200
+  CM3DS_MPS2_TIMER->VALUE  = 0x1000;
+  CM3DS_MPS2_TIMER->CTRL = 0x01; /* Set enable */
+ 49a:	2601      	movs	r6, #1
+ 49c:	4d2c      	ldr	r5, [pc, #176]	; (550 <timer_start_stop_test+0xc4>)
+  counter = 0x100; /* Time out counter */
+ 49e:	492d      	ldr	r1, [pc, #180]	; (554 <timer_start_stop_test+0xc8>)
+ 4a0:	f8c5 2080 	str.w	r2, [r5, #128]	; 0x80
+ 4a4:	f8c5 7080 	str.w	r7, [r5, #128]	; 0x80
+  CM3DS_MPS2_TIMER->RELOAD = 0x1000;
+ 4a8:	6084      	str	r4, [r0, #8]
+  CM3DS_MPS2_TIMER->VALUE  = 0x1000;
+ 4aa:	6044      	str	r4, [r0, #4]
+  CM3DS_MPS2_TIMER->CTRL = 0x01; /* Set enable */
+ 4ac:	6006      	str	r6, [r0, #0]
+  counter = 0x100; /* Time out counter */
+ 4ae:	600a      	str	r2, [r1, #0]
+  while ((CM3DS_MPS2_TIMER->VALUE > 0x900) && (counter>= 0)){
+ 4b0:	6842      	ldr	r2, [r0, #4]
+int timer_start_stop_test(CM3DS_MPS2_TIMER_TypeDef *CM3DS_MPS2_TIMER){
+ 4b2:	4603      	mov	r3, r0
+  while ((CM3DS_MPS2_TIMER->VALUE > 0x900) && (counter>= 0)){
+ 4b4:	f5b2 6f10 	cmp.w	r2, #2304	; 0x900
+ 4b8:	d807      	bhi.n	4ca <timer_start_stop_test+0x3e>
+ 4ba:	e009      	b.n	4d0 <timer_start_stop_test+0x44>
+    counter --;
+ 4bc:	680a      	ldr	r2, [r1, #0]
+ 4be:	3a01      	subs	r2, #1
+ 4c0:	600a      	str	r2, [r1, #0]
+  while ((CM3DS_MPS2_TIMER->VALUE > 0x900) && (counter>= 0)){
+ 4c2:	685a      	ldr	r2, [r3, #4]
+ 4c4:	f5b2 6f10 	cmp.w	r2, #2304	; 0x900
+ 4c8:	d902      	bls.n	4d0 <timer_start_stop_test+0x44>
+ 4ca:	680a      	ldr	r2, [r1, #0]
+ 4cc:	2a00      	cmp	r2, #0
+ 4ce:	daf5      	bge.n	4bc <timer_start_stop_test+0x30>
+    }
+  CM3DS_MPS2_TIMER->CTRL = 0x00; /* stop timer for now */
+ 4d0:	2200      	movs	r2, #0
+ 4d2:	601a      	str	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->VALUE > 0x900) {
+ 4d4:	6858      	ldr	r0, [r3, #4]
+     //puts("ERROR : Timer not decrementing.");
+     err_code += (1<<0);
+     }
+
+  tvalue = CM3DS_MPS2_TIMER->VALUE;
+ 4d6:	685a      	ldr	r2, [r3, #4]
+  if (CM3DS_MPS2_TIMER->VALUE > 0x900) {
+ 4d8:	f5b0 6f10 	cmp.w	r0, #2304	; 0x900
+ 4dc:	bf94      	ite	ls
+ 4de:	2000      	movls	r0, #0
+ 4e0:	2001      	movhi	r0, #1
+
+    No Operation does nothing. This instruction can be used for code alignment purposes.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __NOP(void)
+{
+  __ASM volatile ("nop");
+ 4e2:	bf00      	nop
+ 4e4:	bf00      	nop
+  //puts("- timer disable");
+  __NOP();
+  __NOP();
+  if (CM3DS_MPS2_TIMER->VALUE != tvalue) {
+ 4e6:	6859      	ldr	r1, [r3, #4]
+ 4e8:	4291      	cmp	r1, r2
+ 4ea:	d000      	beq.n	4ee <timer_start_stop_test+0x62>
+     //puts("ERROR : Timer not stopping.");
+     err_code += (1<<1);
+ 4ec:	3002      	adds	r0, #2
+     }
+
+  /* Check reload operation */
+  //puts("- timer reload");
+  CM3DS_MPS2_TIMER->VALUE  = 0x10;
+ 4ee:	2110      	movs	r1, #16
+  CM3DS_MPS2_TIMER->CTRL = 0x09; /* Set enable, and interrupt generation */
+ 4f0:	2209      	movs	r2, #9
+  CM3DS_MPS2_TIMER->VALUE  = 0x10;
+ 4f2:	6059      	str	r1, [r3, #4]
+  CM3DS_MPS2_TIMER->CTRL = 0x09; /* Set enable, and interrupt generation */
+ 4f4:	601a      	str	r2, [r3, #0]
+  while ( CM3DS_MPS2_TIMER->INTSTATUS == 0);
+ 4f6:	68da      	ldr	r2, [r3, #12]
+ 4f8:	2a00      	cmp	r2, #0
+ 4fa:	d0fc      	beq.n	4f6 <timer_start_stop_test+0x6a>
+  CM3DS_MPS2_TIMER->CTRL = 0x00; /* Stop timer */
+ 4fc:	2200      	movs	r2, #0
+ 4fe:	601a      	str	r2, [r3, #0]
+  if (CM3DS_MPS2_TIMER->VALUE > CM3DS_MPS2_TIMER->RELOAD) {
+ 500:	6859      	ldr	r1, [r3, #4]
+ 502:	689a      	ldr	r2, [r3, #8]
+ 504:	4291      	cmp	r1, r2
+     //puts("ERROR : Timer reload fail 1.");
+     err_code += (1<<2);
+     }
+  if ( (CM3DS_MPS2_TIMER->RELOAD - CM3DS_MPS2_TIMER->VALUE) > 0x100 ) {
+ 506:	689a      	ldr	r2, [r3, #8]
+ 508:	6859      	ldr	r1, [r3, #4]
+ 50a:	eba2 0201 	sub.w	r2, r2, r1
+  if (CM3DS_MPS2_TIMER->VALUE > CM3DS_MPS2_TIMER->RELOAD) {
+ 50e:	d812      	bhi.n	536 <timer_start_stop_test+0xaa>
+  if ( (CM3DS_MPS2_TIMER->RELOAD - CM3DS_MPS2_TIMER->VALUE) > 0x100 ) {
+ 510:	f5b2 7f80 	cmp.w	r2, #256	; 0x100
+ 514:	d80f      	bhi.n	536 <timer_start_stop_test+0xaa>
+     //puts("ERROR : Timer reload fail 2.");
+     err_code += (1<<3);
+     }
+
+  // Need to lower the interrupt in the timer before clearing in the NVIC
+  CM3DS_MPS2_TIMER->INTCLEAR = 1;
+ 516:	2501      	movs	r5, #1
+  NVIC->ICPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* Clear pending interrupt */
+ 518:	f44f 7480 	mov.w	r4, #256	; 0x100
+ 51c:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 520:	4a0b      	ldr	r2, [pc, #44]	; (550 <timer_start_stop_test+0xc4>)
+  // timer is currently being tested
+  NVIC_ClearPendingIRQ(TIMER0_IRQn);
+  NVIC_ClearPendingIRQ(TIMER1_IRQn);
+
+  /* Generate return value */
+  if (err_code != 0) {
+ 522:	3800      	subs	r0, #0
+  CM3DS_MPS2_TIMER->INTCLEAR = 1;
+ 524:	60dd      	str	r5, [r3, #12]
+  if (err_code != 0) {
+ 526:	bf18      	it	ne
+ 528:	2001      	movne	r0, #1
+ 52a:	f8c2 4180 	str.w	r4, [r2, #384]	; 0x180
+ 52e:	f8c2 1180 	str.w	r1, [r2, #384]	; 0x180
+    return_val=1;
+    err_code = 0;
+    }
+
+  return(return_val);
+}
+ 532:	bcf0      	pop	{r4, r5, r6, r7}
+ 534:	4770      	bx	lr
+  CM3DS_MPS2_TIMER->INTCLEAR = 1;
+ 536:	2001      	movs	r0, #1
+ 538:	f44f 7480 	mov.w	r4, #256	; 0x100
+ 53c:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 540:	4a03      	ldr	r2, [pc, #12]	; (550 <timer_start_stop_test+0xc4>)
+ 542:	60d8      	str	r0, [r3, #12]
+ 544:	f8c2 4180 	str.w	r4, [r2, #384]	; 0x180
+ 548:	f8c2 1180 	str.w	r1, [r2, #384]	; 0x180
+}
+ 54c:	bcf0      	pop	{r4, r5, r6, r7}
+ 54e:	4770      	bx	lr
+ 550:	e000e100 	.word	0xe000e100
+ 554:	20000064 	.word	0x20000064
+
+00000558 <timer_interrupt_test_1>:
+   The counter (software variable) is increased from 0 to 0x100.
+   Check that timer interrupt did not take place.
+   (timer0_irq_occurred and timer1_irq_occurred are 0).
+
+*/
+int timer_interrupt_test_1(CM3DS_MPS2_TIMER_TypeDef *CM3DS_MPS2_TIMER){
+ 558:	b470      	push	{r4, r5, r6}
+  int return_val=0;
+  int err_code=0;
+
+  //puts ("Timer interrupt test");
+  //puts ("- Test interrupt generation enabled.");
+  CM3DS_MPS2_TIMER->VALUE = 0; /* Disable timer */
+ 55a:	2100      	movs	r1, #0
+  NVIC->ICER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* disable interrupt */
+ 55c:	f44f 7580 	mov.w	r5, #256	; 0x100
+ 560:	f44f 7400 	mov.w	r4, #512	; 0x200
+ 564:	4a4d      	ldr	r2, [pc, #308]	; (69c <timer_interrupt_test_1+0x144>)
+  NVIC_DisableIRQ(TIMER1_IRQn);
+  NVIC_ClearPendingIRQ(TIMER0_IRQn);
+  NVIC_ClearPendingIRQ(TIMER1_IRQn);
+
+  /* Check which timer is being tested and setup software flags */
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER0) {
+ 566:	f1b0 4f80 	cmp.w	r0, #1073741824	; 0x40000000
+  CM3DS_MPS2_TIMER->VALUE = 0; /* Disable timer */
+ 56a:	6041      	str	r1, [r0, #4]
+ 56c:	f8c2 5080 	str.w	r5, [r2, #128]	; 0x80
+ 570:	f8c2 4080 	str.w	r4, [r2, #128]	; 0x80
+  NVIC->ICPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* Clear pending interrupt */
+ 574:	f8c2 5180 	str.w	r5, [r2, #384]	; 0x180
+ 578:	f8c2 4180 	str.w	r4, [r2, #384]	; 0x180
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER0) {
+ 57c:	d06d      	beq.n	65a <timer_interrupt_test_1+0x102>
+
+    NVIC_EnableIRQ(TIMER0_IRQn);  /* Enable Timer Interrupt */
+
+    }
+
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1) {
+ 57e:	4b48      	ldr	r3, [pc, #288]	; (6a0 <timer_interrupt_test_1+0x148>)
+ 580:	4298      	cmp	r0, r3
+ 582:	d03c      	beq.n	5fe <timer_interrupt_test_1+0xa6>
+    NVIC_EnableIRQ(TIMER1_IRQn);  /* Enable Timer Interrupt */
+
+    }
+
+
+  CM3DS_MPS2_TIMER->RELOAD = 0x01FF;
+ 584:	f240 12ff 	movw	r2, #511	; 0x1ff
+  CM3DS_MPS2_TIMER->VALUE  = 0x01FF;
+  CM3DS_MPS2_TIMER->CTRL   = 0x0009;  /* Timer enabled */
+ 588:	2409      	movs	r4, #9
+  counter = 0;
+ 58a:	4b46      	ldr	r3, [pc, #280]	; (6a4 <timer_interrupt_test_1+0x14c>)
+  CM3DS_MPS2_TIMER->RELOAD = 0x01FF;
+ 58c:	6082      	str	r2, [r0, #8]
+  CM3DS_MPS2_TIMER->VALUE  = 0x01FF;
+ 58e:	6042      	str	r2, [r0, #4]
+  CM3DS_MPS2_TIMER->CTRL   = 0x0009;  /* Timer enabled */
+ 590:	6004      	str	r4, [r0, #0]
+  counter = 0;
+ 592:	6019      	str	r1, [r3, #0]
+  /* Check timeout has not occurred */
+  if (counter >= 0x300) {
+     //puts("ERROR : Timer interrupt enable fail.");
+     err_code += (1<<0);
+    }
+  counter = 0;
+ 594:	2200      	movs	r2, #0
+  timer0_irq_expected = 0;
+  timer1_irq_expected = 0;
+  timer0_irq_occurred = 0;
+  timer1_irq_occurred = 0;
+
+  CM3DS_MPS2_TIMER->RELOAD = 0x001F;
+ 596:	241f      	movs	r4, #31
+  CM3DS_MPS2_TIMER->VALUE  = 0x001F;
+  CM3DS_MPS2_TIMER->CTRL   = 0x0001;  /* Timer enabled, with interrupt generation disabled */
+ 598:	2501      	movs	r5, #1
+  if (counter >= 0x300) {
+ 59a:	6819      	ldr	r1, [r3, #0]
+  counter = 0;
+ 59c:	601a      	str	r2, [r3, #0]
+  timer0_irq_expected = 0;
+ 59e:	60da      	str	r2, [r3, #12]
+  timer1_irq_expected = 0;
+ 5a0:	611a      	str	r2, [r3, #16]
+  timer0_irq_occurred = 0;
+ 5a2:	605a      	str	r2, [r3, #4]
+  timer1_irq_occurred = 0;
+ 5a4:	609a      	str	r2, [r3, #8]
+  CM3DS_MPS2_TIMER->RELOAD = 0x001F;
+ 5a6:	6084      	str	r4, [r0, #8]
+  CM3DS_MPS2_TIMER->VALUE  = 0x001F;
+ 5a8:	6044      	str	r4, [r0, #4]
+  CM3DS_MPS2_TIMER->CTRL   = 0x0001;  /* Timer enabled, with interrupt generation disabled */
+ 5aa:	6005      	str	r5, [r0, #0]
+  counter = 0;
+ 5ac:	601a      	str	r2, [r3, #0]
+  while ((counter<0x100) && (timer0_irq_occurred==0) && (timer1_irq_occurred==0)) {
+ 5ae:	681a      	ldr	r2, [r3, #0]
+ 5b0:	2aff      	cmp	r2, #255	; 0xff
+ 5b2:	dd08      	ble.n	5c6 <timer_interrupt_test_1+0x6e>
+ 5b4:	e00a      	b.n	5cc <timer_interrupt_test_1+0x74>
+ 5b6:	689a      	ldr	r2, [r3, #8]
+ 5b8:	b942      	cbnz	r2, 5cc <timer_interrupt_test_1+0x74>
+    counter++;
+ 5ba:	681a      	ldr	r2, [r3, #0]
+ 5bc:	3201      	adds	r2, #1
+ 5be:	601a      	str	r2, [r3, #0]
+  while ((counter<0x100) && (timer0_irq_occurred==0) && (timer1_irq_occurred==0)) {
+ 5c0:	681a      	ldr	r2, [r3, #0]
+ 5c2:	2aff      	cmp	r2, #255	; 0xff
+ 5c4:	dc02      	bgt.n	5cc <timer_interrupt_test_1+0x74>
+ 5c6:	685a      	ldr	r2, [r3, #4]
+ 5c8:	2a00      	cmp	r2, #0
+ 5ca:	d0f4      	beq.n	5b6 <timer_interrupt_test_1+0x5e>
+  }
+  CM3DS_MPS2_TIMER->CTRL   = 0x0000;  /* Stop Timer */
+ 5cc:	2200      	movs	r2, #0
+ 5ce:	6002      	str	r2, [r0, #0]
+  if ((timer0_irq_occurred!=0) || (timer1_irq_occurred!=0)) {
+ 5d0:	685a      	ldr	r2, [r3, #4]
+ 5d2:	2a00      	cmp	r2, #0
+ 5d4:	d133      	bne.n	63e <timer_interrupt_test_1+0xe6>
+ 5d6:	6898      	ldr	r0, [r3, #8]
+ 5d8:	2800      	cmp	r0, #0
+ 5da:	d130      	bne.n	63e <timer_interrupt_test_1+0xe6>
+  NVIC->ICER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* disable interrupt */
+ 5dc:	f44f 7580 	mov.w	r5, #256	; 0x100
+ 5e0:	f44f 7400 	mov.w	r4, #512	; 0x200
+ 5e4:	4a2d      	ldr	r2, [pc, #180]	; (69c <timer_interrupt_test_1+0x144>)
+  if (counter >= 0x300) {
+ 5e6:	f5b1 7f40 	cmp.w	r1, #768	; 0x300
+     //puts("ERROR : Timer interrupt disable fail.");
+     err_code += (1<<1);
+    }
+  counter = 0;
+ 5ea:	6018      	str	r0, [r3, #0]
+ 5ec:	f8c2 5080 	str.w	r5, [r2, #128]	; 0x80
+  if (counter >= 0x300) {
+ 5f0:	bfb4      	ite	lt
+ 5f2:	2000      	movlt	r0, #0
+ 5f4:	2001      	movge	r0, #1
+ 5f6:	f8c2 4080 	str.w	r4, [r2, #128]	; 0x80
+    return_val=1;
+    err_code = 0;
+    }
+
+  return(return_val);
+}
+ 5fa:	bc70      	pop	{r4, r5, r6}
+ 5fc:	4770      	bx	lr
+    timer1_irq_expected = 1;
+ 5fe:	2601      	movs	r6, #1
+    timer0_irq_expected = 0;
+ 600:	4b28      	ldr	r3, [pc, #160]	; (6a4 <timer_interrupt_test_1+0x14c>)
+  CM3DS_MPS2_TIMER->RELOAD = 0x01FF;
+ 602:	f240 15ff 	movw	r5, #511	; 0x1ff
+    timer0_irq_expected = 0;
+ 606:	60d9      	str	r1, [r3, #12]
+    timer1_irq_expected = 1;
+ 608:	611e      	str	r6, [r3, #16]
+    timer0_irq_occurred = 0;
+ 60a:	6059      	str	r1, [r3, #4]
+    timer1_irq_occurred = 0;
+ 60c:	6099      	str	r1, [r3, #8]
+  NVIC->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* enable interrupt */
+ 60e:	6014      	str	r4, [r2, #0]
+  CM3DS_MPS2_TIMER->CTRL   = 0x0009;  /* Timer enabled */
+ 610:	2209      	movs	r2, #9
+  CM3DS_MPS2_TIMER->RELOAD = 0x01FF;
+ 612:	6085      	str	r5, [r0, #8]
+  CM3DS_MPS2_TIMER->VALUE  = 0x01FF;
+ 614:	6045      	str	r5, [r0, #4]
+  CM3DS_MPS2_TIMER->CTRL   = 0x0009;  /* Timer enabled */
+ 616:	6002      	str	r2, [r0, #0]
+  counter = 0;
+ 618:	6019      	str	r1, [r3, #0]
+    while (( timer1_irq_occurred < 2) && (counter < 0x300)){
+ 61a:	689a      	ldr	r2, [r3, #8]
+ 61c:	42b2      	cmp	r2, r6
+ 61e:	dd06      	ble.n	62e <timer_interrupt_test_1+0xd6>
+ 620:	e009      	b.n	636 <timer_interrupt_test_1+0xde>
+      counter ++;
+ 622:	681a      	ldr	r2, [r3, #0]
+ 624:	3201      	adds	r2, #1
+ 626:	601a      	str	r2, [r3, #0]
+    while (( timer1_irq_occurred < 2) && (counter < 0x300)){
+ 628:	689a      	ldr	r2, [r3, #8]
+ 62a:	2a01      	cmp	r2, #1
+ 62c:	dc03      	bgt.n	636 <timer_interrupt_test_1+0xde>
+ 62e:	681a      	ldr	r2, [r3, #0]
+ 630:	f5b2 7f40 	cmp.w	r2, #768	; 0x300
+ 634:	dbf5      	blt.n	622 <timer_interrupt_test_1+0xca>
+    CM3DS_MPS2_TIMER->CTRL   = 0x0000;  /* Stop Timer */
+ 636:	2100      	movs	r1, #0
+ 638:	4a19      	ldr	r2, [pc, #100]	; (6a0 <timer_interrupt_test_1+0x148>)
+ 63a:	6011      	str	r1, [r2, #0]
+ 63c:	e7aa      	b.n	594 <timer_interrupt_test_1+0x3c>
+  counter = 0;
+ 63e:	2500      	movs	r5, #0
+  NVIC->ICER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* disable interrupt */
+ 640:	f44f 7480 	mov.w	r4, #256	; 0x100
+ 644:	f44f 7100 	mov.w	r1, #512	; 0x200
+ 648:	4a14      	ldr	r2, [pc, #80]	; (69c <timer_interrupt_test_1+0x144>)
+ 64a:	601d      	str	r5, [r3, #0]
+    return_val=1;
+ 64c:	2001      	movs	r0, #1
+ 64e:	f8c2 4080 	str.w	r4, [r2, #128]	; 0x80
+ 652:	f8c2 1080 	str.w	r1, [r2, #128]	; 0x80
+}
+ 656:	bc70      	pop	{r4, r5, r6}
+ 658:	4770      	bx	lr
+    timer0_irq_expected = 1;
+ 65a:	2601      	movs	r6, #1
+ 65c:	4b11      	ldr	r3, [pc, #68]	; (6a4 <timer_interrupt_test_1+0x14c>)
+  CM3DS_MPS2_TIMER->RELOAD = 0x01FF;
+ 65e:	f240 14ff 	movw	r4, #511	; 0x1ff
+    timer0_irq_expected = 1;
+ 662:	60de      	str	r6, [r3, #12]
+    timer1_irq_expected = 0;
+ 664:	6119      	str	r1, [r3, #16]
+    timer0_irq_occurred = 0;
+ 666:	6059      	str	r1, [r3, #4]
+    timer1_irq_occurred = 0;
+ 668:	6099      	str	r1, [r3, #8]
+  NVIC->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* enable interrupt */
+ 66a:	6015      	str	r5, [r2, #0]
+  CM3DS_MPS2_TIMER->CTRL   = 0x0009;  /* Timer enabled */
+ 66c:	2209      	movs	r2, #9
+  CM3DS_MPS2_TIMER->RELOAD = 0x01FF;
+ 66e:	6084      	str	r4, [r0, #8]
+  CM3DS_MPS2_TIMER->VALUE  = 0x01FF;
+ 670:	6044      	str	r4, [r0, #4]
+  CM3DS_MPS2_TIMER->CTRL   = 0x0009;  /* Timer enabled */
+ 672:	6002      	str	r2, [r0, #0]
+  counter = 0;
+ 674:	6019      	str	r1, [r3, #0]
+    while (( timer0_irq_occurred < 2) && (counter < 0x300)){
+ 676:	685a      	ldr	r2, [r3, #4]
+ 678:	42b2      	cmp	r2, r6
+ 67a:	dd06      	ble.n	68a <timer_interrupt_test_1+0x132>
+ 67c:	e009      	b.n	692 <timer_interrupt_test_1+0x13a>
+      counter ++;
+ 67e:	681a      	ldr	r2, [r3, #0]
+ 680:	3201      	adds	r2, #1
+ 682:	601a      	str	r2, [r3, #0]
+    while (( timer0_irq_occurred < 2) && (counter < 0x300)){
+ 684:	685a      	ldr	r2, [r3, #4]
+ 686:	2a01      	cmp	r2, #1
+ 688:	dc03      	bgt.n	692 <timer_interrupt_test_1+0x13a>
+ 68a:	681a      	ldr	r2, [r3, #0]
+ 68c:	f5b2 7f40 	cmp.w	r2, #768	; 0x300
+ 690:	dbf5      	blt.n	67e <timer_interrupt_test_1+0x126>
+    CM3DS_MPS2_TIMER->CTRL   = 0x0000;  /* Stop Timer */
+ 692:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
+ 696:	2100      	movs	r1, #0
+ 698:	6011      	str	r1, [r2, #0]
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1) {
+ 69a:	e77b      	b.n	594 <timer_interrupt_test_1+0x3c>
+ 69c:	e000e100 	.word	0xe000e100
+ 6a0:	40001000 	.word	0x40001000
+ 6a4:	20000064 	.word	0x20000064
+
+000006a8 <timer_external_input>:
+   This time the timer interrupt should be triggered.
+
+   it then clear up the interrupt settings and report test status.
+
+*/
+int timer_external_input(CM3DS_MPS2_TIMER_TypeDef *CM3DS_MPS2_TIMER){
+ 6a8:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+  //puts ("Timer external input test");
+  /* Set external in//puts low */
+  CM3DS_MPS2_GPIO0->OUTENABLESET    = (1<<1) | (1<<6);
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+
+  CM3DS_MPS2_TIMER->RELOAD = 0x00FF;
+ 6ac:	23ff      	movs	r3, #255	; 0xff
+  CM3DS_MPS2_GPIO0->OUTENABLESET    = (1<<1) | (1<<6);
+ 6ae:	2142      	movs	r1, #66	; 0x42
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 6b0:	2500      	movs	r5, #0
+  CM3DS_MPS2_TIMER->VALUE  = 0x00FF;
+  CM3DS_MPS2_TIMER->CTRL   = 0x000A;  /* Timer enabled, use external input, interrupt enabled */
+ 6b2:	240a      	movs	r4, #10
+  CM3DS_MPS2_GPIO0->OUTENABLESET    = (1<<1) | (1<<6);
+ 6b4:	4aac      	ldr	r2, [pc, #688]	; (968 <timer_external_input+0x2c0>)
+ 6b6:	6111      	str	r1, [r2, #16]
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 6b8:	f8c2 5508 	str.w	r5, [r2, #1288]	; 0x508
+  CM3DS_MPS2_TIMER->RELOAD = 0x00FF;
+ 6bc:	6083      	str	r3, [r0, #8]
+  CM3DS_MPS2_TIMER->VALUE  = 0x00FF;
+ 6be:	6043      	str	r3, [r0, #4]
+  CM3DS_MPS2_TIMER->CTRL   = 0x000A;  /* Timer enabled, use external input, interrupt enabled */
+ 6c0:	6004      	str	r4, [r0, #0]
+int timer_external_input(CM3DS_MPS2_TIMER_TypeDef *CM3DS_MPS2_TIMER){
+ 6c2:	4601      	mov	r1, r0
+
+  tvalue = CM3DS_MPS2_TIMER->VALUE;
+ 6c4:	6840      	ldr	r0, [r0, #4]
+ 6c6:	bf00      	nop
+ 6c8:	bf00      	nop
+  //puts("- timer use ext. input");
+  __NOP();  /* Some delay is needed due to double flip-flop synchronization logic */
+  __NOP();
+  if (CM3DS_MPS2_TIMER->VALUE != tvalue) {
+ 6ca:	684b      	ldr	r3, [r1, #4]
+   * the fact that the SysTick reload value is set to a larger value than the
+   * system timer start value.  This therefore should allow the system timer to
+   * count round multiple times, and should have the expected outcome
+   * regardless of whether APB is running at full speed or half speed
+   */
+  SysTick->LOAD = (0x100<<2)-1;
+ 6cc:	f04f 24e0 	mov.w	r4, #3758153728	; 0xe000e000
+  NVIC->ICER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* disable interrupt */
+ 6d0:	f44f 7780 	mov.w	r7, #256	; 0x100
+ 6d4:	f44f 7600 	mov.w	r6, #512	; 0x200
+  if (CM3DS_MPS2_TIMER->VALUE != tvalue) {
+ 6d8:	1a18      	subs	r0, r3, r0
+  CM3DS_MPS2_TIMER->VALUE  = 0xFE; /* Use 0xFE so that it count to 0 */
+ 6da:	f04f 08fe 	mov.w	r8, #254	; 0xfe
+  SysTick->LOAD = (0x100<<2)-1;
+ 6de:	f240 3eff 	movw	lr, #1023	; 0x3ff
+  SysTick->VAL  = 0;
+  SysTick->CTRL = 0x7; /* Enable, use internal clock, interrupt enable */
+ 6e2:	f04f 0c07 	mov.w	ip, #7
+  if (CM3DS_MPS2_TIMER->VALUE != tvalue) {
+ 6e6:	bf18      	it	ne
+ 6e8:	2001      	movne	r0, #1
+ 6ea:	4aa0      	ldr	r2, [pc, #640]	; (96c <timer_external_input+0x2c4>)
+  counter = 0;
+ 6ec:	4ba0      	ldr	r3, [pc, #640]	; (970 <timer_external_input+0x2c8>)
+  CM3DS_MPS2_TIMER->VALUE  = 0xFE; /* Use 0xFE so that it count to 0 */
+ 6ee:	f8c1 8004 	str.w	r8, [r1, #4]
+  counter = 0;
+ 6f2:	601d      	str	r5, [r3, #0]
+ 6f4:	f8c2 7080 	str.w	r7, [r2, #128]	; 0x80
+ 6f8:	f8c2 6080 	str.w	r6, [r2, #128]	; 0x80
+  NVIC->ICPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* Clear pending interrupt */
+ 6fc:	f8c2 7180 	str.w	r7, [r2, #384]	; 0x180
+ 700:	f8c2 6180 	str.w	r6, [r2, #384]	; 0x180
+  SysTick->LOAD = (0x100<<2)-1;
+ 704:	f8c4 e014 	str.w	lr, [r4, #20]
+  SysTick->VAL  = 0;
+ 708:	61a5      	str	r5, [r4, #24]
+  SysTick->CTRL = 0x7; /* Enable, use internal clock, interrupt enable */
+ 70a:	f8c4 c010 	str.w	ip, [r4, #16]
+
+  while (counter < 2); /* SysTick handler trigger twice */
+ 70e:	681a      	ldr	r2, [r3, #0]
+ 710:	2a01      	cmp	r2, #1
+ 712:	ddfc      	ble.n	70e <timer_external_input+0x66>
+
+  /* Timer should be reloaded, expected value between 0xA0 to 0xFF (reload value) */
+  timer_value = CM3DS_MPS2_TIMER->VALUE;
+ 714:	684a      	ldr	r2, [r1, #4]
+  if ((timer_value > 0xFF) || (timer_value < 0xA0)) {
+ 716:	3aa0      	subs	r2, #160	; 0xa0
+ 718:	2a5f      	cmp	r2, #95	; 0x5f
+  return((uint32_t) ((NVIC->ISPR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn) & 0x1F)))?1:0)); /* Return 1 if pending else 0 */
+ 71a:	4a94      	ldr	r2, [pc, #592]	; (96c <timer_external_input+0x2c4>)
+    //printf("ERROR : Timer not running when external input is high (0x%x).\n", timer_value);
+    err_code += (1<<1);
+ 71c:	bf88      	it	hi
+ 71e:	3002      	addhi	r0, #2
+ 720:	f8d2 2100 	ldr.w	r2, [r2, #256]	; 0x100
+ 724:	05d6      	lsls	r6, r2, #23
+ 726:	d403      	bmi.n	730 <timer_external_input+0x88>
+  }
+
+  /* Timer interrupt should be pending */
+  if (((NVIC_GetPendingIRQ(TIMER0_IRQn)==0)&&(CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER0))||
+ 728:	f1b1 4f80 	cmp.w	r1, #1073741824	; 0x40000000
+ 72c:	f000 8128 	beq.w	980 <timer_external_input+0x2d8>
+ 730:	4a8e      	ldr	r2, [pc, #568]	; (96c <timer_external_input+0x2c4>)
+ 732:	f8d2 2100 	ldr.w	r2, [r2, #256]	; 0x100
+ 736:	0595      	lsls	r5, r2, #22
+ 738:	f140 811e 	bpl.w	978 <timer_external_input+0x2d0>
+    {
+     //puts("ERROR : Timer not trigger #1.");
+     err_code += (1<<2);
+    }
+
+  if (CM3DS_MPS2_TIMER->INTSTATUS==0) {
+ 73c:	68ca      	ldr	r2, [r1, #12]
+ 73e:	2a00      	cmp	r2, #0
+ 740:	f040 8123 	bne.w	98a <timer_external_input+0x2e2>
+    //puts("ERROR : Timer not trigger #2.");
+    err_code += (1<<3);
+ 744:	3008      	adds	r0, #8
+  NVIC->ICPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* Clear pending interrupt */
+ 746:	f44f 7580 	mov.w	r5, #256	; 0x100
+ 74a:	f44f 7400 	mov.w	r4, #512	; 0x200
+ 74e:	4a87      	ldr	r2, [pc, #540]	; (96c <timer_external_input+0x2c4>)
+  NVIC_ClearPendingIRQ(TIMER0_IRQn);
+  NVIC_ClearPendingIRQ(TIMER1_IRQn);
+
+
+  //puts("- use EXTIN as clock");
+  CM3DS_MPS2_TIMER->VALUE = 0xC0;
+ 750:	27c0      	movs	r7, #192	; 0xc0
+ 752:	f8c2 5180 	str.w	r5, [r2, #384]	; 0x180
+  CM3DS_MPS2_TIMER->CTRL   = 0x0007;  /* Timer enabled, use external input as clock, interrupt disabled */
+ 756:	2607      	movs	r6, #7
+ 758:	f8c2 4180 	str.w	r4, [r2, #384]	; 0x180
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 75c:	2500      	movs	r5, #0
+  counter = 10;                        /* delay */
+ 75e:	220a      	movs	r2, #10
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 760:	4c81      	ldr	r4, [pc, #516]	; (968 <timer_external_input+0x2c0>)
+  CM3DS_MPS2_TIMER->VALUE = 0xC0;
+ 762:	604f      	str	r7, [r1, #4]
+  CM3DS_MPS2_TIMER->CTRL   = 0x0007;  /* Timer enabled, use external input as clock, interrupt disabled */
+ 764:	600e      	str	r6, [r1, #0]
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 766:	f8c4 5508 	str.w	r5, [r4, #1288]	; 0x508
+  counter = 10;                        /* delay */
+ 76a:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 76c:	681a      	ldr	r2, [r3, #0]
+ 76e:	42aa      	cmp	r2, r5
+ 770:	dd05      	ble.n	77e <timer_external_input+0xd6>
+    counter --;
+ 772:	681a      	ldr	r2, [r3, #0]
+ 774:	3a01      	subs	r2, #1
+ 776:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 778:	681a      	ldr	r2, [r3, #0]
+ 77a:	2a00      	cmp	r2, #0
+ 77c:	dcf9      	bgt.n	772 <timer_external_input+0xca>
+    }
+  if (CM3DS_MPS2_TIMER->VALUE != 0xC0) {
+     //puts("ERROR : Timer change unexpectedly 1.");
+     err_code += (1<<5);
+    }
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 77e:	2442      	movs	r4, #66	; 0x42
+  if (CM3DS_MPS2_TIMER->VALUE != 0xC0) {
+ 780:	684a      	ldr	r2, [r1, #4]
+ 782:	2ac0      	cmp	r2, #192	; 0xc0
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 784:	4a78      	ldr	r2, [pc, #480]	; (968 <timer_external_input+0x2c0>)
+     err_code += (1<<5);
+ 786:	bf18      	it	ne
+ 788:	3020      	addne	r0, #32
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 78a:	f8c2 4508 	str.w	r4, [r2, #1288]	; 0x508
+    so that all instructions following the ISB are fetched from cache or
+    memory, after the instruction has been completed.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __ISB(void)
+{
+  __ASM volatile ("isb");
+ 78e:	f3bf 8f6f 	isb	sy
+ 792:	f3bf 8f6f 	isb	sy
+  __ISB();
+  __ISB();
+
+  if (CM3DS_MPS2_TIMER->VALUE != 0xBF) {
+ 796:	684a      	ldr	r2, [r1, #4]
+ 798:	2abf      	cmp	r2, #191	; 0xbf
+     //puts("ERROR : Timer decrement failed.");
+     err_code += (1<<6);
+    }
+  counter = 10;                        /* delay */
+ 79a:	f04f 020a 	mov.w	r2, #10
+ 79e:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 7a0:	681a      	ldr	r2, [r3, #0]
+     err_code += (1<<6);
+ 7a2:	bf18      	it	ne
+ 7a4:	3040      	addne	r0, #64	; 0x40
+  while (counter > 0) {
+ 7a6:	2a00      	cmp	r2, #0
+ 7a8:	dd05      	ble.n	7b6 <timer_external_input+0x10e>
+    counter --;
+ 7aa:	681a      	ldr	r2, [r3, #0]
+ 7ac:	3a01      	subs	r2, #1
+ 7ae:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 7b0:	681a      	ldr	r2, [r3, #0]
+ 7b2:	2a00      	cmp	r2, #0
+ 7b4:	dcf9      	bgt.n	7aa <timer_external_input+0x102>
+    }
+  if (CM3DS_MPS2_TIMER->VALUE != 0xBF) {
+ 7b6:	684a      	ldr	r2, [r1, #4]
+     //puts("ERROR : Timer change unexpectedly 2.");
+     err_code += (1<<7);
+    }
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should NOT decrement */
+ 7b8:	2500      	movs	r5, #0
+  if (CM3DS_MPS2_TIMER->VALUE != 0xBF) {
+ 7ba:	2abf      	cmp	r2, #191	; 0xbf
+  counter = 10;                        /* delay */
+ 7bc:	f04f 020a 	mov.w	r2, #10
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should NOT decrement */
+ 7c0:	4c69      	ldr	r4, [pc, #420]	; (968 <timer_external_input+0x2c0>)
+     err_code += (1<<7);
+ 7c2:	bf18      	it	ne
+ 7c4:	3080      	addne	r0, #128	; 0x80
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should NOT decrement */
+ 7c6:	f8c4 5508 	str.w	r5, [r4, #1288]	; 0x508
+  counter = 10;                        /* delay */
+ 7ca:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 7cc:	681a      	ldr	r2, [r3, #0]
+ 7ce:	42aa      	cmp	r2, r5
+ 7d0:	dd05      	ble.n	7de <timer_external_input+0x136>
+    counter --;
+ 7d2:	681a      	ldr	r2, [r3, #0]
+ 7d4:	3a01      	subs	r2, #1
+ 7d6:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 7d8:	681a      	ldr	r2, [r3, #0]
+ 7da:	2a00      	cmp	r2, #0
+ 7dc:	dcf9      	bgt.n	7d2 <timer_external_input+0x12a>
+    }
+  if (CM3DS_MPS2_TIMER->VALUE != 0xBF) {
+ 7de:	684a      	ldr	r2, [r1, #4]
+ 7e0:	2abf      	cmp	r2, #191	; 0xbf
+     //puts("ERROR : Timer change unexpectedly 3.");
+     err_code += (1<<8);
+    }
+  counter = 15;
+ 7e2:	f04f 020f 	mov.w	r2, #15
+ 7e6:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 7e8:	681a      	ldr	r2, [r3, #0]
+     err_code += (1<<8);
+ 7ea:	bf18      	it	ne
+ 7ec:	f500 7080 	addne.w	r0, r0, #256	; 0x100
+  while (counter > 0) {
+ 7f0:	2a00      	cmp	r2, #0
+ 7f2:	dd0e      	ble.n	812 <timer_external_input+0x16a>
+    CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 7f4:	2642      	movs	r6, #66	; 0x42
+    __ISB();
+    CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should not decrement */
+ 7f6:	2500      	movs	r5, #0
+    CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 7f8:	4c5b      	ldr	r4, [pc, #364]	; (968 <timer_external_input+0x2c0>)
+ 7fa:	f8c4 6508 	str.w	r6, [r4, #1288]	; 0x508
+ 7fe:	f3bf 8f6f 	isb	sy
+    CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should not decrement */
+ 802:	f8c4 5508 	str.w	r5, [r4, #1288]	; 0x508
+    counter --;
+ 806:	681a      	ldr	r2, [r3, #0]
+ 808:	3a01      	subs	r2, #1
+ 80a:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 80c:	681a      	ldr	r2, [r3, #0]
+ 80e:	2a00      	cmp	r2, #0
+ 810:	dcf3      	bgt.n	7fa <timer_external_input+0x152>
+    }
+  if (CM3DS_MPS2_TIMER->VALUE != 0xB0) {
+ 812:	684a      	ldr	r2, [r1, #4]
+ 814:	2ab0      	cmp	r2, #176	; 0xb0
+  return((uint32_t) ((NVIC->ISPR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn) & 0x1F)))?1:0)); /* Return 1 if pending else 0 */
+ 816:	4a55      	ldr	r2, [pc, #340]	; (96c <timer_external_input+0x2c4>)
+     //puts("ERROR : Timer counting failed");
+     err_code += (1<<9);
+ 818:	bf18      	it	ne
+ 81a:	f500 7000 	addne.w	r0, r0, #512	; 0x200
+ 81e:	f8d2 4100 	ldr.w	r4, [r2, #256]	; 0x100
+ 822:	05e4      	lsls	r4, r4, #23
+ 824:	d404      	bmi.n	830 <timer_external_input+0x188>
+ 826:	f8d2 2100 	ldr.w	r2, [r2, #256]	; 0x100
+ 82a:	0592      	lsls	r2, r2, #22
+ 82c:	f140 80c0 	bpl.w	9b0 <timer_external_input+0x308>
+  /* Check interrupt should not be trigger */
+  if ((NVIC_GetPendingIRQ(TIMER0_IRQn)!=0)||(NVIC_GetPendingIRQ(TIMER1_IRQn)!=0)||
+      (CM3DS_MPS2_TIMER->INTSTATUS!=0))
+    {
+     //puts("ERROR : Timer IRQ set unexpectedly.");
+     err_code += (1<<10);
+ 830:	f500 6080 	add.w	r0, r0, #1024	; 0x400
+    }
+
+  //puts("- IRQ at 1->0 transition");
+  CM3DS_MPS2_TIMER->VALUE  = 0x02;
+  CM3DS_MPS2_TIMER->CTRL   = 0x000F;  /* Timer enabled, use external input as clock, interrupt enabled */
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 834:	2200      	movs	r2, #0
+  CM3DS_MPS2_TIMER->VALUE  = 0x02;
+ 836:	2602      	movs	r6, #2
+  CM3DS_MPS2_TIMER->CTRL   = 0x000F;  /* Timer enabled, use external input as clock, interrupt enabled */
+ 838:	250f      	movs	r5, #15
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 83a:	4c4b      	ldr	r4, [pc, #300]	; (968 <timer_external_input+0x2c0>)
+  timer0_irq_expected = 0;
+  timer1_irq_expected = 0;
+  timer0_irq_occurred = 0;
+  timer1_irq_occurred = 0;
+
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER0) {
+ 83c:	f1b1 4f80 	cmp.w	r1, #1073741824	; 0x40000000
+  CM3DS_MPS2_TIMER->VALUE  = 0x02;
+ 840:	604e      	str	r6, [r1, #4]
+  CM3DS_MPS2_TIMER->CTRL   = 0x000F;  /* Timer enabled, use external input as clock, interrupt enabled */
+ 842:	600d      	str	r5, [r1, #0]
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 844:	f8c4 2508 	str.w	r2, [r4, #1288]	; 0x508
+  timer0_irq_expected = 0;
+ 848:	60da      	str	r2, [r3, #12]
+  timer1_irq_expected = 0;
+ 84a:	611a      	str	r2, [r3, #16]
+  timer0_irq_occurred = 0;
+ 84c:	605a      	str	r2, [r3, #4]
+  timer1_irq_occurred = 0;
+ 84e:	609a      	str	r2, [r3, #8]
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER0) {
+ 850:	f000 80b3 	beq.w	9ba <timer_external_input+0x312>
+    NVIC_EnableIRQ(TIMER0_IRQn);
+    }
+
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1) {
+ 854:	4a47      	ldr	r2, [pc, #284]	; (974 <timer_external_input+0x2cc>)
+ 856:	4291      	cmp	r1, r2
+ 858:	f000 809f 	beq.w	99a <timer_external_input+0x2f2>
+    NVIC_EnableIRQ(TIMER1_IRQn);
+    }
+
+  /* Test no IRQ generation for 2 to 1 transition */
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 85c:	2442      	movs	r4, #66	; 0x42
+ 85e:	4a42      	ldr	r2, [pc, #264]	; (968 <timer_external_input+0x2c0>)
+ 860:	f8c2 4508 	str.w	r4, [r2, #1288]	; 0x508
+ 864:	f3bf 8f6f 	isb	sy
+    __ISB();
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should not decrement */
+ 868:	2500      	movs	r5, #0
+
+  counter = 10;                        /* delay */
+ 86a:	240a      	movs	r4, #10
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should not decrement */
+ 86c:	f8c2 5508 	str.w	r5, [r2, #1288]	; 0x508
+  counter = 10;                        /* delay */
+ 870:	601c      	str	r4, [r3, #0]
+  while (counter > 0) {
+ 872:	681a      	ldr	r2, [r3, #0]
+ 874:	42aa      	cmp	r2, r5
+ 876:	dd05      	ble.n	884 <timer_external_input+0x1dc>
+    counter --;
+ 878:	681a      	ldr	r2, [r3, #0]
+ 87a:	3a01      	subs	r2, #1
+ 87c:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 87e:	681a      	ldr	r2, [r3, #0]
+ 880:	2a00      	cmp	r2, #0
+ 882:	dcf9      	bgt.n	878 <timer_external_input+0x1d0>
+    }
+
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER0) {
+ 884:	f1b1 4f80 	cmp.w	r1, #1073741824	; 0x40000000
+ 888:	f000 809c 	beq.w	9c4 <timer_external_input+0x31c>
+    timer0_irq_expected=1;
+    }
+
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1) {
+ 88c:	4a39      	ldr	r2, [pc, #228]	; (974 <timer_external_input+0x2cc>)
+ 88e:	4291      	cmp	r1, r2
+    timer1_irq_expected=1;
+ 890:	bf04      	itt	eq
+ 892:	2201      	moveq	r2, #1
+ 894:	611a      	streq	r2, [r3, #16]
+    }
+
+  /* Test IRQ generation for 1 to 0 transition */
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 896:	2442      	movs	r4, #66	; 0x42
+ 898:	4a33      	ldr	r2, [pc, #204]	; (968 <timer_external_input+0x2c0>)
+ 89a:	f8c2 4508 	str.w	r4, [r2, #1288]	; 0x508
+ 89e:	f3bf 8f6f 	isb	sy
+    __ISB();
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should not decrement */
+ 8a2:	2500      	movs	r5, #0
+
+  counter = 10;                        /* delay */
+ 8a4:	240a      	movs	r4, #10
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should not decrement */
+ 8a6:	f8c2 5508 	str.w	r5, [r2, #1288]	; 0x508
+  counter = 10;                        /* delay */
+ 8aa:	601c      	str	r4, [r3, #0]
+  while (counter > 0) {
+ 8ac:	681a      	ldr	r2, [r3, #0]
+ 8ae:	42aa      	cmp	r2, r5
+ 8b0:	dd05      	ble.n	8be <timer_external_input+0x216>
+    counter --;
+ 8b2:	681a      	ldr	r2, [r3, #0]
+ 8b4:	3a01      	subs	r2, #1
+ 8b6:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 8b8:	681a      	ldr	r2, [r3, #0]
+ 8ba:	2a00      	cmp	r2, #0
+ 8bc:	dcf9      	bgt.n	8b2 <timer_external_input+0x20a>
+    }
+  if (((CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER0)&&(timer0_irq_occurred==0))||
+ 8be:	f1b1 4f80 	cmp.w	r1, #1073741824	; 0x40000000
+ 8c2:	f000 8082 	beq.w	9ca <timer_external_input+0x322>
+ 8c6:	4a2b      	ldr	r2, [pc, #172]	; (974 <timer_external_input+0x2cc>)
+ 8c8:	4291      	cmp	r1, r2
+ 8ca:	d06b      	beq.n	9a4 <timer_external_input+0x2fc>
+      ((CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1)&&(timer1_irq_occurred==0))) {
+    //puts("ERROR : Timer not trigger.");
+    err_code += (1<<11);
+    }
+
+  timer0_irq_expected = 0;
+ 8cc:	2200      	movs	r2, #0
+  timer1_irq_expected = 0;
+  timer0_irq_occurred = 0;
+  timer1_irq_occurred = 0;
+
+  /* Test IRQ generation for 0 to RELOAD transition */
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 8ce:	2542      	movs	r5, #66	; 0x42
+ 8d0:	4c25      	ldr	r4, [pc, #148]	; (968 <timer_external_input+0x2c0>)
+  timer0_irq_expected = 0;
+ 8d2:	60da      	str	r2, [r3, #12]
+  timer1_irq_expected = 0;
+ 8d4:	611a      	str	r2, [r3, #16]
+  timer0_irq_occurred = 0;
+ 8d6:	605a      	str	r2, [r3, #4]
+  timer1_irq_occurred = 0;
+ 8d8:	609a      	str	r2, [r3, #8]
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042; /* Timer should decrement */
+ 8da:	f8c4 5508 	str.w	r5, [r4, #1288]	; 0x508
+ 8de:	f3bf 8f6f 	isb	sy
+    __ISB();
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000; /* Timer should not decrement */
+ 8e2:	f8c4 2508 	str.w	r2, [r4, #1288]	; 0x508
+
+  counter = 10;                        /* delay */
+ 8e6:	220a      	movs	r2, #10
+ 8e8:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 8ea:	681a      	ldr	r2, [r3, #0]
+ 8ec:	2a00      	cmp	r2, #0
+ 8ee:	dd05      	ble.n	8fc <timer_external_input+0x254>
+    counter --;
+ 8f0:	681a      	ldr	r2, [r3, #0]
+ 8f2:	3a01      	subs	r2, #1
+ 8f4:	601a      	str	r2, [r3, #0]
+  while (counter > 0) {
+ 8f6:	681a      	ldr	r2, [r3, #0]
+ 8f8:	2a00      	cmp	r2, #0
+ 8fa:	dcf9      	bgt.n	8f0 <timer_external_input+0x248>
+    }
+  if ((timer0_irq_occurred!=0)||(timer1_irq_occurred!=0)) {
+ 8fc:	685a      	ldr	r2, [r3, #4]
+ 8fe:	b90a      	cbnz	r2, 904 <timer_external_input+0x25c>
+ 900:	689a      	ldr	r2, [r3, #8]
+ 902:	b312      	cbz	r2, 94a <timer_external_input+0x2a2>
+  NVIC->ICER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* disable interrupt */
+ 904:	f44f 7780 	mov.w	r7, #256	; 0x100
+ 908:	f44f 7600 	mov.w	r6, #512	; 0x200
+  NVIC_DisableIRQ(TIMER1_IRQn);
+  NVIC_ClearPendingIRQ(TIMER0_IRQn);
+  NVIC_ClearPendingIRQ(TIMER1_IRQn);
+
+  /* Clearing up */
+  SysTick->CTRL = 0x0;
+ 90c:	f04f 2ee0 	mov.w	lr, #3758153728	; 0xe000e000
+ 910:	2200      	movs	r2, #0
+  CM3DS_MPS2_TIMER->CTRL   = 0x00;/* Disable, use internal clock, interrupt enable */
+  CM3DS_MPS2_TIMER->RELOAD = 0x0000;
+  CM3DS_MPS2_TIMER->VALUE  = 0x0000;
+  CM3DS_MPS2_GPIO0->OUTENABLECLR    = 0xFFFF;
+ 912:	f64f 7cff 	movw	ip, #65535	; 0xffff
+  timer1_irq_occurred = 0;
+
+  /* Generate return value */
+  if (err_code != 0) {
+    //printf ("ERROR : Interrupt test failed (0x%x)\n", err_code);
+    return_val=1;
+ 916:	2001      	movs	r0, #1
+ 918:	4c14      	ldr	r4, [pc, #80]	; (96c <timer_external_input+0x2c4>)
+  CM3DS_MPS2_GPIO0->OUTENABLECLR    = 0xFFFF;
+ 91a:	4d13      	ldr	r5, [pc, #76]	; (968 <timer_external_input+0x2c0>)
+ 91c:	f8c4 7080 	str.w	r7, [r4, #128]	; 0x80
+ 920:	f8c4 6080 	str.w	r6, [r4, #128]	; 0x80
+  NVIC->ICPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* Clear pending interrupt */
+ 924:	f8c4 7180 	str.w	r7, [r4, #384]	; 0x180
+ 928:	f8c4 6180 	str.w	r6, [r4, #384]	; 0x180
+  SysTick->CTRL = 0x0;
+ 92c:	f8ce 2010 	str.w	r2, [lr, #16]
+  CM3DS_MPS2_TIMER->CTRL   = 0x00;/* Disable, use internal clock, interrupt enable */
+ 930:	600a      	str	r2, [r1, #0]
+  CM3DS_MPS2_TIMER->RELOAD = 0x0000;
+ 932:	608a      	str	r2, [r1, #8]
+  CM3DS_MPS2_TIMER->VALUE  = 0x0000;
+ 934:	604a      	str	r2, [r1, #4]
+  CM3DS_MPS2_GPIO0->OUTENABLECLR    = 0xFFFF;
+ 936:	f8c5 c014 	str.w	ip, [r5, #20]
+  CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ 93a:	f8c5 2508 	str.w	r2, [r5, #1288]	; 0x508
+  timer0_irq_expected = 0;
+ 93e:	60da      	str	r2, [r3, #12]
+  timer1_irq_expected = 0;
+ 940:	611a      	str	r2, [r3, #16]
+  timer0_irq_occurred = 0;
+ 942:	605a      	str	r2, [r3, #4]
+  timer1_irq_occurred = 0;
+ 944:	609a      	str	r2, [r3, #8]
+    err_code = 0;
+    }
+
+  return(return_val);
+}
+ 946:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+  if (err_code != 0) {
+ 94a:	3800      	subs	r0, #0
+ 94c:	bf18      	it	ne
+ 94e:	2001      	movne	r0, #1
+  NVIC->ICER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* disable interrupt */
+ 950:	f44f 7780 	mov.w	r7, #256	; 0x100
+ 954:	f44f 7600 	mov.w	r6, #512	; 0x200
+  SysTick->CTRL = 0x0;
+ 958:	f04f 2ee0 	mov.w	lr, #3758153728	; 0xe000e000
+  CM3DS_MPS2_GPIO0->OUTENABLECLR    = 0xFFFF;
+ 95c:	f64f 7cff 	movw	ip, #65535	; 0xffff
+ 960:	4c02      	ldr	r4, [pc, #8]	; (96c <timer_external_input+0x2c4>)
+ 962:	4d01      	ldr	r5, [pc, #4]	; (968 <timer_external_input+0x2c0>)
+ 964:	e7da      	b.n	91c <timer_external_input+0x274>
+ 966:	bf00      	nop
+ 968:	40010000 	.word	0x40010000
+ 96c:	e000e100 	.word	0xe000e100
+ 970:	20000064 	.word	0x20000064
+ 974:	40001000 	.word	0x40001000
+      ((NVIC_GetPendingIRQ(TIMER1_IRQn)==0)&&(CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1)))
+ 978:	4a17      	ldr	r2, [pc, #92]	; (9d8 <timer_external_input+0x330>)
+ 97a:	4291      	cmp	r1, r2
+ 97c:	f47f aede 	bne.w	73c <timer_external_input+0x94>
+  if (CM3DS_MPS2_TIMER->INTSTATUS==0) {
+ 980:	68ca      	ldr	r2, [r1, #12]
+     err_code += (1<<2);
+ 982:	3004      	adds	r0, #4
+  if (CM3DS_MPS2_TIMER->INTSTATUS==0) {
+ 984:	2a00      	cmp	r2, #0
+ 986:	f43f aedd 	beq.w	744 <timer_external_input+0x9c>
+    CM3DS_MPS2_TIMER->INTCLEAR=1; /* Clear interrupt status */
+ 98a:	2201      	movs	r2, #1
+ 98c:	60ca      	str	r2, [r1, #12]
+    if (CM3DS_MPS2_TIMER->INTSTATUS!=0) {
+ 98e:	68ca      	ldr	r2, [r1, #12]
+ 990:	2a00      	cmp	r2, #0
+ 992:	f43f aed8 	beq.w	746 <timer_external_input+0x9e>
+      err_code += (1<<4);
+ 996:	3010      	adds	r0, #16
+ 998:	e6d5      	b.n	746 <timer_external_input+0x9e>
+  NVIC->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* enable interrupt */
+ 99a:	f44f 7400 	mov.w	r4, #512	; 0x200
+ 99e:	4a0f      	ldr	r2, [pc, #60]	; (9dc <timer_external_input+0x334>)
+ 9a0:	6014      	str	r4, [r2, #0]
+}
+ 9a2:	e75b      	b.n	85c <timer_external_input+0x1b4>
+      ((CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1)&&(timer1_irq_occurred==0))) {
+ 9a4:	689a      	ldr	r2, [r3, #8]
+ 9a6:	2a00      	cmp	r2, #0
+ 9a8:	d190      	bne.n	8cc <timer_external_input+0x224>
+    err_code += (1<<11);
+ 9aa:	f500 6000 	add.w	r0, r0, #2048	; 0x800
+ 9ae:	e78d      	b.n	8cc <timer_external_input+0x224>
+      (CM3DS_MPS2_TIMER->INTSTATUS!=0))
+ 9b0:	68ca      	ldr	r2, [r1, #12]
+  if ((NVIC_GetPendingIRQ(TIMER0_IRQn)!=0)||(NVIC_GetPendingIRQ(TIMER1_IRQn)!=0)||
+ 9b2:	2a00      	cmp	r2, #0
+ 9b4:	f43f af3e 	beq.w	834 <timer_external_input+0x18c>
+ 9b8:	e73a      	b.n	830 <timer_external_input+0x188>
+  NVIC->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* enable interrupt */
+ 9ba:	f44f 7480 	mov.w	r4, #256	; 0x100
+ 9be:	4a07      	ldr	r2, [pc, #28]	; (9dc <timer_external_input+0x334>)
+ 9c0:	6014      	str	r4, [r2, #0]
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1) {
+ 9c2:	e74b      	b.n	85c <timer_external_input+0x1b4>
+    timer0_irq_expected=1;
+ 9c4:	2201      	movs	r2, #1
+ 9c6:	60da      	str	r2, [r3, #12]
+  if (CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER1) {
+ 9c8:	e765      	b.n	896 <timer_external_input+0x1ee>
+  if (((CM3DS_MPS2_TIMER==CM3DS_MPS2_TIMER0)&&(timer0_irq_occurred==0))||
+ 9ca:	685a      	ldr	r2, [r3, #4]
+ 9cc:	2a00      	cmp	r2, #0
+ 9ce:	f47f af7d 	bne.w	8cc <timer_external_input+0x224>
+    err_code += (1<<11);
+ 9d2:	f500 6000 	add.w	r0, r0, #2048	; 0x800
+ 9d6:	e779      	b.n	8cc <timer_external_input+0x224>
+ 9d8:	40001000 	.word	0x40001000
+ 9dc:	e000e100 	.word	0xe000e100
+
+000009e0 <timer0_id_check>:
+int timer0_id_check(void)
+{
+unsigned char timer_id;
+  timer_id = HW8_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE8) & 0x07;
+
+  if ((HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE0) != 0x22) ||
+ 9e0:	f04f 4380 	mov.w	r3, #1073741824	; 0x40000000
+  timer_id = HW8_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE8) & 0x07;
+ 9e4:	4a09      	ldr	r2, [pc, #36]	; (a0c <timer0_id_check+0x2c>)
+ 9e6:	f892 00e8 	ldrb.w	r0, [r2, #232]	; 0xe8
+  if ((HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE0) != 0x22) ||
+ 9ea:	f8d3 2fe0 	ldr.w	r2, [r3, #4064]	; 0xfe0
+  timer_id = HW8_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE8) & 0x07;
+ 9ee:	b2c0      	uxtb	r0, r0
+  if ((HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE0) != 0x22) ||
+ 9f0:	2a22      	cmp	r2, #34	; 0x22
+ 9f2:	d103      	bne.n	9fc <timer0_id_check+0x1c>
+      (HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE4) != 0xB8) ||
+ 9f4:	f8d3 3fe4 	ldr.w	r3, [r3, #4068]	; 0xfe4
+  if ((HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE0) != 0x22) ||
+ 9f8:	2bb8      	cmp	r3, #184	; 0xb8
+ 9fa:	d001      	beq.n	a00 <timer0_id_check+0x20>
+      (timer_id != 0x03))
+    return 1; /* part ID & ARM ID does not match */
+ 9fc:	2001      	movs	r0, #1
+  else
+    return 0;
+}
+ 9fe:	4770      	bx	lr
+      (HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE4) != 0xB8) ||
+ a00:	f000 0007 	and.w	r0, r0, #7
+ a04:	3803      	subs	r0, #3
+ a06:	bf18      	it	ne
+ a08:	2001      	movne	r0, #1
+ a0a:	4770      	bx	lr
+ a0c:	40000f00 	.word	0x40000f00
+
+00000a10 <timer1_id_check>:
+
+int timer1_id_check(void)
+{
+unsigned char timer_id;
+  timer_id = HW8_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE8) & 0x07;
+ a10:	4a0a      	ldr	r2, [pc, #40]	; (a3c <timer1_id_check+0x2c>)
+
+  if ((HW32_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE0) != 0x22) ||
+ a12:	4b0b      	ldr	r3, [pc, #44]	; (a40 <timer1_id_check+0x30>)
+  timer_id = HW8_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE8) & 0x07;
+ a14:	f892 00e8 	ldrb.w	r0, [r2, #232]	; 0xe8
+  if ((HW32_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE0) != 0x22) ||
+ a18:	f8d3 2fe0 	ldr.w	r2, [r3, #4064]	; 0xfe0
+  timer_id = HW8_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE8) & 0x07;
+ a1c:	b2c0      	uxtb	r0, r0
+  if ((HW32_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE0) != 0x22) ||
+ a1e:	2a22      	cmp	r2, #34	; 0x22
+ a20:	d103      	bne.n	a2a <timer1_id_check+0x1a>
+      (HW32_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE4) != 0xB8) ||
+ a22:	f8d3 3fe4 	ldr.w	r3, [r3, #4068]	; 0xfe4
+  if ((HW32_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE0) != 0x22) ||
+ a26:	2bb8      	cmp	r3, #184	; 0xb8
+ a28:	d001      	beq.n	a2e <timer1_id_check+0x1e>
+      (timer_id != 0x03))
+    return 1; /* part ID & ARM ID does not match */
+ a2a:	2001      	movs	r0, #1
+  else
+    return 0;
+}
+ a2c:	4770      	bx	lr
+      (HW32_REG(CM3DS_MPS2_TIMER1_BASE + 0xFE4) != 0xB8) ||
+ a2e:	f000 0007 	and.w	r0, r0, #7
+ a32:	3803      	subs	r0, #3
+ a34:	bf18      	it	ne
+ a36:	2001      	movne	r0, #1
+ a38:	4770      	bx	lr
+ a3a:	bf00      	nop
+ a3c:	40001f00 	.word	0x40001f00
+ a40:	40001000 	.word	0x40001000
+
+00000a44 <gpio0_id_check>:
+
+int gpio0_id_check(void)
+{
+unsigned char gpio_id;
+  gpio_id = HW8_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE8) & 0x07;
+ a44:	4a0a      	ldr	r2, [pc, #40]	; (a70 <gpio0_id_check+0x2c>)
+
+  if ((HW32_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE0) != 0x20) ||
+ a46:	4b0b      	ldr	r3, [pc, #44]	; (a74 <gpio0_id_check+0x30>)
+  gpio_id = HW8_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE8) & 0x07;
+ a48:	f892 00e8 	ldrb.w	r0, [r2, #232]	; 0xe8
+  if ((HW32_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE0) != 0x20) ||
+ a4c:	f8d3 2fe0 	ldr.w	r2, [r3, #4064]	; 0xfe0
+  gpio_id = HW8_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE8) & 0x07;
+ a50:	b2c0      	uxtb	r0, r0
+  if ((HW32_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE0) != 0x20) ||
+ a52:	2a20      	cmp	r2, #32
+ a54:	d103      	bne.n	a5e <gpio0_id_check+0x1a>
+      (HW32_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE4) != 0xB8) ||
+ a56:	f8d3 3fe4 	ldr.w	r3, [r3, #4068]	; 0xfe4
+  if ((HW32_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE0) != 0x20) ||
+ a5a:	2bb8      	cmp	r3, #184	; 0xb8
+ a5c:	d001      	beq.n	a62 <gpio0_id_check+0x1e>
+      (gpio_id != 0x03))
+    return 1; /* part ID & ARM ID does not match */
+ a5e:	2001      	movs	r0, #1
+  else
+    return 0;
+}
+ a60:	4770      	bx	lr
+      (HW32_REG(CM3DS_MPS2_GPIO0_BASE + 0xFE4) != 0xB8) ||
+ a62:	f000 0007 	and.w	r0, r0, #7
+ a66:	3803      	subs	r0, #3
+ a68:	bf18      	it	ne
+ a6a:	2001      	movne	r0, #1
+ a6c:	4770      	bx	lr
+ a6e:	bf00      	nop
+ a70:	40010f00 	.word	0x40010f00
+ a74:	40010000 	.word	0x40010000
+
+00000a78 <TIMER0_Handler>:
+/* --------------------------------------------------------------- */
+
+void TIMER0_Handler(void)
+{
+  timer0_irq_occurred ++;
+  CM3DS_MPS2_TIMER0->INTCLEAR = 1;
+ a78:	2001      	movs	r0, #1
+ a7a:	f04f 4180 	mov.w	r1, #1073741824	; 0x40000000
+  timer0_irq_occurred ++;
+ a7e:	4b04      	ldr	r3, [pc, #16]	; (a90 <TIMER0_Handler+0x18>)
+ a80:	685a      	ldr	r2, [r3, #4]
+ a82:	4402      	add	r2, r0
+ a84:	605a      	str	r2, [r3, #4]
+  CM3DS_MPS2_TIMER0->INTCLEAR = 1;
+ a86:	60c8      	str	r0, [r1, #12]
+  if (timer0_irq_expected ==0) {
+ a88:	68db      	ldr	r3, [r3, #12]
+ a8a:	b103      	cbz	r3, a8e <TIMER0_Handler+0x16>
+    //puts ("ERROR : Unexpected Timer 0 interrupt occurred.\n");
+    //UartEndSimulation();
+    while (1);
+    }
+  return;
+}
+ a8c:	4770      	bx	lr
+    while (1);
+ a8e:	e7fe      	b.n	a8e <TIMER0_Handler+0x16>
+ a90:	20000064 	.word	0x20000064
+
+00000a94 <TIMER1_Handler>:
+
+void TIMER1_Handler(void)
+{
+  timer1_irq_occurred ++;
+  CM3DS_MPS2_TIMER1->INTCLEAR = 1;
+ a94:	2001      	movs	r0, #1
+  timer1_irq_occurred ++;
+ a96:	4b05      	ldr	r3, [pc, #20]	; (aac <TIMER1_Handler+0x18>)
+  CM3DS_MPS2_TIMER1->INTCLEAR = 1;
+ a98:	4905      	ldr	r1, [pc, #20]	; (ab0 <TIMER1_Handler+0x1c>)
+  timer1_irq_occurred ++;
+ a9a:	689a      	ldr	r2, [r3, #8]
+ a9c:	4402      	add	r2, r0
+ a9e:	609a      	str	r2, [r3, #8]
+  CM3DS_MPS2_TIMER1->INTCLEAR = 1;
+ aa0:	60c8      	str	r0, [r1, #12]
+  if (timer1_irq_expected ==0) {
+ aa2:	691b      	ldr	r3, [r3, #16]
+ aa4:	b103      	cbz	r3, aa8 <TIMER1_Handler+0x14>
+    //puts ("ERROR : Unexpected Timer 1 interrupt occurred.\n");
+    //UartEndSimulation();
+    while (1);
+    }
+  return;
+}
+ aa6:	4770      	bx	lr
+    while (1);
+ aa8:	e7fe      	b.n	aa8 <TIMER1_Handler+0x14>
+ aaa:	bf00      	nop
+ aac:	20000064 	.word	0x20000064
+ ab0:	40001000 	.word	0x40001000
+
+00000ab4 <SysTick_Handler>:
+/* --------------------------------------------------------------- */
+/*  SysTick exception handlers                                       */
+/* --------------------------------------------------------------- */
+void SysTick_Handler(void)
+{
+  switch (counter) {
+ ab4:	4b14      	ldr	r3, [pc, #80]	; (b08 <SysTick_Handler+0x54>)
+ ab6:	681a      	ldr	r2, [r3, #0]
+ ab8:	b15a      	cbz	r2, ad2 <SysTick_Handler+0x1e>
+ aba:	2a01      	cmp	r2, #1
+ abc:	d011      	beq.n	ae2 <SysTick_Handler+0x2e>
+      SysTick->CTRL = 0;
+      SCB->ICSR = SCB->ICSR & 0xFDFFFFFF; /* Clear SysTick pending bit */
+      counter ++;
+      break;
+    default:
+      SysTick->CTRL = 0;
+ abe:	f04f 23e0 	mov.w	r3, #3758153728	; 0xe000e000
+ ac2:	2100      	movs	r1, #0
+      SCB->ICSR = SCB->ICSR & 0xFDFFFFFF; /* Clear SysTick pending bit */
+ ac4:	4a11      	ldr	r2, [pc, #68]	; (b0c <SysTick_Handler+0x58>)
+      SysTick->CTRL = 0;
+ ac6:	6119      	str	r1, [r3, #16]
+      SCB->ICSR = SCB->ICSR & 0xFDFFFFFF; /* Clear SysTick pending bit */
+ ac8:	6853      	ldr	r3, [r2, #4]
+ aca:	f023 7300 	bic.w	r3, r3, #33554432	; 0x2000000
+ ace:	6053      	str	r3, [r2, #4]
+      break;
+    }
+  return;
+ ad0:	4770      	bx	lr
+      CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0042;
+ ad2:	2142      	movs	r1, #66	; 0x42
+ ad4:	4a0e      	ldr	r2, [pc, #56]	; (b10 <SysTick_Handler+0x5c>)
+ ad6:	f8c2 1508 	str.w	r1, [r2, #1288]	; 0x508
+      counter ++;
+ ada:	681a      	ldr	r2, [r3, #0]
+ adc:	3201      	adds	r2, #1
+ ade:	601a      	str	r2, [r3, #0]
+      break;
+ ae0:	4770      	bx	lr
+      CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ ae2:	2200      	movs	r2, #0
+      SysTick->CTRL = 0;
+ ae4:	f04f 20e0 	mov.w	r0, #3758153728	; 0xe000e000
+{
+ ae8:	b410      	push	{r4}
+      CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ aea:	4c09      	ldr	r4, [pc, #36]	; (b10 <SysTick_Handler+0x5c>)
+      SCB->ICSR = SCB->ICSR & 0xFDFFFFFF; /* Clear SysTick pending bit */
+ aec:	4907      	ldr	r1, [pc, #28]	; (b0c <SysTick_Handler+0x58>)
+      CM3DS_MPS2_GPIO0->LB_MASKED[0x42] = 0x0000;
+ aee:	f8c4 2508 	str.w	r2, [r4, #1288]	; 0x508
+      SysTick->CTRL = 0;
+ af2:	6102      	str	r2, [r0, #16]
+      SCB->ICSR = SCB->ICSR & 0xFDFFFFFF; /* Clear SysTick pending bit */
+ af4:	684a      	ldr	r2, [r1, #4]
+}
+ af6:	bc10      	pop	{r4}
+      SCB->ICSR = SCB->ICSR & 0xFDFFFFFF; /* Clear SysTick pending bit */
+ af8:	f022 7200 	bic.w	r2, r2, #33554432	; 0x2000000
+ afc:	604a      	str	r2, [r1, #4]
+      counter ++;
+ afe:	681a      	ldr	r2, [r3, #0]
+ b00:	3201      	adds	r2, #1
+ b02:	601a      	str	r2, [r3, #0]
+}
+ b04:	4770      	bx	lr
+ b06:	bf00      	nop
+ b08:	20000064 	.word	0x20000064
+ b0c:	e000ed00 	.word	0xe000ed00
+ b10:	40010000 	.word	0x40010000
+
+00000b14 <main>:
+  timer0_irq_occurred = 0;
+ b14:	2200      	movs	r2, #0
+  if ((HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE0) != 0x22) ||
+ b16:	f04f 4080 	mov.w	r0, #1073741824	; 0x40000000
+{
+ b1a:	b508      	push	{r3, lr}
+  timer0_irq_occurred = 0;
+ b1c:	4b0c      	ldr	r3, [pc, #48]	; (b50 <main+0x3c>)
+  timer_id = HW8_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE8) & 0x07;
+ b1e:	490d      	ldr	r1, [pc, #52]	; (b54 <main+0x40>)
+  timer0_irq_occurred = 0;
+ b20:	605a      	str	r2, [r3, #4]
+  timer1_irq_occurred = 0;
+ b22:	609a      	str	r2, [r3, #8]
+  timer0_irq_expected = 0;
+ b24:	60da      	str	r2, [r3, #12]
+  timer1_irq_expected = 0;
+ b26:	611a      	str	r2, [r3, #16]
+  timer_id = HW8_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE8) & 0x07;
+ b28:	f891 30e8 	ldrb.w	r3, [r1, #232]	; 0xe8
+  if ((HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE0) != 0x22) ||
+ b2c:	f8d0 2fe0 	ldr.w	r2, [r0, #4064]	; 0xfe0
+ b30:	2a22      	cmp	r2, #34	; 0x22
+ b32:	d103      	bne.n	b3c <main+0x28>
+      (HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE4) != 0xB8) ||
+ b34:	f8d0 2fe4 	ldr.w	r2, [r0, #4068]	; 0xfe4
+  if ((HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE0) != 0x22) ||
+ b38:	2ab8      	cmp	r2, #184	; 0xb8
+ b3a:	d001      	beq.n	b40 <main+0x2c>
+}
+ b3c:	2000      	movs	r0, #0
+ b3e:	bd08      	pop	{r3, pc}
+ b40:	b2db      	uxtb	r3, r3
+      (HW32_REG(CM3DS_MPS2_TIMER0_BASE + 0xFE4) != 0xB8) ||
+ b42:	f003 0307 	and.w	r3, r3, #7
+ b46:	2b03      	cmp	r3, #3
+ b48:	d1f8      	bne.n	b3c <main+0x28>
+      result += timer_start_stop_test(CM3DS_MPS2_TIMER0);   // ✅ Run ONLY this test
+ b4a:	f7ff fc9f 	bl	48c <timer_start_stop_test>
+ b4e:	e7f5      	b.n	b3c <main+0x28>
+ b50:	20000064 	.word	0x20000064
+ b54:	40000f00 	.word	0x40000f00
+
+00000b58 <SystemCoreClockUpdate>:
+ b58:	4b01      	ldr	r3, [pc, #4]	; (b60 <SystemCoreClockUpdate+0x8>)
+ b5a:	4a02      	ldr	r2, [pc, #8]	; (b64 <SystemCoreClockUpdate+0xc>)
+ b5c:	601a      	str	r2, [r3, #0]
+ b5e:	4770      	bx	lr
+ b60:	20000000 	.word	0x20000000
+ b64:	017d7840 	.word	0x017d7840
+
+00000b68 <SystemInit>:
+
+#ifdef UNALIGNED_SUPPORT_DISABLE
+  SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
+#endif
+
+  SystemCoreClock = __SYSTEM_CLOCK;
+ b68:	4b01      	ldr	r3, [pc, #4]	; (b70 <SystemInit+0x8>)
+ b6a:	4a02      	ldr	r2, [pc, #8]	; (b74 <SystemInit+0xc>)
+ b6c:	601a      	str	r2, [r3, #0]
+
+}
+ b6e:	4770      	bx	lr
+ b70:	20000000 	.word	0x20000000
+ b74:	017d7840 	.word	0x017d7840
+
+00000b78 <exit>:
+ b78:	b508      	push	{r3, lr}
+ b7a:	4b07      	ldr	r3, [pc, #28]	; (b98 <exit+0x20>)
+ b7c:	4604      	mov	r4, r0
+ b7e:	b113      	cbz	r3, b86 <exit+0xe>
+ b80:	2100      	movs	r1, #0
+ b82:	f3af 8000 	nop.w
+ b86:	4b05      	ldr	r3, [pc, #20]	; (b9c <exit+0x24>)
+ b88:	6818      	ldr	r0, [r3, #0]
+ b8a:	6a83      	ldr	r3, [r0, #40]	; 0x28
+ b8c:	b103      	cbz	r3, b90 <exit+0x18>
+ b8e:	4798      	blx	r3
+ b90:	4620      	mov	r0, r4
+ b92:	f000 f805 	bl	ba0 <_exit>
+ b96:	bf00      	nop
+ b98:	00000000 	.word	0x00000000
+ b9c:	00000bac 	.word	0x00000bac
+
+00000ba0 <_exit>:
+ ba0:	e7fe      	b.n	ba0 <_exit>
+ ba2:	bf00      	nop
+
+00000ba4 <_init>:
+ ba4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ ba6:	bf00      	nop
+
+00000ba8 <_fini>:
+ ba8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ baa:	bf00      	nop
+
+00000bac <_global_impure_ptr>:
+ bac:	0004 2000                                   ... 

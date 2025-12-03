@@ -1,0 +1,79 @@
+QuestaSim-64 vlog 2021.2_1 Compiler 2021.05 May 15 2021
+Start time: 14:25:54 on Nov 28,2025
+vlog -f iot_top.vc "+define+MTI_BUILD" "+define+NO_DSM" "+acc=blnr" -noincr "+define+VCD_ON" -64 
+-- Compiling module m3ds_iot_top
+-- Compiling interface apb_if
+-- Compiling package tb_m3ds_iot_top_sv_unit
+-- Compiling interface sram_if
+-- Compiling interface ahb_if
+-- Compiling module tb_m3ds_iot_top
+-- Scanning library directory '../../cortexm3integration_ds_obs/verilog'
+-- Compiling module CORTEXM3INTEGRATIONDS
+-- Compiling module cortexm3ds_logic
+-- Scanning library directory '../../../../m3designstart_iot/logical/models/modules/generic'
+-- Scanning library directory '../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog'
+-- Compiling module p_beid_interconnect_f0
+-- Compiling module p_beid_interconnect_f0_ahb_code_mux
+-- Compiling module p_beid_interconnect_f0_ahb_to_apb
+-- Compiling module p_beid_interconnect_f0_apb_slave_mux
+-- Scanning library directory '../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog'
+-- Compiling module p_beid_interconnect_f0_ahb_mtx
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_input_stage
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_decoderINITCM3DI
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_decoderINITCM3S
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_decoderINITEXP0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_decoderINITEXP1
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_output_stageTARGFLASH0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_output_stageTARGSRAM0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_output_stageTARGSRAM1
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_output_stageTARGSRAM2
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_output_stageTARGSRAM3
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_output_stageTARGAPB0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_output_stageTARGEXP0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_output_stageTARGEXP1
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_default_slave
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_arbiterTARGFLASH0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_arbiterTARGSRAM0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_arbiterTARGSRAM1
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_arbiterTARGSRAM2
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_arbiterTARGSRAM3
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_arbiterTARGAPB0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_arbiterTARGEXP0
+-- Compiling module p_beid_interconnect_f0_ahb_mtx_arbiterTARGEXP1
+-- Scanning library directory '../../../../m3designstart_iot/logical/p_beid_peripheral_f0/verilog'
+-- Compiling module p_beid_peripheral_f0
+-- Compiling module p_beid_peripheral_f0_timer
+-- Scanning library directory '../../models/generic'
+-- Scanning library directory '../../../../m3designstart_iot/logical/models/modules/generic'
+-- Compiling module p_beid_peripheral_f0_static_reg
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_ahb_slave_mux/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_ahb_default_slave/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_ahb_to_apb/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_ahb_to_sram/verilog'
+-- Compiling module cmsdk_ahb_to_sram
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_apb_subsystem/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_apb_slave_mux/verilog'
+-- Scanning library directory '../../../../smm/logical/smm_common_fpga/verilog'
+-- Scanning library directory '../../m3ds_user_partition/verilog'
+-- Compiling module m3ds_simple_flash
+-- Scanning library directory '../../cortexm3integration_ds_obs/verilog'
+-- Scanning library directory '../../../../m3designstart_iot/logical/models/modules/generic'
+-- Scanning library directory '../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog'
+-- Scanning library directory '../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog'
+-- Scanning library directory '../../../../m3designstart_iot/logical/p_beid_peripheral_f0/verilog'
+-- Scanning library directory '../../models/generic'
+-- Compiling module static_reg
+-- Scanning library directory '../../../../m3designstart_iot/logical/models/modules/generic'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_ahb_slave_mux/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_ahb_default_slave/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_ahb_to_apb/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_ahb_to_sram/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_apb_subsystem/verilog'
+-- Scanning library directory '../../../../cmsdk/logical/cmsdk_apb_slave_mux/verilog'
+-- Scanning library directory '../../../../smm/logical/smm_common_fpga/verilog'
+-- Compiling module ahb_blockram_128
+
+Top level modules:
+	tb_m3ds_iot_top
+End time: 14:25:55 on Nov 28,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0
