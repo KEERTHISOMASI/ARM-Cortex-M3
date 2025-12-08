@@ -1,44 +1,47 @@
 `ifndef APB_SLAVE_MODEL_SV
 `define APB_SLAVE_MODEL_SV
 
+typedef struct packed {
+  byte pid0, pid1, pid2, pid3;
+  byte pid4, pid5, pid6, pid7;
+  byte cid0, cid1, cid2, cid3;
+} pidcid_t;
+
 class apb_slave_model;
 
-  rand bit [31:0] regs[];
-  typedef struct packed {
-    bit privileged_ok;
-    bit nonsecure_ok;
-  } perm_t;
+  // Full 4KB window of 32-bit words = 1024 entries
+  bit [31:0] regs[];
+  pidcid_t ids;
 
-  perm_t perms[];
-
-  function new(int num_regs = 8);
-    regs  = new[num_regs];
-    perms = new[num_regs];
-
-    foreach (regs[i]) begin
-      regs[i] = 32'hABCD_0000 + i;
-      perms[i].privileged_ok = 1;
-      perms[i].nonsecure_ok  = 1;
-    end
-    // Make register 3 secure-only for test
-    perms[3].nonsecure_ok = 0;
+  function new(int num_regs = 1024);
+    regs = new[num_regs];
+    foreach (regs[i]) regs[i] = '0;
   endfunction
 
-  function bit addr_to_index(logic [31:0] addr, output int idx);
-    idx = addr >> 2;
-    return (idx >= 0 && idx < regs.size());
+  function void set_ids(pidcid_t new_ids);
+    ids = new_ids;
   endfunction
 
-  function bit check_pprot(int idx, logic [2:0] pprot);
-    bit is_priv     = pprot[0];
-    bit is_nonsec   = pprot[1];
+  // Check PID/CID space by OFFSET (12-bit)
+  function bit is_pidcid_addr(logic [11:0] addr, output byte b);
+    case (addr)
+      12'hFD0: b = ids.pid4;
+      12'hFD4: b = ids.pid5;
+      12'hFD8: b = ids.pid6;
+      12'hFDC: b = ids.pid7;
 
-    if (is_nonsec && !perms[idx].nonsecure_ok)
-      return 0;
+      12'hFE0: b = ids.pid0;
+      12'hFE4: b = ids.pid1;
+      12'hFE8: b = ids.pid2;
+      12'hFEC: b = ids.pid3;
 
-    if (!is_priv && !perms[idx].privileged_ok)
-      return 0;
+      12'hFF0: b = ids.cid0;
+      12'hFF4: b = ids.cid1;
+      12'hFF8: b = ids.cid2;
+      12'hFFC: b = ids.cid3;
 
+      default: return 0;
+    endcase
     return 1;
   endfunction
 

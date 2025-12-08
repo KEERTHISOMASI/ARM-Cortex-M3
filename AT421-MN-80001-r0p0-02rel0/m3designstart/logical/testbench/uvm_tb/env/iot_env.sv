@@ -6,7 +6,7 @@
 //AHB Master and Slave agents include file paths
 `include "../agents/ahb_agent/ahb_master_agent.sv"
 `include "../agents/ahb_agent/ahb_slave_agent.sv"
-
+`include "../agents/apb_agent/apb_slave_agent.sv"
 class iot_env extends uvm_env;
     `uvm_component_utils(iot_env)
 
@@ -17,7 +17,9 @@ class iot_env extends uvm_env;
     //AHB Slave agents
     ahb_slave_agent  slave_agent_exp0;
     ahb_slave_agent  slave_agent_exp1;
-
+    
+    //APB Slave Agents
+    apb_slave_agent APB[2:15];
 
     function new(string name = "iot_env", uvm_component parent);
         super.new(name, parent);
@@ -32,7 +34,11 @@ class iot_env extends uvm_env;
         //AHB Slave agents creation
         slave_agent_exp0 = ahb_slave_agent::type_id::create("slave_agent_exp0", this);
         slave_agent_exp1 = ahb_slave_agent::type_id::create("slave_agent_exp1", this);
-    endfunction
+
+        foreach (APB[i]) begin
+                 APB[i] = my_agent::type_id::create($sformatf("APB_%0d", i), this);
+              end
+        endfunction
 
 //   function void connect_phase(uvm_phase phase);
 //       super.connect_phase(phase);
