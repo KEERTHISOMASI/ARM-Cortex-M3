@@ -10,7 +10,6 @@ class sram_agent_config extends uvm_object;
 
   function new(string name = "sram_agent_config");
     super.new(name);
-    bit active = 1;
     mem_model = sram_storage_c::type_id::create("mem_model");
   endfunction
 endclass
