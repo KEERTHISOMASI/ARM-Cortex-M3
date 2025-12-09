@@ -15,8 +15,7 @@ class ahb_seq_item extends uvm_sequence_item;
   rand logic [1:0]  trans;
 
   // Response Fields (Slave -> Master)
-  rand logic        resp;      // 0=OKAY, 1=ERROR
-  rand int unsigned delay;     // Number of HREADY=0 cycles to insert
+  logic        resp;      // 0=OKAY, 1=ERROR
 
   `uvm_object_utils_begin(ahb_seq_item)
     `uvm_field_int(addr,  UVM_ALL_ON)
@@ -29,7 +28,19 @@ class ahb_seq_item extends uvm_sequence_item;
   function new(string name = "ahb_seq_item");
     super.new(name);
   endfunction
-
+// -------------------------------------------------------
+  // Address Map Constraint
+  // -------------------------------------------------------
+  constraint c_valid_mem_map {
+    addr inside {
+      [32'hA000_0000 : 32'hA000_FFFF], // exp0 range
+      [32'h0004_0000 : 32'h1FFF_FFFF], // exp1 range start
+      [32'h2002_0000 : 32'h3FFF_FFFF],
+      [32'h4001_0000 : 32'h9FFF_FFFF],
+      [32'hA001_0000 : 32'hDFFF_FFFF],
+      [32'hE001_0000 : 32'hFFFF_FFFF]
+    };
+  }
   constraint c_addr_aligned { addr[1:0] == 0; }
   
   // Default Constraints
@@ -40,10 +51,6 @@ class ahb_seq_item extends uvm_sequence_item;
   }
 
   // Response Constraints (Keep delays reasonable by default)
-  constraint c_resp_delay {
-    delay dist { 0:=70, [1:2]:=20, [3:10]:=10 }; // Mostly 0 wait states
-    resp  dist { 0:=98, 1:=2 };                  // Mostly OKAY responses
-  }
 
 endclass
 
