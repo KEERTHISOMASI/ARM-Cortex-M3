@@ -1,0 +1,7 @@
+`ifndef APB_SLAVE_VIF_SV
+`define APB_SLAVE_VIF_SV
+
+typedef virtual interface apb_slave_if.slave_mp apb_slave_vif;
+
+`endif
+
