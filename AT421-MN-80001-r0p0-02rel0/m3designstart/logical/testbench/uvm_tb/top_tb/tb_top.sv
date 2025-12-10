@@ -4,10 +4,10 @@ import uvm_pkg::*;
 `include "uvm_macros.svh"
 `include "../../../../../m3designstart/logical/fpga_top/verilog/fpga_options_defs.v"
 // Include your interface files
- `include "../agents/ahb_agent/ahb_if.sv"
- `include "../agents/apb_agent/apb_slave_if.sv"
- `include "../agents/sram_agent/sram_if.sv"
- `include "../../verilog/dut_wrapper.v"
+`include "../agents/ahb_agent/ahb_if.sv"
+`include "../agents/apb_agent/apb_slave_if.sv"
+`include "../agents/sram_agent/sram_if.sv"
+`include "../../verilog/dut_wrapper.v"
 
 /*`include "../../../../../m3designstart_iot/logical/models/modules/generic/p_beid_peripheral_f0_static_reg.v"
 `include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog/*.v"
@@ -124,10 +124,12 @@ import uvm_pkg::*;
 `include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_sys_bus_mux.v"
 `include "../../../../../smm/logical/smm_common_fpga/verilog/SBCon.v"
 
- 
+
 // Include the Environment and Test
 //`include "iot_env.sv"
- `include "../tests/iot_test_base.sv" 
+`include "../tests/iot_test_base.sv"
+`include "../tests/iot_ahb_wr_rd_test.sv"
+
 
 module tb_top;
 
@@ -571,11 +573,6 @@ module tb_top;
     //foreach (sram_vif[i]) begin
     //  uvm_config_db#(virtual sram_if.TB)::set(null, "*", $sformatf("sram_vif_%0d", i), sram_vif[i]);
     //end
-
-    uvm_config_db#(virtual sram_if.TB)::set(null, "*", "*sram_vif_0*", sram_vif[0]);
-    uvm_config_db#(virtual sram_if.TB)::set(null, "*", "*sram_vif_1*", sram_vif[1]);
-    uvm_config_db#(virtual sram_if.TB)::set(null, "*", "*sram_vif_2*", sram_vif[2]);
-    uvm_config_db#(virtual sram_if.TB)::set(null, "*", "*sram_vif_3*", sram_vif[3]);
     // 2. Set AHB Interfaces
     uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp0_vif);
     uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp1_vif);
@@ -585,28 +582,43 @@ module tb_top;
     // 3. Set APB Interfaces (2 to 15)
     // Matches the naming convention in iot_env: "APB_2", "APB_3", etc.
     //for (int i = 2; i <= 15; i++) begin
-      //uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, $sformatf("*APB_%0d*", i), "vif", apb_vif[i]);
+    //uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, $sformatf("*APB_%0d*", i), "vif", apb_vif[i]);
     //end
 
 
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_2*", "vif", apb_vif[2].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_3*", "vif", apb_vif[3].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_4*", "vif", apb_vif[4].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_5*", "vif", apb_vif[5].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_6*", "vif", apb_vif[6].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_7*", "vif", apb_vif[7].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_8*", "vif", apb_vif[8].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_9*", "vif", apb_vif[9].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_10*", "vif", apb_vif[10].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_11*", "vif", apb_vif[11].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_12*", "vif", apb_vif[12].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_13*", "vif", apb_vif[13].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_14*", "vif", apb_vif[14].slave_mp);
-      uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_15*", "vif", apb_vif[15].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_2*", "vif", apb_vif[2].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_3*", "vif", apb_vif[3].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_4*", "vif", apb_vif[4].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_5*", "vif", apb_vif[5].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_6*", "vif", apb_vif[6].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_7*", "vif", apb_vif[7].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_8*", "vif", apb_vif[8].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_9*", "vif", apb_vif[9].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_10*", "vif",
+                                                       apb_vif[10].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_11*", "vif",
+                                                       apb_vif[11].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_12*", "vif",
+                                                       apb_vif[12].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_13*", "vif",
+                                                       apb_vif[13].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_14*", "vif",
+                                                       apb_vif[14].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_15*", "vif",
+                                                       apb_vif[15].slave_mp);
+
+
+    uvm_config_db#(virtual sram_if)::set(null, "*", "sram_vif_0", sram_vif[0]);
+    uvm_config_db#(virtual sram_if)::set(null, "*", "sram_vif_1", sram_vif[1]);
+    uvm_config_db#(virtual sram_if)::set(null, "*", "sram_vif_2", sram_vif[2]);
+    uvm_config_db#(virtual sram_if)::set(null, "*", "sram_vif_3", sram_vif[3]);
     // ----------------------------------------------------------------
+    //
     // 6. Run Test
     // ----------------------------------------------------------------
-    run_test("iot_test_base");
+  end
+  initial begin
+    run_test("iot_ahb_wr_rd_test");
   end
 
 endmodule
