@@ -456,10 +456,10 @@ module tb_top;
     end
 
     // 2. Set AHB Interfaces
-    uvm_config_db#(virtual ahb_if)::set(null, "*slave_agent_exp0*", "vif", targexp0_vif);
-    uvm_config_db#(virtual ahb_if)::set(null, "*slave_agent_exp1*", "vif", targexp1_vif);
-    uvm_config_db#(virtual ahb_if)::set(null, "*master_agent_spi*", "vif", initexp0_vif);
-    uvm_config_db#(virtual ahb_if)::set(null, "*master_agent_dma*", "vif", initexp1_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp0_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp1_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif", initexp0_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif", initexp1_vif);
 
     // 3. Set APB Interfaces (2 to 15)
     // Matches the naming convention in iot_env: "APB_2", "APB_3", etc.
