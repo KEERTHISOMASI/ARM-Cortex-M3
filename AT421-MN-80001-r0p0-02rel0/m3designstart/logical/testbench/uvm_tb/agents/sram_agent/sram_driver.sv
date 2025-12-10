@@ -1,6 +1,4 @@
-import uvm_pkg::*;
-`include "uvm_macros.svh"
-
+`include "sram_seq_item.sv"
 
 // ----------------------------------------------------------------
 // 4. DRIVER (Responder)

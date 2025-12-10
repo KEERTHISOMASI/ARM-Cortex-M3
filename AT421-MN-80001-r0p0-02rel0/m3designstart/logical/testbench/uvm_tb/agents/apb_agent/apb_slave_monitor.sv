@@ -1,6 +1,6 @@
 `ifndef APB_SLAVE_MONITOR_SV
 `define APB_SLAVE_MONITOR_SV
-
+`include "apb_slave_seq_item.sv"
 class apb_slave_monitor extends uvm_monitor;
   `uvm_component_utils(apb_slave_monitor)
 
@@ -19,22 +19,22 @@ class apb_slave_monitor extends uvm_monitor;
 
   virtual task run_phase(uvm_phase phase);
     forever begin
-      @(posedge vif.cb.pclk);
+      @(posedge vif.pclk);
 
-      if (vif.cb.psel && vif.cb.penable && vif.cb.pready) begin
+      if (vif.psel && vif.penable && vif.pready) begin
         apb_slave_seq_item tr = new();
 
         // Report the 12-bit offset (peripheral internal address)
-        tr.addr  = vif.cb.paddr[11:0];
-        tr.pstrb = vif.cb.pstrb;
-        tr.pprot = vif.cb.pprot;
+        tr.addr  = vif.paddr[11:0];
+        tr.pstrb = vif.pstrb;
+        tr.pprot = vif.pprot;
 
-        if (vif.cb.pwrite) begin
+        if (vif.pwrite) begin
           tr.rw   = WRITE;
-          tr.data = vif.cb.pwdata;
+          tr.data = vif.pwdata;
         end else begin
           tr.rw   = READ;
-          tr.data = vif.cb.prdata;
+          tr.data = vif.prdata;
         end
 
         mon_ap.write(tr);

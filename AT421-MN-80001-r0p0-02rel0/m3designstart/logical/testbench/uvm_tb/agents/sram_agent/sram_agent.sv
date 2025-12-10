@@ -1,7 +1,7 @@
 
-import uvm_pkg::*;
-`include "uvm_macros.svh"
-
+`include "sram_agent_config.sv"
+`include "sram_driver.sv"
+`include "sram_monitor.sv"
 
 // ----------------------------------------------------------------
 // 6. AGENT

@@ -22,7 +22,6 @@ class ahb_seq_item extends uvm_sequence_item;
     `uvm_field_int(data,  UVM_ALL_ON)
     `uvm_field_int(write, UVM_ALL_ON)
     `uvm_field_int(resp,  UVM_ALL_ON)
-    `uvm_field_int(delay, UVM_ALL_ON)
   `uvm_object_utils_end
 
   function new(string name = "ahb_seq_item");

@@ -24,7 +24,7 @@
 // Abstract : V2M-MPS2 FPGA PLL
 //-----------------------------------------------------------------------------
 
-`include "fpga_options_defs.v"
+//`include "fpga_options_defs.v"
 
 module fpga_pll_speed (
     input  wire [2:0]    osc,            // Oscillator #0 - 50    MHz

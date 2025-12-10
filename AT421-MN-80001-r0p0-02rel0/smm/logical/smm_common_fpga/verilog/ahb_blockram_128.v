@@ -21,7 +21,7 @@
 //  Purpose : AHB BlockRam/OnChip
 // ----------------------------------------------------------------------------
 
-`include "fpga_options_defs.v"
+//`include "fpga_options_defs.v"
 
 module ahb_blockram_128
   (//Inputs
