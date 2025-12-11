@@ -4,7 +4,7 @@
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
-`include "ahb_slave_sequencer.sv"
+//`include "ahb_slave_sequencer.sv"
 `include "ahb_slave_driver.sv"
 `include "ahb_slave_monitor.sv"
 
@@ -13,7 +13,7 @@ class ahb_slave_agent extends uvm_agent;
 
   ahb_slave_driver    driver;
   ahb_slave_monitor   monitor;
-  ahb_slave_sequencer sequencer; // Added Sequencer
+  //ahb_slave_sequencer sequencer; // Added Sequencer
   
   virtual ahb_if.SLAVE vif;
 
@@ -33,7 +33,7 @@ class ahb_slave_agent extends uvm_agent;
     
     if(get_is_active() == UVM_ACTIVE) begin
       driver    = ahb_slave_driver::type_id::create("driver", this);
-      sequencer = ahb_slave_sequencer::type_id::create("sequencer", this); // Create Sequencer
+      //sequencer = ahb_slave_sequencer::type_id::create("sequencer", this); // Create Sequencer
     end
     
     // Pass VIF to children
@@ -46,7 +46,7 @@ class ahb_slave_agent extends uvm_agent;
     
     if(get_is_active() == UVM_ACTIVE) begin
       // Connect Driver to Sequencer
-      driver.seq_item_port.connect(sequencer.seq_item_export); 
+      //driver.seq_item_port.connect(sequencer.seq_item_export); 
     end
   endfunction
 
