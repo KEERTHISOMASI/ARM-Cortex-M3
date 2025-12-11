@@ -17,7 +17,7 @@ interface apb_slave_if(
   logic [3:0]  pstrb;
   logic [2:0]  pprot;
 
-  clocking cb @(posedge pclk);
+/*  clocking cb @(posedge pclk);
     input  psel;
     input  penable;
     input  pwrite;
@@ -30,8 +30,23 @@ interface apb_slave_if(
     output pslverr;
     output pready;
   endclocking
+*/
+  //modport slave_mp(clocking cb);
+  modport slave_mp (
+    input  pclk,
+    input  presetn,
+    input  psel,
+    input  penable,
+    input  pwrite,
+    input  paddr,
+    input  pwdata,
+    input  pstrb,
+    input  pprot,
 
-  modport slave_mp(clocking cb);
+    output prdata,
+    output pslverr,
+    output pready
+  );
 
 endinterface
 `endif

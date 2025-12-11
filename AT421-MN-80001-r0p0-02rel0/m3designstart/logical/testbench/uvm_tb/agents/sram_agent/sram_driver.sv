@@ -1,6 +1,4 @@
-import uvm_pkg::*;
-`include "uvm_macros.svh"
-
+`include "sram_seq_item.sv"
 
 // ----------------------------------------------------------------
 // 4. DRIVER (Responder)
@@ -8,27 +6,26 @@ import uvm_pkg::*;
 class sram_driver extends uvm_driver #(sram_seq_item);
   `uvm_component_utils(sram_driver)
 
-  virtual sram_if vif;
-  sram_agent_config m_cfg;
+  virtual sram_if          vif;
+  sram_agent_config        m_cfg;
 
   // Pipeline Registers
-  bit        pipe_prev_cs;
-  bit [12:0] pipe_prev_addr;
+  bit                      pipe_prev_cs;
+  bit               [12:0] pipe_prev_addr;
 
   function new(string name, uvm_component parent);
     super.new(name, parent);
   endfunction
 
-  function void build_phase(uvm_phase phase);
-    super.build_phase(phase);
-    if(!uvm_config_db#(sram_agent_config)::get(this, "", "sram_cfg", m_cfg))
-       `uvm_fatal("DRV", "No Config Found")
-    vif = m_cfg.vif;
-  endfunction
-
   task run_phase(uvm_phase phase);
+    // Basic safety checks
+    if (vif == null) `uvm_fatal("DRV", $sformatf("%s: vif is null", get_full_name()))
+    if (m_cfg == null) `uvm_fatal("DRV", $sformatf("%s: m_cfg is null", get_full_name()))
+    if (m_cfg.mem_model == null)
+      `uvm_fatal("DRV", $sformatf("%s: mem_model is null", get_full_name()))
+
     // Init
-    vif.RDATA      <= 'z;
+    vif.RDATA <= 'z;
     pipe_prev_cs   = 0;
     pipe_prev_addr = 0;
 

@@ -2,15 +2,134 @@
 
 import uvm_pkg::*;
 `include "uvm_macros.svh"
-
+`include "../../../../../m3designstart/logical/fpga_top/verilog/fpga_options_defs.v"
 // Include your interface files
-// `include "ahb_if.sv"
-// `include "apb_slave_if.sv"
-// `include "sram_if.sv"
+`include "../agents/ahb_agent/ahb_if.sv"
+`include "../agents/apb_agent/apb_slave_if.sv"
+`include "../agents/sram_agent/sram_if.sv"
+`include "../../verilog/dut_wrapper.v"
+
+/*`include "../../../../../m3designstart_iot/logical/models/modules/generic/p_beid_peripheral_f0_static_reg.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog/*.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/*.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_peripheral_f0/verilog/*.v"
+`include "../../../models/generic/*.v"
+`include "../../../../../m3designstart_iot/logical/models/modules/generic/*.v"
+`include "../../../../../cmsdk/logical/cmsdk_ahb_slave_mux/verilog/*.v"
+`include "../../../../../cmsdk/logical/cmsdk_ahb_default_slave/verilog/*.v"
+`include "../../../../../cmsdk/logical/cmsdk_ahb_to_apb/verilog/*.v"
+`include "../../../../../cmsdk/logical/cmsdk_ahb_to_sram/verilog/*.v"
+`include "../../../../../cmsdk/logical/cmsdk_apb_subsystem/verilog/*.v"
+`include "../../../../../cmsdk/logical/cmsdk_apb_slave_mux/verilog/*.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/*.v"
+`include "../../../m3ds_user_partition/verilog/*.v"*/
+
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog/p_beid_interconnect_f0_ahb_code_mux.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog/p_beid_interconnect_f0_ahb_to_apb.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog/p_beid_interconnect_f0_apb_slave_mux.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0/verilog/p_beid_interconnect_f0.v"
+
+// cortexm3integration_ds_obs
+`include "../../../../../m3designstart/logical/cortexm3integration_ds_obs/verilog/cortexm3ds_logic.v"
+`include "../../../../../m3designstart/logical/cortexm3integration_ds_obs/verilog/CORTEXM3INTEGRATIONDS.v"
+
+// m3designstart models/generic
+`include "../../../../../m3designstart/logical/models/generic/static_reg.v"
+
+// m3ds_user_partition
+`include "../../../../../m3designstart/logical/m3ds_user_partition/verilog/m3ds_simple_flash.v"
+`include "../../../../../m3designstart/logical/m3ds_user_partition/verilog/m3ds_tscnt_48.v"
+`include "../../../../../m3designstart/logical/m3ds_user_partition/verilog/m3ds_user_partition.v"
+
+// m3designstart_iot : m3ds_iot_top
+`include "../../../../../m3designstart_iot/logical/m3ds_iot_top/verilog/m3ds_iot_top.v"
+
+// m3designstart_iot : models/modules/generic
+`include "../../../../../m3designstart_iot/logical/models/modules/generic/p_beid_peripheral_f0_static_reg.v"
+
+// m3designstart_iot : p_beid_interconnect_f0_ahb_mtx
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_arbiterTARGAPB0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_arbiterTARGEXP0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_arbiterTARGEXP1.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_arbiterTARGFLASH0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_arbiterTARGSRAM0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_arbiterTARGSRAM1.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_arbiterTARGSRAM2.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_arbiterTARGSRAM3.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_decoderINITCM3DI.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_decoderINITCM3S.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_decoderINITEXP0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_decoderINITEXP1.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_default_slave.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_input_stage.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_output_stageTARGAPB0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_output_stageTARGEXP0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_output_stageTARGEXP1.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_output_stageTARGFLASH0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_output_stageTARGSRAM0.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_output_stageTARGSRAM1.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_output_stageTARGSRAM2.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx_output_stageTARGSRAM3.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_interconnect_f0_ahb_mtx/verilog/p_beid_interconnect_f0_ahb_mtx.v"
+
+// p_beid_peripheral_f0
+`include "../../../../../m3designstart_iot/logical/p_beid_peripheral_f0/verilog/p_beid_peripheral_f0_timer.v"
+`include "../../../../../m3designstart_iot/logical/p_beid_peripheral_f0/verilog/p_beid_peripheral_f0.v"
+
+// local models/generic (m3designstart)
+`include "../../../../../m3designstart/logical/models/generic/static_reg.v"
+
+
+
+// cmsdk : cmsdk_ahb_slave_mux
+`include "../../../../../cmsdk/logical/cmsdk_ahb_slave_mux/verilog/cmsdk_ahb_slave_mux.v"
+
+// cmsdk : cmsdk_ahb_default_slave
+`include "../../../../../cmsdk/logical/cmsdk_ahb_default_slave/verilog/cmsdk_ahb_default_slave.v"
+
+// cmsdk : cmsdk_ahb_to_apb
+`include "../../../../../cmsdk/logical/cmsdk_ahb_to_apb/verilog/cmsdk_ahb_to_apb.v"
+
+// cmsdk : cmsdk_ahb_to_sram
+`include "../../../../../cmsdk/logical/cmsdk_ahb_to_sram/verilog/cmsdk_ahb_to_sram.v"
+
+// cmsdk : cmsdk_apb_subsystem
+`include "../../../../../cmsdk/logical/cmsdk_apb_subsystem/verilog/cmsdk_apb_subsystem_speed.v"
+`include "../../../../../cmsdk/logical/cmsdk_apb_subsystem/verilog/cmsdk_apb_subsystem.v"
+`include "../../../../../cmsdk/logical/cmsdk_apb_subsystem/verilog/cmsdk_apb_test_slave.v"
+`include "../../../../../cmsdk/logical/cmsdk_apb_subsystem/verilog/cmsdk_irq_sync.v"
+
+// cmsdk : cmsdk_apb_slave_mux
+`include "../../../../../cmsdk/logical/cmsdk_apb_slave_mux/verilog/cmsdk_apb_slave_mux.v"
+
+// smm : smm_common_fpga
+`include "../../../../../smm/logical/smm_common_fpga/verilog/ahb_blockram_128.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/ahb_blockram_32.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/ahb_zbtram_32.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/ahb_zbtram_64.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/audio_pll.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/cmsdk_ahb_memory_models_defs.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/cmsdk_clock_gate.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/ddr_inout.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/ddr_out_22.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/ddr_out.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_100hz_gen.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_io_regs_ard.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_io_regs.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_pll_speed.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_pll.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_rst_sync.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_spi_ahb.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_sync_regs.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/fpga_sys_bus_mux.v"
+`include "../../../../../smm/logical/smm_common_fpga/verilog/SBCon.v"
+
 
 // Include the Environment and Test
-`include "iot_env.sv"
-// `include "iot_test.sv" 
+//`include "iot_env.sv"
+`include "../tests/iot_test_base.sv"
+`include "../tests/iot_ahb_wr_rd_test.sv"
+
 
 module tb_top;
 
@@ -23,24 +142,6 @@ module tb_top;
   logic cpu0_sys_reset_n;
 
   // Clock Generation (100MHz)
-  initial begin
-    fclk = 0;
-    forever #5 fclk = ~fclk;
-  end
-
-  // Reset Generation Sequence
-  initial begin
-    cpu0_po_reset_n  = 0;
-    sys_reset_n      = 0;
-    cpu0_sys_reset_n = 0;
-
-    repeat (10) @(posedge fclk);
-    cpu0_po_reset_n = 1;
-
-    repeat (10) @(posedge fclk);
-    sys_reset_n      = 1;
-    cpu0_sys_reset_n = 1;
-  end
 
   // ----------------------------------------------------------------
   // 2. Interface Instantiations
@@ -445,16 +546,33 @@ module tb_top;
       .dftse(dftse)
   );
 
+  initial begin
+    fclk = 0;
+    forever #5 fclk = ~fclk;
+  end
+
+  // Reset Generation Sequence
+  initial begin
+    cpu0_po_reset_n  = 0;
+    sys_reset_n      = 0;
+    cpu0_sys_reset_n = 0;
+
+    repeat (10) @(posedge fclk);
+    cpu0_po_reset_n = 1;
+
+    repeat (10) @(posedge fclk);
+    sys_reset_n      = 1;
+    cpu0_sys_reset_n = 1;
+  end
   // ----------------------------------------------------------------
   // 5. UVM Config DB Settings
   // ----------------------------------------------------------------
   initial begin
     // 1. Set SRAM Interfaces (Array)
     // Matches the foreach loop in iot_env: "sram_vif_0", "sram_vif_1", etc.
-    foreach (sram_vif[i]) begin
-      uvm_config_db#(virtual sram_if)::set(null, "*", $sformatf("sram_vif_%0d", i), sram_vif[i]);
-    end
-
+    //foreach (sram_vif[i]) begin
+    //  uvm_config_db#(virtual sram_if.TB)::set(null, "*", $sformatf("sram_vif_%0d", i), sram_vif[i]);
+    //end
     // 2. Set AHB Interfaces
     uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp0_vif);
     uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp1_vif);
@@ -463,14 +581,44 @@ module tb_top;
 
     // 3. Set APB Interfaces (2 to 15)
     // Matches the naming convention in iot_env: "APB_2", "APB_3", etc.
-    for (int i = 2; i <= 15; i++) begin
-      uvm_config_db#(virtual apb_slave_if)::set(null, $sformatf("*APB_%0d*", i), "vif", apb_vif[i]);
-    end
+    //for (int i = 2; i <= 15; i++) begin
+    //uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, $sformatf("*APB_%0d*", i), "vif", apb_vif[i]);
+    //end
 
+
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_2*", "vif", apb_vif[2].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_3*", "vif", apb_vif[3].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_4*", "vif", apb_vif[4].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_5*", "vif", apb_vif[5].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_6*", "vif", apb_vif[6].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_7*", "vif", apb_vif[7].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_8*", "vif", apb_vif[8].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_9*", "vif", apb_vif[9].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_10*", "vif",
+                                                       apb_vif[10].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_11*", "vif",
+                                                       apb_vif[11].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_12*", "vif",
+                                                       apb_vif[12].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_13*", "vif",
+                                                       apb_vif[13].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_14*", "vif",
+                                                       apb_vif[14].slave_mp);
+    uvm_config_db#(virtual apb_slave_if.slave_mp)::set(null, "*APB_15*", "vif",
+                                                       apb_vif[15].slave_mp);
+
+
+    uvm_config_db#(virtual sram_if)::set(null, "*", "sram_vif_0", sram_vif[0]);
+    uvm_config_db#(virtual sram_if)::set(null, "*", "sram_vif_1", sram_vif[1]);
+    uvm_config_db#(virtual sram_if)::set(null, "*", "sram_vif_2", sram_vif[2]);
+    uvm_config_db#(virtual sram_if)::set(null, "*", "sram_vif_3", sram_vif[3]);
     // ----------------------------------------------------------------
+    //
     // 6. Run Test
     // ----------------------------------------------------------------
-    run_test();
+  end
+  initial begin
+    run_test("iot_ahb_wr_rd_test");
   end
 
 endmodule

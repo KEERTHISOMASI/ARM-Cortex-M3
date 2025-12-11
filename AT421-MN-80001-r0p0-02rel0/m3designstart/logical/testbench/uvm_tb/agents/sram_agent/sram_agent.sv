@@ -1,7 +1,7 @@
 
-import uvm_pkg::*;
-`include "uvm_macros.svh"
-
+`include "sram_agent_config.sv"
+`include "sram_driver.sv"
+`include "sram_monitor.sv"
 
 // ----------------------------------------------------------------
 // 6. AGENT
@@ -26,7 +26,6 @@ class sram_agent extends uvm_agent;
     // Get Config
     if (!uvm_config_db#(sram_agent_config)::get(this, "", "sram_cfg", m_cfg))
       `uvm_fatal("AGENT", "No sram_cfg found")
-    uvm_config_db#(sram_agent_config)::set(this, "*", "sram_cfg", m_cfg);
     mon = sram_monitor::type_id::create("mon", this);
 
     if (m_cfg.active) begin
@@ -36,12 +35,17 @@ class sram_agent extends uvm_agent;
 
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    mon.ap.connect(this.ap);  // Promote monitor port to agent boundary
 
-    // Share the config (and the memory model)
+    // Hook up monitor's analysis port to agent's
+    mon.ap.connect(this.ap);
+
+    // Pass shared config + vif down from agent to children
     mon.m_cfg = m_cfg;
-    if (m_cfg.active) begin
+    mon.vif   = m_cfg.vif;
+
+    if (m_cfg.active && drv != null) begin
       drv.m_cfg = m_cfg;
+      drv.vif   = m_cfg.vif;
     end
   endfunction
 endclass

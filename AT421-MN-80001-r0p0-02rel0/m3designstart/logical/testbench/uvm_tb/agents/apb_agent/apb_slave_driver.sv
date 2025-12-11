@@ -1,11 +1,12 @@
 `ifndef APB_SLAVE_DRIVER_SV
 `define APB_SLAVE_DRIVER_SV
-
+`include "apb_slave_vif.sv"
+`include "apb_slave_model.sv"
 class apb_slave_driver extends uvm_component;
   `uvm_component_utils(apb_slave_driver)
 
-  apb_slave_vif   vif;
-  apb_slave_model model;
+virtual apb_slave_if.slave_mp vif;
+apb_slave_model model;
 
   function new(string name, uvm_component parent);
     super.new(name, parent);
@@ -13,10 +14,10 @@ class apb_slave_driver extends uvm_component;
   endfunction
 
   virtual function void build_phase(uvm_phase phase);
-    if (!uvm_config_db#(apb_slave_vif)::get(this,"","vif",vif))
-      `uvm_fatal("DRV","No VIF provided")
-
     pidcid_t ids;
+    if (!uvm_config_db#(virtual apb_slave_if.slave_mp)::get(this,"","vif",vif))
+      	    `uvm_fatal("DRV","No VIF provided")
+
     if (uvm_config_db#(pidcid_t)::get(this,"","pidcid",ids))
       model.set_ids(ids);
   endfunction
@@ -32,44 +33,46 @@ class apb_slave_driver extends uvm_component;
   endfunction
 
   virtual task run_phase(uvm_phase phase);
+	logic [11:0] offset;
+	int idx;
     // Default outputs
-    vif.cb.prdata  <= '0;
-    vif.cb.pslverr <= 0;
-    vif.cb.pready  <= 1;   // <<<<<< ALWAYS READY (matches your RTL)
+    vif.prdata  <= '0;
+    vif.pslverr <= 0;
+    vif.pready  <= 1;   // <<<<<< ALWAYS READY (matches your RTL)
 
     forever begin
-      @(posedge vif.cb.pclk);
+      @(posedge vif.pclk);
 
-      if (!vif.cb.psel)
+      if (!vif.psel)
         continue;
 
       // APB protocol: PSEL=1 in SETUP, PSEL=1 & PENABLE=1 in ACCESS
-      if (vif.cb.penable == 0)
+      if (vif.penable == 0)
         continue;
 
-      logic [11:0] offset = vif.cb.paddr[11:0];
+      offset = vif.paddr[11:0];
 
       // RTL requirement: ANY offset in 0..FFF is valid. No error.
-      vif.cb.pslverr <= 0;
+      vif.pslverr <= 0;
 
-      int idx = offset >> 2;
+      idx = offset >> 2;
 
       if (idx >= model.regs.size()) begin
-        vif.cb.prdata <= 32'h0;
+        vif.prdata <= 32'h0;
       end
       else begin
-        if (vif.cb.pwrite) begin
+        if (vif.pwrite) begin
           bit [1:0] byte_ofs = offset[1:0];
-          bit [31:0] mask         = pstrb_to_mask(vif.cb.pstrb, byte_ofs);
-          bit [31:0] shifted_data = (vif.cb.pwdata << (byte_ofs * 8));
+          bit [31:0] mask         = pstrb_to_mask(vif.pstrb, byte_ofs);
+          bit [31:0] shifted_data = (vif.pwdata << (byte_ofs * 8));
 
           bit [31:0] old = model.regs[idx];
           model.regs[idx] = (old & ~mask) | (shifted_data & mask);
-          vif.cb.prdata   <= 0;
+          vif.prdata   <= 0;
         end
         else begin
           // Read
-          vif.cb.prdata <= model.regs[idx];
+          vif.prdata <= model.regs[idx];
         end
       end
 

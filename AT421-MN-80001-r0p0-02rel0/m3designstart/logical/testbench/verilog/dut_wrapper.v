@@ -1,15 +1,5 @@
-Here is the updated `dut_wrapper` module.
-
-**Changes made:**
-
-1.  **Exposed APB Ports:** Added input/output ports for all APB interfaces from `apbtargexp2` through `apbtargexp15` to the top of the wrapper.
-2.  **Disconnected Flash APB:** Broken the internal APB connection between `m3ds_iot_top` (Ports 3, 9, 10) and `m3ds_simple_flash`.
-3.  **Rerouted IoT APB:** Connected `m3ds_iot_top` APB ports 3, 9, and 10 directly to the wrapper outputs (so you can verify them externally).
-4.  **Tied-off Flash APB:** Tied the APB *inputs* of the `m3ds_simple_flash` instance to logic 0 (inactive) and left the *outputs* unconnected.
-
-<!-- end list -->
-
-```verilog
+`include "../../../../m3designstart_iot/logical/m3ds_iot_top/verilog/m3ds_iot_top.v"
+`include "../../../../m3designstart/logical/m3ds_user_partition/verilog/m3ds_simple_flash.v"
 module dut_wrapper (
     // Clocking
     input  wire         fclk,            // Main Free running clock
@@ -882,4 +872,4 @@ module dut_wrapper (
   );
 
 endmodule
-```
+

@@ -47,5 +47,5 @@
 +incdir+../../../../m3designstart_iot/logical/p_beid_peripheral_f0/verilog
 +incdir+../../fpga_top/verilog
 
-../verilog/tb_m3ds_iot_top.sv
+//../verilog/tb_m3ds_iot_top.sv
 
