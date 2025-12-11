@@ -129,7 +129,7 @@ import uvm_pkg::*;
 //`include "iot_env.sv"
 `include "../tests/iot_test_base.sv"
 `include "../tests/iot_ahb_wr_rd_test.sv"
-
+`include "../tests/ahb_test.sv"
 
 module tb_top;
 
@@ -618,7 +618,7 @@ module tb_top;
     // ----------------------------------------------------------------
   end
   initial begin
-    run_test("iot_ahb_wr_rd_test");
+    run_test("ahb_wr_rd_test");
   end
 
 endmodule

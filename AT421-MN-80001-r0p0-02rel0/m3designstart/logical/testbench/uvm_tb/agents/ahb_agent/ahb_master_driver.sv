@@ -71,7 +71,7 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
       req_burst   = req.burst;
       req_size    = req.size;
       req_trans  = req.trans;
-      `uvm_info("HTRANS", $sformatf("--------------------REQ.TRANS=%0d---------------", req.trans), UVM_MEDIUM) 
+      `uvm_info("HTRANS", $sformatf("---1---GOT DATA FROM SEQ--------------REQ.ADDR=%0d---------------", req.addr), UVM_MEDIUM) 
       req_pending = 1;
 
       @(addr_phase_accepted);
@@ -115,14 +115,15 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
            if (pipe_stage.write) vif.HWDATA <= pipe_stage.data;
            else                  vif.HWDATA <= 'hx ; 
         end else begin
-          `uvm_info("HTRANS","PIPE_VALID0",UVM_MEDIUM)
+        //  `uvm_info("HTRANS","PIPE_VALID0",UVM_MEDIUM)
            vif.HWDATA <= 'hxx;
         end
 
         // --- B. ADDRESS PHASE (Current Transaction) ---
         if (req_pending) begin
-          `uvm_info("HTRANS","REQ_PENDING1",UVM_MEDIUM)
-          
+         // `uvm_info("HTRANS","REQ_PENDING1",UVM_MEDIUM)
+      //   #5;
+      //@(posedge vif.hclk); 
            
            // DIRECT DRIVE: Blindly follow the Sequence
            vif.HTRANS <= req_trans;
@@ -131,7 +132,7 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
            vif.HWRITE <= req_write;
            vif.HSIZE  <= req_size;
 
-       
+    `uvm_info("DRV", $sformatf("2---DROVE: Addr=0x%h ", vif.HADDR), UVM_LOW)
            // execute a Data Phase in the next cycle.
          
            if (req_trans[1]) begin
@@ -139,18 +140,22 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
                pipe_stage.valid <= 1;
                pipe_stage.data  <= req_data;
                pipe_stage.write <= req_write;
+             `uvm_info("trans0",$sformatf("----------3 driving data req_data=%0d",req_data),UVM_MEDIUM)
            end else begin
-             `uvm_info("trans0","htrans[1]==0",UVM_MEDIUM)
+            
                pipe_stage.valid <= 0; // It was IDLE or BUSY
            end
 
            // Handshake
            -> addr_phase_accepted;
+//	   req_pending<=0;
         end
         else begin
+                @(posedge vif.hclk); 
+		`uvm_info("reqpend",$sformatf("--req_addr=%0h req_data=%0d",req_addr,req_data),UVM_MEDIUM)
            // No item from sequence? Default to IDLE.
            vif.HTRANS <= HTRANS_IDLE;
-           vif.HADDR  <= 0;
+           vif.HADDR  <= 'h0000_0000;
            vif.HWRITE <= 0;
            pipe_stage.valid <= 0;
         end

@@ -33,7 +33,7 @@ class ahb_seq_item extends uvm_sequence_item;
     super.new(name);
   endfunction
 
-  constraint c_addr_aligned { addr[1:0] == 0; }
+//  constraint c_addr_aligned { addr[1:0] == 0; }
   
   // Default Constraints
   constraint c_default_ctrl {
@@ -41,10 +41,10 @@ class ahb_seq_item extends uvm_sequence_item;
   }
 
   // Response Constraints (Keep delays reasonable by default)
-  constraint c_resp_delay {
+/*  constraint c_resp_delay {
     delay dist { 0:=70, [1:2]:=20, [3:10]:=10 }; // Mostly 0 wait states
     resp  dist { 0:=98, 1:=2 };                  // Mostly OKAY responses
-  }
+  }*/
 
 endclass
 
