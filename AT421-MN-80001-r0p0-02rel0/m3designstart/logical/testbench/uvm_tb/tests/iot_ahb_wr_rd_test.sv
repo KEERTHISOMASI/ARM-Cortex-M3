@@ -18,10 +18,11 @@ class iot_ahb_wr_rd_test extends iot_test_base;
     endfunction
 
     task run_phase(uvm_phase phase);
-        ahb_write_read_seq seq;
-        phase.raise_objection(this);
+        //ahb_write_read_seq seq;
+        ahb_incr4_burst_seq seq;
+	phase.raise_objection(this);
 
-        seq = ahb_write_read_seq::type_id::create("seq");
+        seq = ahb_incr4_burst_seq::type_id::create("seq");
         seq.start(env.master_agent_dma.sequencer);
         #100;
 
