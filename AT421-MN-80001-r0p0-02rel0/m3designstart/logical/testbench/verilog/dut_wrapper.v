@@ -31,7 +31,7 @@ module dut_wrapper (
     input  wire         cpu0_sysresetreq, // Usually an output, but listed as input in instantiation
     input  wire         cpu0_lockup,      // Usually an output, listed as input in instantiation
     input  wire         wdog_reset_req,
-    input  wire         mtx_remap,
+    input  wire [3:1]   mtx_remap,
     
     // Interrupts (Input Vector)
     input  wire [239:0] cpu0_intisr,

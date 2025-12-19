@@ -27,13 +27,23 @@ class ahb_master_monitor extends uvm_monitor;
     item_collected_port = new("item_collected_port", this);
   endfunction
 
+
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    if(!uvm_config_db#(virtual ahb_if.MASTER)::get(this, "", "vif", vif)) begin
-      `uvm_fatal("NOVIF", "Virtual interface not set for ahb_master_monitor")
-    end
-  endfunction
-
+// Logic to determine if this is slave 0 or 1
+if (get_name() == "master_agent_dma")
+begin
+if(!uvm_config_db#(virtual ahb_if.MASTER)::get(this, "","vif_0" , vif)) begin
+    `uvm_fatal("NOVIF","Virtual interface master agent dma not set ")
+end
+end
+else                         
+begin
+if(!uvm_config_db#(virtual ahb_if.MASTER)::get(this, "","vif_1", vif)) begin
+    `uvm_fatal("NOVIF","Virtual interface master agent spi not set ")
+end
+end
+     endfunction
   task run_phase(uvm_phase phase);
     pipeline_info_s pending;
     ahb_seq_item    trans_obj;

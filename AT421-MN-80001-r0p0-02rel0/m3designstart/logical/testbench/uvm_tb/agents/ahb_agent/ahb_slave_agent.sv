@@ -23,30 +23,9 @@ class ahb_slave_agent extends uvm_agent;
 
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    
-    // Get VIF
-    if(!uvm_config_db#(virtual ahb_if.SLAVE)::get(this, "", "vif", vif)) begin
-      `uvm_fatal("NOVIF", "Virtual interface not set for ahb_slave_agent")
-    end
-    
     monitor = ahb_slave_monitor::type_id::create("monitor", this);
-    
     if(get_is_active() == UVM_ACTIVE) begin
       driver    = ahb_slave_driver::type_id::create("driver", this);
-      //sequencer = ahb_slave_sequencer::type_id::create("sequencer", this); // Create Sequencer
-    end
-    
-    // Pass VIF to children
-    uvm_config_db#(virtual ahb_if.SLAVE)::set(this, "driver", "vif", vif);
-    uvm_config_db#(virtual ahb_if.SLAVE)::set(this, "monitor", "vif", vif);
-  endfunction
-
-  function void connect_phase(uvm_phase phase);
-    super.connect_phase(phase);
-    
-    if(get_is_active() == UVM_ACTIVE) begin
-      // Connect Driver to Sequencer
-      //driver.seq_item_port.connect(sequencer.seq_item_export); 
     end
   endfunction
 

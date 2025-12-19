@@ -31,7 +31,7 @@ class ahb_single_write_seq extends ahb_base_seq;
     // Edit values here to control the transaction
     if (!req.randomize() with {
         // --- User Controls ---
-        addr   == 32'hA0000000;     // Set your Address
+        addr   == 32'h00040000;     // Set your Address
         data   == 32'hAABBCCDD;// Set your Data
         
         // --- Protocol Rules ---
@@ -139,7 +139,7 @@ class ahb_incr4_burst_seq extends ahb_base_seq;
   task body();
     ahb_seq_item req;
     // Task-local variable to track address increment
-    logic [31:0] current_addr = 32'ha000_0000; // Start Address
+    logic [31:0] current_addr = 32'h0004_0000; // Start Address
  logic [31:0] current_data = 32'h0000_3000; // Start Address
 
     `uvm_info("SEQ", $sformatf("Starting INCR4 Burst @ 0x%h", current_addr), UVM_LOW)
@@ -159,15 +159,17 @@ class ahb_incr4_burst_seq extends ahb_base_seq;
      // req.trans = (i == 0) ? 2'b10 : 2'b11; 
 
       finish_item(req);
-      
-
       // Increment Address for next beat
       current_addr += 4;
       current_data+=4;
-      `uvm_info("HTRANS", $sformatf("seq ----------------TRANS=%0d i=%0d currentaddr=%0h------------------", req.trans,i,current_addr), UVM_MEDIUM) 
+      `uvm_info("SEQ", $sformatf("TRANS=%0d i=%0d current_addr=%0h", req.trans,i,current_addr), UVM_MEDIUM) 
     end
   endtask
 endclass
+
+
+
+
 //WRAP4
 class ahb_wrap4_burst_seq extends ahb_base_seq;
   `uvm_object_utils(ahb_wrap4_burst_seq)

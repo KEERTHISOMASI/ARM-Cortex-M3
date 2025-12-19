@@ -24,13 +24,23 @@ class ahb_slave_monitor extends uvm_monitor;
     item_collected_port = new("item_collected_port", this);
   endfunction
 
+
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    if(!uvm_config_db#(virtual ahb_if.SLAVE)::get(this, "", "vif", vif)) begin
-      `uvm_fatal("NOVIF", "Virtual interface not set for ahb_slave_monitor")
-    end
-  endfunction
-
+// Logic to determine if this is slave 0 or 1
+if (get_name() == "slave_agent_exp0")
+begin
+if(!uvm_config_db#(virtual ahb_if.SLAVE)::get(this, "","vif_0" , vif)) begin
+    `uvm_fatal("NOVIF","Virtual interface slave agent 0 not set ")
+end
+end
+else                         
+begin
+if(!uvm_config_db#(virtual ahb_if.SLAVE)::get(this, "","vif_1", vif)) begin
+    `uvm_fatal("NOVIF","Virtual interface slave agent 1 not set ")
+end
+end
+     endfunction
   task run_phase(uvm_phase phase);
     pipeline_info_s pending;
     ahb_seq_item    trans_obj;
@@ -38,7 +48,7 @@ class ahb_slave_monitor extends uvm_monitor;
     forever begin
       @(posedge vif.hclk);
       
-      if (vif.hresetn && vif.HREADY) begin
+      if (vif.hresetn) begin
         
         // --- 1. DATA PHASE ---
         if (pipeline_q.size() > 0) begin
