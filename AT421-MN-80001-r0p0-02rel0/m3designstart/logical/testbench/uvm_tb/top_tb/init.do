@@ -396,8 +396,12 @@ add wave -noupdate /tb_top/targexp1_vif/HRESP
 add wave -noupdate /tb_top/targexp1_vif/HSEL
 add wave -noupdate /tb_top/targexp1_vif/HREADYMUX
 add wave -noupdate /tb_top/targexp1_vif/HREADY
+add wave -noupdate -expand /tb_top/u_dut/u_iot_top/u_p_beid_interconnect_f0/u_p_beid_interconnect_f0_ahb_mtx/u_p_beid_interconnect_f0_ahb_mtx_decoderinitexp1/addr_out_port
+add wave -noupdate /tb_top/u_dut/u_iot_top/u_p_beid_interconnect_f0/u_p_beid_interconnect_f0_ahb_mtx/u_p_beid_interconnect_f0_ahb_mtx_decoderinitexp1/active_dec7
+add wave -noupdate -expand -label {Contributors: active_dec7} -group {Contributors: sim:/tb_top/u_dut/u_iot_top/u_p_beid_interconnect_f0/u_p_beid_interconnect_f0_ahb_mtx/u_p_beid_interconnect_f0_ahb_mtx_decoderinitexp1/active_dec7} /tb_top/u_dut/u_iot_top/u_p_beid_interconnect_f0/u_p_beid_interconnect_f0_ahb_mtx/u_p_beid_interconnect_f0_ahb_mtx_output_stagetargexp1_7/addr_in_port
+add wave -noupdate -expand -label {Contributors: active_dec7} -group {Contributors: sim:/tb_top/u_dut/u_iot_top/u_p_beid_interconnect_f0/u_p_beid_interconnect_f0_ahb_mtx/u_p_beid_interconnect_f0_ahb_mtx_decoderinitexp1/active_dec7} /tb_top/u_dut/u_iot_top/u_p_beid_interconnect_f0/u_p_beid_interconnect_f0_ahb_mtx/u_p_beid_interconnect_f0_ahb_mtx_output_stagetargexp1_7/no_port
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {121232 ps} 0}
+WaveRestoreCursors {{Cursor 1} {105000 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 216
 configure wave -valuecolwidth 100
@@ -413,4 +417,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {290064 ps}
+WaveRestoreZoom {0 ps} {1160250 ps}

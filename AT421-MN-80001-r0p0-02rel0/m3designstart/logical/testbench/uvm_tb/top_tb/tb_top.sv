@@ -196,7 +196,7 @@ module tb_top;
   logic         cpu0_sysresetreq;
   logic         cpu0_lockup;
   logic         wdog_reset_req;
-  logic  [3:1]  mtx_remap;
+  logic [  3:1] mtx_remap;
   logic [239:0] cpu0_intisr;
   logic         cpu0_intnmi;
 
@@ -518,7 +518,7 @@ module tb_top;
       .apbtargexp15pslverr(apb_vif[15].pslverr),
       .apbtargexp15pstrb(apb_vif[15].pstrb),
       .apbtargexp15pprot(apb_vif[15].pprot),
-    
+
       // Debug & Misc
       .nTRST(nTRST),
       .SWCLKTCK(SWCLKTCK),
@@ -543,50 +543,8 @@ module tb_top;
       .flash_int_o(),
       .dftscanmode(dftscanmode),
       .dftcgen(dftcgen),
-      .dftse(dftse));/*
-      wire [31:0]  targflash0haddr;
-  wire [1:0]   targflash0htrans;
-  wire         targflash0hwrite;
-  wire [2:0]   targflash0hsize;
-  wire [31:0]  targflash0hwdata;
-  wire [2:0]   targflash0hburst;
-  wire [3:0]   targflash0hprot;
-  wire [1:0]   targflash0memattr;
-  wire         targflash0exreq;
-  wire [3:0]   targflash0hmaster;
-  wire         targflash0hmastlock;
-  wire         targflash0hauser;
-  wire [3:0]   targflash0hwuser;
-  wire         targflash0hreadymux;
-  wire         targflash0hreadyout;
-  wire [31:0]  targflash0hrdata;
-  wire         targflash0hresp;
-  wire         targflash0exresp;
-  wire [2:0]   targflash0hruser;
-
-  // Clock Distribution (mimicking user partition logic)
-  wire SRAMFHCLK      = fclk;
-  wire SRAM0HCLK      = fclk;
-  wire SRAM1HCLK      = fclk;
-  wire SRAM2HCLK      = fclk;
-  wire SRAM3HCLK      = fclk;
-  wire MTXHCLK        = fclk;
-  wire AHB2APBHCLK    = fclk;
-  wire TIMER0PCLK     = fclk;
-  wire TIMER0PCLKG    = fclk;
-  wire TIMER1PCLK     = fclk;
-  wire TIMER1PCLKG    = fclk;
-  wire CPU0FCLK       = fclk;
-  wire CPU0HCLK       = fclk;
-  wire TPIUTRACECLKIN = fclk;
-  wire PCLK           = fclk;
-  wire PCLKG          = fclk;
-
-  // Reset Distribution
-  wire MTXHRESETn     = sys_reset_n;
-  wire SRAMHRESETn    = sys_reset_n;
-  wire TIMER0PRESETn  = sys_reset_n;
-  wire TIMER1PRESETn  = sys_reset_n;*/
+      .dftse(dftse)
+  );
 
   initial begin
     fclk = 0;
@@ -600,7 +558,7 @@ module tb_top;
     cpu0_sys_reset_n = 0;
 
     repeat (10) @(posedge fclk);
-    cpu0_po_reset_n = 1;
+    cpu0_po_reset_n  = 1;
     sys_reset_n      = 1;
     cpu0_sys_reset_n = 1;
   end
@@ -615,10 +573,37 @@ module tb_top;
     //end
     // 2. Set AHB Interfaces
     // Use unique field names to distinguish the interfaces
-    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif_0", targexp0_vif);
-    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif_1", targexp1_vif);
-    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif_0", initexp0_vif);
-    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif_1", initexp1_vif);
+    /*uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif_0_s", targexp0_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif_1_s", targexp1_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif_0_m", initexp0_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif_1_m", initexp1_vif);*/
+
+    // 1. DMA Master Agent
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_dma.driver",
+                                               "vif", initexp0_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_dma.monitor",
+                                               "vif", initexp0_vif);
+
+    // 2. SPI Master Agent
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_spi.driver",
+                                               "vif", initexp1_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_spi.monitor",
+                                               "vif", initexp1_vif);
+
+    // -------------------------------------------------------------
+    // SLAVE AGENTS
+    // -------------------------------------------------------------
+    // 3. Slave Agent 0 (exp0)
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "uvm_test_top.env.slave_agent_exp0.driver",
+                                              "vif", targexp0_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "uvm_test_top.env.slave_agent_exp0.monitor",
+                                              "vif", targexp0_vif);
+
+    // 4. Slave Agent 1 (exp1)
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "uvm_test_top.env.slave_agent_exp1.driver",
+                                              "vif", targexp1_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "uvm_test_top.env.slave_agent_exp1.monitor",
+                                              "vif", targexp1_vif);
 
     // 3. Set APB Interfaces (2 to 15)
     // Matches the naming convention in iot_env: "APB_2", "APB_3", etc.
@@ -659,7 +644,7 @@ module tb_top;
     // ----------------------------------------------------------------
   end
   initial begin
-	  
+
     run_test("ahb_wr_rd_test");
     #1000;
   end
