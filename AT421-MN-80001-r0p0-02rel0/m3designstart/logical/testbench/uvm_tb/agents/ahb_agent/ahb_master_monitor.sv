@@ -27,13 +27,13 @@ class ahb_master_monitor extends uvm_monitor;
     item_collected_port = new("item_collected_port", this);
   endfunction
 
+
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    if (!uvm_config_db#(virtual ahb_if.MASTER)::get(this, "", "vif", vif)) begin
-      `uvm_fatal("NOVIF", "Virtual interface not set for ahb_master_monitor")
-    end
+    if (!uvm_config_db#(virtual ahb_if.MASTER)::get(this, "", "vif", vif))
+      `uvm_fatal("NOVIF", {"Virtual interface must be set for: ", get_full_name(), ".vif"})
+    // Logic to determine if this is slave 0 or 1
   endfunction
-
   task run_phase(uvm_phase phase);
     pipeline_info_s pending;
     ahb_seq_item    trans_obj;
@@ -66,9 +66,8 @@ class ahb_master_monitor extends uvm_monitor;
           item_collected_port.write(trans_obj);
 
           // Optional Verbosity
-          `uvm_info("MON", $sformatf("Type:%s Addr:0x%0h Data:0x%0h",
-                                     (trans_obj.write ? "WR" : "RD"), trans_obj.addr,
-                                     trans_obj.data), UVM_LOW)
+          //`uvm_info("MON", $sformatf("Type:%s Addr:0x%0h Data:0x%0h", 
+          //                          (trans_obj.write ? "WR" : "RD"), trans_obj.addr, trans_obj.data), UVM_LOW)
         end
 
         // ---------------------------------------------------

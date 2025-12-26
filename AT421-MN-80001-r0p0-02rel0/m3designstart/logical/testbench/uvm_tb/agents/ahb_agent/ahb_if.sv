@@ -13,18 +13,18 @@ interface ahb_if (
   logic        HREADYOUT;
   logic        HRESP;
   logic        HSEL;
+  logic        HREADYMUX;
 
   logic        HREADY;
-  assign HREADY = HREADYOUT;
+  //assign HREADY = HREADYOUT;
 
   modport MASTER(
       input hclk, hresetn, HREADY, HRESP, HRDATA,
-      output HADDR, HWRITE, HTRANS, HSIZE, HBURST, HPROT, HWDATA
+      output HSEL, HADDR, HWRITE, HTRANS, HSIZE, HBURST, HPROT, HWDATA
   );
 
   modport SLAVE(
-      input hclk, hresetn, HSEL, HADDR, HWRITE, HTRANS, HSIZE, HBURST, HPROT, HWDATA, HREADY,
+      input hclk, hresetn, HSEL, HADDR, HWRITE, HTRANS, HSIZE, HBURST, HPROT, HWDATA, HREADYMUX,
       output HREADYOUT, HRESP, HRDATA
   );
 endinterface
-
