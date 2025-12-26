@@ -151,7 +151,7 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
 //	   req_pending<=0;
         end
         else begin
-                @(posedge vif.hclk); 
+               // @(posedge vif.hclk); 
 		`uvm_info("reqpend",$sformatf("--req_addr=%0h req_data=%0d",req_addr,req_data),UVM_MEDIUM)
            // No item from sequence? Default to IDLE.
            vif.HTRANS <= HTRANS_IDLE;
