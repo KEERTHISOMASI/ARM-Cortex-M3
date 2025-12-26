@@ -6,6 +6,10 @@
 //Include path of Environment
 `include "../env/iot_env.sv"
 
+`include "../sequences/ahb_sequences.sv"
+`include "../sequences/apb_sequences.sv"
+`include "../sequences/sram_sequences.sv"
+
 class iot_test_base extends uvm_test;
   `uvm_component_utils(iot_test_base)
 
@@ -24,9 +28,7 @@ class iot_test_base extends uvm_test;
     uvm_top.print_topology();
 
     //Configure Slave ranges
-    //env.slave_agent_exp0.driver.add_range(32'h0000_0000, 32'h0000_0001);
     env.slave_agent_exp0.driver.add_range(32'hA000_0000, 32'hA000_FFFF);
-    //env.slave_agent_exp1.driver.add_range(32'h0000_0000, 32'h0000_0001);
     env.slave_agent_exp1.driver.add_range(32'h0004_0000, 32'h1FFF_FFFF);
     env.slave_agent_exp1.driver.add_range(32'h2002_0000, 32'h3FFF_FFFF);
     env.slave_agent_exp1.driver.add_range(32'h4001_0000, 32'h9FFF_FFFF);

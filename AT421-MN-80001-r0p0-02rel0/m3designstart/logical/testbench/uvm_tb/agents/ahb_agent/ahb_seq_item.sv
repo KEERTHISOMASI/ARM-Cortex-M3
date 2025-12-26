@@ -1,8 +1,6 @@
 `ifndef AHB_SEQ_ITEM_SV
 `define AHB_SEQ_ITEM_SV 
 
-import uvm_pkg::*;
-`include "uvm_macros.svh"
 
 class ahb_seq_item extends uvm_sequence_item;
 

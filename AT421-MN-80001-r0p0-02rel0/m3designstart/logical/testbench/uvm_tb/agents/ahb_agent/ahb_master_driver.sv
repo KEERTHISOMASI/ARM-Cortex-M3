@@ -2,7 +2,6 @@
 `ifndef AHB_MASTER_DRIVER_SV
 `define AHB_MASTER_DRIVER_SV 
 
-
 class ahb_master_driver extends uvm_driver #(ahb_seq_item);
   `uvm_component_utils(ahb_master_driver)
 
@@ -164,7 +163,5 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
       wait (vif.hresetn);
     end
   endtask
-
 endclass
-
 `endif
