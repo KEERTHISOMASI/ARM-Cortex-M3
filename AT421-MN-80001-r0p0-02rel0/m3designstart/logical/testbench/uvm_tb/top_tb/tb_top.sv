@@ -456,11 +456,10 @@ module tb_top;
     //  uvm_config_db#(virtual sram_if.TB)::set(null, "*", $sformatf("sram_vif_%0d", i), sram_vif[i]);
     //end
     // 2. Set AHB Interfaces
-    // Use unique field names to distinguish the interfaces
-    /*uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif_0_s", targexp0_vif);
-    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif_1_s", targexp1_vif);
-    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif_0_m", initexp0_vif);
-    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif_1_m", initexp1_vif);*/
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp0_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp1_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*.master_agent_spi*", "vif", initexp0_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*.master_agent_dma*", "vif", initexp1_vif);
 
     // 1. DMA Master Agent
     uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_dma.driver",
