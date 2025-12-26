@@ -128,7 +128,6 @@ import uvm_pkg::*;
 // Include the Environment and Test
 //`include "iot_env.sv"
 `include "../tests/iot_test_base.sv"
-`include "../tests/iot_ahb_wr_rd_test.sv"
 `include "../tests/ahb_test.sv"
 
 module tb_top;
@@ -197,7 +196,7 @@ module tb_top;
   logic         cpu0_sysresetreq;
   logic         cpu0_lockup;
   logic         wdog_reset_req;
-  logic         mtx_remap;
+  logic [  3:1] mtx_remap;
   logic [239:0] cpu0_intisr;
   logic         cpu0_intnmi;
 
@@ -224,7 +223,7 @@ module tb_top;
     cpu0_sysresetreq   = 0;
     cpu0_lockup        = 0;
     wdog_reset_req     = 0;
-    mtx_remap          = 0;
+    mtx_remap          = 3'b000;
     cpu0_intisr        = 240'h0;
     cpu0_intnmi        = 0;
     nTRST              = 1;
@@ -276,16 +275,19 @@ module tb_top;
       .sram0_wren(sram_vif[0].WREN),
       .sram0_wdata(sram_vif[0].WDATA),
       .sram0_cs(sram_vif[0].CS),
+
       .sram1_rdata(sram_vif[1].RDATA),
       .sram1_addr(sram_vif[1].ADDR),
       .sram1_wren(sram_vif[1].WREN),
       .sram1_wdata(sram_vif[1].WDATA),
       .sram1_cs(sram_vif[1].CS),
+
       .sram2_rdata(sram_vif[2].RDATA),
       .sram2_addr(sram_vif[2].ADDR),
       .sram2_wren(sram_vif[2].WREN),
       .sram2_wdata(sram_vif[2].WDATA),
       .sram2_cs(sram_vif[2].CS),
+
       .sram3_rdata(sram_vif[3].RDATA),
       .sram3_addr(sram_vif[3].ADDR),
       .sram3_wren(sram_vif[3].WREN),
@@ -325,7 +327,7 @@ module tb_top;
       .initexp0hprot (initexp0_vif.HPROT),
       .initexp0hwdata(initexp0_vif.HWDATA),
       .initexp0hrdata(initexp0_vif.HRDATA),
-      .initexp0hready(initexp0_vif.HREADYOUT),
+      .initexp0hready(initexp0_vif.HREADY),
       .initexp0hresp (initexp0_vif.HRESP),
       .initexp1hsel  (initexp1_vif.HSEL),
       .initexp1haddr (initexp1_vif.HADDR),
@@ -336,15 +338,14 @@ module tb_top;
       .initexp1hprot (initexp1_vif.HPROT),
       .initexp1hwdata(initexp1_vif.HWDATA),
       .initexp1hrdata(initexp1_vif.HRDATA),
-      .initexp1hready(initexp1_vif.HREADYOUT),
+      .initexp1hready(initexp1_vif.HREADY),
       .initexp1hresp (initexp1_vif.HRESP),
 
-      // AHB Tie-offs
       .targexp0memattr(),
       .targexp0exreq(),
       .targexp0hmaster(),
       .targexp0hmastlock(),
-      .targexp0hreadymux(),
+      .targexp0hreadymux(targexp0_vif.HREADYMUX),
       .targexp0hauser(),
       .targexp0hwuser(),
       .targexp0exresp(1'b0),
@@ -353,7 +354,7 @@ module tb_top;
       .targexp1exreq(),
       .targexp1hmaster(),
       .targexp1hmastlock(),
-      .targexp1hreadymux(),
+      .targexp1hreadymux(targexp1_vif.HREADYMUX),
       .targexp1hauser(),
       .targexp1hwuser(),
       .targexp1exresp(1'b0),
@@ -518,7 +519,6 @@ module tb_top;
       .apbtargexp15pstrb(apb_vif[15].pstrb),
       .apbtargexp15pprot(apb_vif[15].pprot),
 
-
       // Debug & Misc
       .nTRST(nTRST),
       .SWCLKTCK(SWCLKTCK),
@@ -558,9 +558,7 @@ module tb_top;
     cpu0_sys_reset_n = 0;
 
     repeat (10) @(posedge fclk);
-    cpu0_po_reset_n = 1;
-
-    repeat (10) @(posedge fclk);
+    cpu0_po_reset_n  = 1;
     sys_reset_n      = 1;
     cpu0_sys_reset_n = 1;
   end
@@ -574,10 +572,38 @@ module tb_top;
     //  uvm_config_db#(virtual sram_if.TB)::set(null, "*", $sformatf("sram_vif_%0d", i), sram_vif[i]);
     //end
     // 2. Set AHB Interfaces
-    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp0_vif);
-    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif", targexp1_vif);
-    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif", initexp0_vif);
-    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif", initexp1_vif);
+    // Use unique field names to distinguish the interfaces
+    /*uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif_0_s", targexp0_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "*", "vif_1_s", targexp1_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif_0_m", initexp0_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "*", "vif_1_m", initexp1_vif);*/
+
+    // 1. DMA Master Agent
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_dma.driver",
+                                               "vif", initexp0_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_dma.monitor",
+                                               "vif", initexp0_vif);
+
+    // 2. SPI Master Agent
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_spi.driver",
+                                               "vif", initexp1_vif);
+    uvm_config_db#(virtual ahb_if.MASTER)::set(null, "uvm_test_top.env.master_agent_spi.monitor",
+                                               "vif", initexp1_vif);
+
+    // -------------------------------------------------------------
+    // SLAVE AGENTS
+    // -------------------------------------------------------------
+    // 3. Slave Agent 0 (exp0)
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "uvm_test_top.env.slave_agent_exp0.driver",
+                                              "vif", targexp0_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "uvm_test_top.env.slave_agent_exp0.monitor",
+                                              "vif", targexp0_vif);
+
+    // 4. Slave Agent 1 (exp1)
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "uvm_test_top.env.slave_agent_exp1.driver",
+                                              "vif", targexp1_vif);
+    uvm_config_db#(virtual ahb_if.SLAVE)::set(null, "uvm_test_top.env.slave_agent_exp1.monitor",
+                                              "vif", targexp1_vif);
 
     // 3. Set APB Interfaces (2 to 15)
     // Matches the naming convention in iot_env: "APB_2", "APB_3", etc.
@@ -618,7 +644,9 @@ module tb_top;
     // ----------------------------------------------------------------
   end
   initial begin
+
     run_test("ahb_wr_rd_test");
+    #1000;
   end
 
 endmodule

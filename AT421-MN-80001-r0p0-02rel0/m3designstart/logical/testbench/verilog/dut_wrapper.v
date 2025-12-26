@@ -31,7 +31,7 @@ module dut_wrapper (
     input  wire         cpu0_sysresetreq, // Usually an output, but listed as input in instantiation
     input  wire         cpu0_lockup,      // Usually an output, listed as input in instantiation
     input  wire         wdog_reset_req,
-    input  wire         mtx_remap,
+    input  wire [3:1]   mtx_remap,
     
     // Interrupts (Input Vector)
     input  wire [239:0] cpu0_intisr,
@@ -86,7 +86,7 @@ module dut_wrapper (
     output wire [3:0]   targexp0hwuser,
     input  wire [31:0]  targexp0hrdata,
     input  wire         targexp0hreadyout,
-    input  wire         targexp0hresp,
+    input  wire    targexp0hresp,
     input  wire         targexp0exresp,
     input  wire [2:0]   targexp0hruser,
 
@@ -108,7 +108,7 @@ module dut_wrapper (
     output wire [3:0]   targexp1hwuser,
     input  wire [31:0]  targexp1hrdata,
     input  wire         targexp1hreadyout,
-    input  wire         targexp1hresp,
+    input  wire    targexp1hresp,
     input  wire         targexp1exresp,
     input  wire [2:0]   targexp1hruser,
 
@@ -130,7 +130,7 @@ module dut_wrapper (
     input  wire         initexp0hmastlock,
     output wire [31:0]  initexp0hrdata,
     output wire         initexp0hready,
-    output wire         initexp0hresp,
+    output wire    initexp0hresp,
     input  wire [31:0]  initexp0hwdata,
 
     // Init Expansion 1 (Slave Inputs)
@@ -152,7 +152,7 @@ module dut_wrapper (
     input  wire         initexp1hmastlock,
     output wire [31:0]  initexp1hrdata,
     output wire         initexp1hready,
-    output wire         initexp1hresp,
+    output wire    initexp1hresp,
 
     // ----------------------------------------------------------------
     // APB Expansions [2:15]
