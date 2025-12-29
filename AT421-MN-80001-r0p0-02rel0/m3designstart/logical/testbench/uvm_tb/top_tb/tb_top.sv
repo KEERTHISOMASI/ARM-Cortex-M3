@@ -11,7 +11,7 @@ import uvm_pkg::*;
 
 // Include the Environment and Test
 //`include "iot_env.sv"
-`include "../tests/iot_test_base.sv"
+//`include "../tests/iot_test_base.sv"
 `include "../tests/iot_test_pkg.sv"
 
 import iot_test_pkg::*;
