@@ -2,20 +2,19 @@
 
 import uvm_pkg::*;
 `include "uvm_macros.svh"
-`include "rtl_pkg.sv"
-import rtl_pkg::*;
-
 // Include your interface files
 `include "../agents/ahb_agent/ahb_if.sv"
 `include "../agents/apb_agent/apb_slave_if.sv"
 `include "../agents/sram_agent/sram_if.sv"
 `include "../../verilog/dut_wrapper.v"
 
+
 // Include the Environment and Test
 //`include "iot_env.sv"
 `include "../tests/iot_test_base.sv"
-`include "../tests/ahb_test.sv"
+`include "../tests/iot_test_pkg.sv"
 
+import iot_test_pkg::*;
 module tb_top;
   // ----------------------------------------------------------------
   // 1. Clock and Reset Generation

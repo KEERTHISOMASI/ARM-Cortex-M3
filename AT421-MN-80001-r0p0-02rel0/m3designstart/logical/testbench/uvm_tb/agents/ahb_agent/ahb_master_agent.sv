@@ -34,8 +34,7 @@ class ahb_master_agent extends uvm_agent;
 
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-      driver.seq_item_port.connect(sequencer.seq_item_export);
-    end
+    driver.seq_item_port.connect(sequencer.seq_item_export);
   endfunction
 
 endclass
