@@ -94,7 +94,7 @@ class ahb_write_read_seq extends ahb_base_seq;
   task body();
     ahb_seq_item req;
     // Task-local variable to sync address between Write and Read
-    logic [31:0] target_addr = 32'h2000;
+    logic [31:0] target_addr = 32'h40008000;
     logic [31:0] target_data = 32'h12345678;
 
     `uvm_info("SEQ", "--- Starting Write-Read Sequence ---", UVM_LOW)
@@ -143,13 +143,14 @@ class ahb_incr4_burst_seq extends ahb_base_seq;
   task body();
     ahb_seq_item req;
     // Task-local variable to track address increment
-    logic [31:0] current_addr = 32'h0004_0000;  // Start Address
+    logic [31:0] current_addr = 32'h4000_8000;  // Start Address
     logic [31:0] current_data = 32'h0000_3000;  // Start Address
 
     `uvm_info("SEQ", $sformatf("Starting INCR4 Burst @ 0x%h", current_addr), UVM_LOW)
 
     for (int i = 0; i < 5; i++) begin
-      req = ahb_seq_item::type_id::create("req");
+      req = ahb_seq_item::type_id::create("req");;
+
       start_item(req);
 
       if (!req.randomize() with {

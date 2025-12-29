@@ -13,20 +13,20 @@ class ahb_wr_rd_test extends iot_test_base;
   task run_phase(uvm_phase phase);
 
     ahb_slave_reactive_seq slave_seq;
-    ahb_incr4_burst_seq master_seq;
+   // ahb_incr4_burst_seq master_seq;
     //ahb_single_write_seq   master_seq;
     //ahb_single_read_seq master_seq;
-    //ahb_write_read_seq master_seq;
+    ahb_write_read_seq master_seq;
     //ahb_wrap4_burst_seq master_seq;
     phase.raise_objection(this);
 
     // 1. Fork the Slave Sequence (Runs infinitely in background)
     slave_seq  = ahb_slave_reactive_seq::type_id::create("slave_seq");
     // 2. Start the Master Sequence (The actual test scenario)
-    master_seq = ahb_incr4_burst_seq::type_id::create("master_seq");
+   // master_seq = ahb_incr4_burst_seq::type_id::create("master_seq");
     //master_seq = ahb_single_write_seq::type_id::create("master_seq");
     //master_seq = ahb_single_read_seq::type_id::create("master_seq");
-    // master_seq = ahb_write_read_seq::type_id::create("master_seq");
+     master_seq = ahb_write_read_seq::type_id::create("master_seq");
     // master_seq = ahb_wrap4_burst_seq::type_id::create("master_seq");
     //
 
