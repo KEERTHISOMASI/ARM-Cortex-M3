@@ -15,8 +15,6 @@
 //
 // ---------------------------------------------------------
 
-`ifndef AHB_SRAM_DEFAULT_VAL_TEST_SV
-`define AHB_SRAM_DEFAULT_VAL_TEST_SV
 
 class ahb_sram_default_val_test extends iot_test_base;
   `uvm_component_utils(ahb_sram_default_val_test)
@@ -31,7 +29,6 @@ class ahb_sram_default_val_test extends iot_test_base;
     phase.raise_objection(this);
 
     // Wait for reset deassertion (VERY IMPORTANT)
-    wait (tb_top.sys_reset_n == 1);
 
     sram_seq = ahb_sram_default_val_seq::type_id::create("sram_seq");
 

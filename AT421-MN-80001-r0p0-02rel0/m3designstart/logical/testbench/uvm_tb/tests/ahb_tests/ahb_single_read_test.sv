@@ -4,19 +4,16 @@
 // The AHB master initiates a NONSEQ SINGLE read to a valid slave address.
 // The test checks correct address decoding, data return,
 // HREADY handshake, and HRESP = OKAY.
-class ahb_single_read_test extends uvm_test;
+class ahb_single_read_test extends iot_test_base;
   `uvm_component_utils(ahb_single_read_test)
 
-  ahb_env env;
+  //iot_env env;
 
   function new(string name, uvm_component parent);
     super.new(name, parent);
   endfunction
 
-  function void build_phase(uvm_phase phase);
-    super.build_phase(phase);
-    env = ahb_env::type_id::create("env", this);
-  endfunction
+ 
 
   task run_phase(uvm_phase phase);
     ahb_single_read_seq master_seq;
@@ -25,7 +22,7 @@ class ahb_single_read_test extends uvm_test;
 
     // 2. Start the Master Sequence (The actual test scenario)
     master_seq = ahb_single_read_seq::type_id::create("master_seq");
-    master_seq.start(env.master_agent.sequencer);
+    master_seq.start(env.master_agent_spi.sequencer);
 
     // Allow a little time for final response to complete
     #100;

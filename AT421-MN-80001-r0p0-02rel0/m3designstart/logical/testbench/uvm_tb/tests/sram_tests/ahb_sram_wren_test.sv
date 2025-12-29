@@ -38,7 +38,6 @@ class ahb_sram_wren_test extends iot_test_base;
     // -------------------------------------------------
     // Wait for reset to be deasserted
     // -------------------------------------------------
-    wait (tb_top.sys_reset_n == 1);
 
     // -------------------------------------------------
     // Create and configure sequence
@@ -60,3 +59,5 @@ class ahb_sram_wren_test extends iot_test_base;
     phase.drop_objection(this);
   endtask
 endclass
+
+`endif

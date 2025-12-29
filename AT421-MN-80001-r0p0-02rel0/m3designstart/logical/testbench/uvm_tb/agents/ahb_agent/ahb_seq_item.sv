@@ -1,6 +1,8 @@
 `ifndef AHB_SEQ_ITEM_SV
 `define AHB_SEQ_ITEM_SV 
 
+import uvm_pkg::*;
+`include "uvm_macros.svh"
 
 class ahb_seq_item extends uvm_sequence_item;
 
@@ -11,9 +13,11 @@ class ahb_seq_item extends uvm_sequence_item;
   rand logic        [ 2:0] size;
   rand logic        [ 2:0] burst;
   rand logic        [ 1:0] trans;
+  
 
   // Response Fields (Slave -> Master)
   logic                    resp;  // 0=OKAY, 1=ERROR
+  logic                    mastlock;
   rand int unsigned        delay;  // Number of HREADY=0 cycles to insert
 
   `uvm_object_utils_begin(ahb_seq_item)
@@ -34,7 +38,7 @@ class ahb_seq_item extends uvm_sequence_item;
   //  constraint c_addr_aligned { addr[1:0] == 0; }
 
   // Default Constraints
-//  constraint c_default_ctrl {size == 3'b010;}
+  //  constraint c_default_ctrl {size == 3'b010;}
 
   // Response Constraints (Keep delays reasonable by default)
   /*  constraint c_resp_delay {

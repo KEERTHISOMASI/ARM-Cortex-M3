@@ -17,9 +17,9 @@
 `ifndef AHB_SRAM_COHERENCY_TEST_SV
 `define AHB_SRAM_COHERENCY_TEST_SV
 
-class ahb_sram_coherency_test extends ahb_test_base;
+class ahb_sram_coherency_test extends iot_test_base;
   `uvm_component_utils(ahb_sram_coherency_test)
-
+ logic [31:0] test_addr;
  // ahb_dma_spi_dma_vseq vseq;
 
   function new(string name = "ahb_sram_coherency_test", uvm_component parent = null);
@@ -31,9 +31,8 @@ class ahb_sram_coherency_test extends ahb_test_base;
     ahb_sram_single_read_seq  rd1;
     ahb_sram_single_write_seq wr;
     ahb_sram_single_read_seq  rd2;
-
+test_addr=32'h2001_8004;
     phase.raise_objection(this);
-    wait (tb_top.sys_reset_n);
 
     // DMA READ
     rd1 = ahb_sram_single_read_seq::type_id::create("rd1");
@@ -54,4 +53,4 @@ class ahb_sram_coherency_test extends ahb_test_base;
     phase.drop_objection(this);
   endtask
 endclass
-
+`endif
