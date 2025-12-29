@@ -115,6 +115,32 @@ add wave -noupdate /tb_top/targexp0_vif/HRESP
 add wave -noupdate /tb_top/targexp0_vif/HSEL
 add wave -noupdate /tb_top/targexp0_vif/HREADYMUX
 add wave -noupdate /tb_top/targexp0_vif/HREADY
+add wave -noupdate -divider {APB 5}
+add wave -noupdate {/tb_top/apb_vif[5]/pclk}
+add wave -noupdate {/tb_top/apb_vif[5]/presetn}
+add wave -noupdate {/tb_top/apb_vif[5]/psel}
+add wave -noupdate {/tb_top/apb_vif[5]/penable}
+add wave -noupdate {/tb_top/apb_vif[5]/pwrite}
+add wave -noupdate {/tb_top/apb_vif[5]/paddr}
+add wave -noupdate {/tb_top/apb_vif[5]/pwdata}
+add wave -noupdate {/tb_top/apb_vif[5]/prdata}
+add wave -noupdate {/tb_top/apb_vif[5]/pready}
+add wave -noupdate {/tb_top/apb_vif[5]/pslverr}
+add wave -noupdate {/tb_top/apb_vif[5]/pstrb}
+add wave -noupdate {/tb_top/apb_vif[5]/pprot}
+add wave -noupdate -divider {apb 8}
+add wave -noupdate {/tb_top/apb_vif[8]/pclk}
+add wave -noupdate {/tb_top/apb_vif[8]/presetn}
+add wave -noupdate {/tb_top/apb_vif[8]/psel}
+add wave -noupdate {/tb_top/apb_vif[8]/penable}
+add wave -noupdate {/tb_top/apb_vif[8]/pwrite}
+add wave -noupdate {/tb_top/apb_vif[8]/paddr}
+add wave -noupdate {/tb_top/apb_vif[8]/pwdata}
+add wave -noupdate {/tb_top/apb_vif[8]/prdata}
+add wave -noupdate {/tb_top/apb_vif[8]/pready}
+add wave -noupdate {/tb_top/apb_vif[8]/pslverr}
+add wave -noupdate {/tb_top/apb_vif[8]/pstrb}
+add wave -noupdate {/tb_top/apb_vif[8]/pprot}
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {135000 ps} 0}
 quietly wave cursor active 1
@@ -132,4 +158,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {278250 ps}
+WaveRestoreZoom {0 ps} {1395723 ps}

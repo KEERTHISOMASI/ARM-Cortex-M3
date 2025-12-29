@@ -34,7 +34,7 @@ class ahb_seq_item extends uvm_sequence_item;
   //  constraint c_addr_aligned { addr[1:0] == 0; }
 
   // Default Constraints
-  constraint c_default_ctrl {size == 3'b010;}
+//  constraint c_default_ctrl {size == 3'b010;}
 
   // Response Constraints (Keep delays reasonable by default)
   /*  constraint c_resp_delay {

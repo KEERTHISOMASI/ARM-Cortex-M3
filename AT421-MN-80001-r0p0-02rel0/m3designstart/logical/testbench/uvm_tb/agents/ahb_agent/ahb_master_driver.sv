@@ -115,7 +115,7 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
           vif.HADDR  <= req_addr;
           vif.HWRITE <= req_write;
           vif.HTRANS <= 2'b10;  // NONSEQ
-          vif.HSIZE  <= 3'b010;
+          vif.HSIZE  <= 3'b001;
           vif.HBURST <= 3'b000;
           vif.HSEL   <= 1'b1;
           `uvm_info("AHB_M_DRV", $sformatf("REQ_ADDR=%0h, REQ_WR=%0h, VIF.HADDR=%0h, VIF.HWR=%0h",
