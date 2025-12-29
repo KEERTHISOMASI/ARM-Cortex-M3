@@ -1,8 +1,6 @@
 `ifndef AHB_SLAVE_AGENT_SV
 `define AHB_SLAVE_AGENT_SV 
 
-import uvm_pkg::*;
-`include "uvm_macros.svh"
 
 // Ensure these are included in your package or file list
 `include "ahb_seq_item.sv"

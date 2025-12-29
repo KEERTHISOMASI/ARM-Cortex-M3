@@ -1,6 +1,6 @@
 // ahb_master_agent.sv
 `ifndef AHB_MASTER_AGENT_SV
-`define AHB_MASTER_AGENT_SV
+`define AHB_MASTER_AGENT_SV 
 
 
 // Include component files
@@ -26,7 +26,7 @@ class ahb_master_agent extends uvm_agent;
     super.build_phase(phase);
     monitor = ahb_master_monitor::type_id::create("monitor", this);
     // Create Driver/Sequencer only if Active
-    if(get_is_active() == UVM_ACTIVE) begin
+    if (get_is_active() == UVM_ACTIVE) begin
       driver    = ahb_master_driver::type_id::create("driver", this);
       sequencer = ahb_master_sequencer::type_id::create("sequencer", this);
     end
@@ -34,9 +34,7 @@ class ahb_master_agent extends uvm_agent;
 
   function void connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    if(get_is_active() == UVM_ACTIVE) begin
-      driver.seq_item_port.connect(sequencer.seq_item_export);
-    end
+    driver.seq_item_port.connect(sequencer.seq_item_export);
   endfunction
 
 endclass
