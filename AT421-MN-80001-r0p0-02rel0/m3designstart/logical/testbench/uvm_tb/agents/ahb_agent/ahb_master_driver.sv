@@ -106,8 +106,17 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
             vif.HWDATA <= pipe_stage.data;
             `uvm_info("AHB_M_DRV", $sformatf("---------------vif.hwdata=%0h-------------------------",
                                               vif.HWDATA), UVM_MEDIUM)
+             
+    `uvm_info("AHB_M_DRV_DATA",
+      $sformatf("DATA_PHASE : WRITE  ADDR=0x%08h  DATA=0x%08h",
+                pipe_stage.addr, pipe_stage.data),
+      UVM_MEDIUM)
           end else begin
             vif.HWDATA <= 32'h0000_0000;
+    `uvm_info("AHB_M_DRV_DATA",
+      $sformatf("DATA_PHASE : READ   ADDR=0x%08h  (waiting for HRDATA)",
+                pipe_stage.addr),
+      UVM_MEDIUM)
             // Optionally capture HRDATA here if we want to send response back
           end
         end else begin

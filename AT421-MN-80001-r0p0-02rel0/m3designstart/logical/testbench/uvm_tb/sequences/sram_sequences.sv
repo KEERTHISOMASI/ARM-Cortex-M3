@@ -135,7 +135,7 @@ class ahb_sram_addr_boundary_seq extends ahb_base_seq;
         size == 3'b010;
       };
       finish_item(req);
-
+      #100ns;
       // WRITE last word
       req = ahb_seq_item::type_id::create($sformatf("wr_last_b%0d", bank));
       start_item(req);
@@ -149,6 +149,7 @@ class ahb_sram_addr_boundary_seq extends ahb_base_seq;
       };
       finish_item(req);
 
+      #100ns;
       // READ base
       req = ahb_seq_item::type_id::create($sformatf("rd_base_b%0d", bank));
       start_item(req);
@@ -161,6 +162,7 @@ class ahb_sram_addr_boundary_seq extends ahb_base_seq;
       };
       finish_item(req);
 
+      #100ns;
       // READ last word
       req = ahb_seq_item::type_id::create($sformatf("rd_last_b%0d", bank));
       start_item(req);
@@ -230,70 +232,6 @@ class ahb_sram_wren_seq extends ahb_base_seq;
   function new(string name = "ahb_sram_wren_seq");
     super.new(name);
   endfunction
-
-  task body();
-    ahb_seq_item req;
-    logic [31:0] addr;
-
-    `uvm_info("SRAM_WREN_SEQ", "Starting SRAM WREN Test", UVM_LOW)
-
-    // BYTE writes
-    for (int byte_lane = 0; byte_lane < 4; byte_lane++) begin
-      addr = test_addr + byte_lane;
-      write_word(test_addr, 32'hFFFF_FFFF);
-
-      req = ahb_seq_item::type_id::create("wr_byte");
-      start_item(req);
-      req.randomize() with {
-        addr == addr;
-        data == 32'h0;
-        write == 1;
-        size == 3'b000;
-        burst == 3'b000;
-        trans == 2'b10;
-      };
-      finish_item(req);
-
-      read_word(test_addr);
-    end
-
-    // HALFWORD writes
-    for (int half = 0; half < 2; half++) begin
-      addr = test_addr + (half * 2);
-      write_word(test_addr, 32'hFFFF_FFFF);
-
-      req = ahb_seq_item::type_id::create("wr_half");
-      start_item(req);
-      req.randomize() with {
-        addr == addr;
-        data == 32'h0;
-        write == 1;
-        size == 3'b001;
-        burst == 3'b000;
-        trans == 2'b10;
-      };
-      finish_item(req);
-
-      read_word(test_addr);
-    end
-
-    // WORD write
-    write_word(test_addr, 32'hFFFF_FFFF);
-    req = ahb_seq_item::type_id::create("wr_word");
-    start_item(req);
-    req.randomize() with {addr == test_addr;
-                          data == 32'h0;
-                          write == 1;
-                          size == 3'b010;
-                          burst == 3'b000;
-                          trans == 2'b10;};
-    finish_item(req);
-
-    read_word(test_addr);
-
-    `uvm_info("SRAM_WREN_SEQ", "Completed SRAM WREN Test", UVM_LOW)
-  endtask
-
   // Helper tasks
   task write_word(logic [31:0] addr, logic [31:0] data);
     ahb_sram_single_write_seq wr_seq;
@@ -308,6 +246,79 @@ class ahb_sram_wren_seq extends ahb_base_seq;
     rd_seq = ahb_sram_single_read_seq::type_id::create("rd_seq");
     rd_seq.rd_addr = addr;
     rd_seq.start(m_sequencer);
+  endtask
+  task body();
+    ahb_seq_item req;
+    logic [31:0] addr1;
+
+    `uvm_info("SRAM_WREN_SEQ", "Starting SRAM WREN Test", UVM_LOW)
+
+    // BYTE writes
+    for (int byte_lane = 0; byte_lane < 4; byte_lane++) begin
+      addr1 = test_addr + byte_lane;
+      write_word(test_addr, 32'hFFFF_FFFF);
+
+      #100ns;
+      req = ahb_seq_item::type_id::create("wr_byte");
+      start_item(req);
+      req.randomize() with {
+        addr == addr1;
+        data == 32'h00000000;
+        write == 1;
+        size == 3'b000;
+        burst == 3'b000;
+        trans == 2'b10;
+      };
+      finish_item(req);
+
+      #100ns;
+      read_word(test_addr);
+
+      #100ns;
+    end
+
+    // HALFWORD writes
+    for (int half = 0; half < 2; half++) begin
+      addr1 = test_addr + (half * 2);
+      write_word(test_addr, 32'hFFFF_FFFF);
+
+      #100ns;
+
+      req = ahb_seq_item::type_id::create("wr_half");
+      start_item(req);
+      req.randomize() with {
+        addr == addr1;
+        data == 32'h00000000;
+        write == 1;
+        size == 3'b001;
+        burst == 3'b000;
+        trans == 2'b10;
+      };
+      finish_item(req);
+
+      #100ns;
+      read_word(test_addr);
+      #100ns;
+    end
+
+    // WORD write
+    write_word(test_addr, 32'hFFFF_FFFF);
+    #100ns;
+
+    req = ahb_seq_item::type_id::create("wr_word");
+    start_item(req);
+    req.randomize() with {addr == test_addr;
+                          data == 32'h0;
+                          write == 1;
+                          size == 3'b010;
+                          burst == 3'b000;
+                          trans == 2'b10;};
+    finish_item(req);
+
+    #100ns;
+    read_word(test_addr);
+
+    `uvm_info("SRAM_WREN_SEQ", "Completed SRAM WREN Test", UVM_LOW)
   endtask
 
 endclass
