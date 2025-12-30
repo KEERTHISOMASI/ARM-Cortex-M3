@@ -39,7 +39,6 @@ class ahb_sram_addr_boundary_test extends iot_test_base;
     phase.raise_objection(this);
 
     // Wait for reset deassertion
-    wait (tb_top.sys_reset_n == 1);
 
     boundary_seq = ahb_sram_addr_boundary_seq::type_id::create("boundary_seq");
 

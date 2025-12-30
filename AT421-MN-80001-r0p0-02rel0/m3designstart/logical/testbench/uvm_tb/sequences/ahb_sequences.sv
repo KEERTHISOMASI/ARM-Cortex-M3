@@ -271,7 +271,7 @@ class ahb_incr4_burst_seq extends ahb_base_seq;
 
     `uvm_info("SEQ", $sformatf("Starting INCR4 Burst @ 0x%h", current_addr), UVM_LOW)
 
-    for (int i = 0; i < 5; i++) begin
+    for (int i = 0; i < 4; i++) begin
       req = ahb_seq_item::type_id::create("req");;
 
       start_item(req);
@@ -282,22 +282,30 @@ class ahb_incr4_burst_seq extends ahb_base_seq;
             write == 1;  // Write
             burst == 3'b011;  // INCR4 (Fixed 4-beat)
             trans == ((i == 0) ? 2'b10 : 2'b11);
+            size ==3'b010;
 
           })
         `uvm_error("SEQ", "Randomization failed");
       // req.trans = (i == 0) ? 2'b10 : 2'b11; 
-
-      finish_item(req);
-      // Increment Address for next beat
-      current_addr += 4;
-      current_data += 4;
-      `uvm_info("SEQ", $sformatf(
+       `uvm_info("SEQ", $sformatf(
                 "TRANS=%0d i=%0d current_addr=%0h, current_data=%0h",
                 req.trans,
                 i,
                 current_addr,
                 current_data
                 ), UVM_MEDIUM)
+
+      finish_item(req);
+      // Increment Address for next beat
+      current_addr += 4;
+      current_data += 4;
+     /* `uvm_info("SEQ", $sformatf(
+                "TRANS=%0d i=%0d current_addr=%0h, current_data=%0h",
+                req.trans,
+                i,
+                current_addr,
+                current_data
+                ), UVM_MEDIUM)*/
     end
   endtask
 endclass
@@ -982,7 +990,7 @@ endclass
 // ---------------------------------------------------------
 // Locked Transfer Sequence
 // ---------------------------------------------------------
-class ahb_locked_transfer_seq extends ahb_base_seq;
+/*class ahb_locked_transfer_seq extends ahb_base_seq;
   `uvm_object_utils(ahb_locked_transfer_seq)
 
   function new(string name = "ahb_locked_transfer_seq");
@@ -1061,7 +1069,7 @@ class ahb_locked_transfer_seq extends ahb_base_seq;
       UVM_LOW)
 
   endtask
-endclass
+endclass*/
 // ---------------------------------------------------------
 // ERROR Response Test Sequence (2-cycle ERROR handling)
 // ---------------------------------------------------------

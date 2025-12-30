@@ -20,6 +20,9 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
   local logic    [31:0] req_addr;
   local logic    [31:0] req_data;
   local bit             req_write;
+  local logic    [2:0]  req_burst;
+  local logic    [2:0]  req_size;
+  local logic    [1:0]  req_trans;
 
   pipeline_reg_t        pipe_stage;
 
@@ -66,6 +69,9 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
         req_addr    <= req.addr;
         req_data    <= req.data;
         req_write   <= req.write;
+        req_burst   <= req.burst;
+        req_size    <= req.size;
+        req_trans   <= req.trans;        
         req_pending <= 1;
         //`uvm_info("AHB_M_DRV",$sformatf("REQ_ADDR=%0h, REQ_DATA=%0h, REQ_WR=%0h, REQ.ADDR=%0h, REQ.DATA=%0h, REQ.WRITE=%0h", req_addr, req_data, req_write, req.addr, req.data, req.write),UVM_MEDIUM)
 
@@ -98,10 +104,10 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
         if (pipe_stage.valid) begin
           if (pipe_stage.write) begin
             vif.HWDATA <= pipe_stage.data;
-            `uvm_info("AHB_M_DRV", $sformatf("Pipe_stage_data=%0h, vif.hwdata=%0h",
-                                             pipe_stage.data, vif.HWDATA), UVM_HIGH)
+            `uvm_info("AHB_M_DRV", $sformatf("---------------vif.hwdata=%0h-------------------------",
+                                              vif.HWDATA), UVM_MEDIUM)
           end else begin
-            vif.HWDATA <= 32'hDEAD_DEAD;
+            vif.HWDATA <= 32'h0000_0000;
             // Optionally capture HRDATA here if we want to send response back
           end
         end else begin
@@ -114,24 +120,31 @@ class ahb_master_driver extends uvm_driver #(ahb_seq_item);
           `uvm_info("AHB_M_DRV", "Req Pending -- 1", UVM_HIGH)
           vif.HADDR  <= req_addr;
           vif.HWRITE <= req_write;
-          vif.HTRANS <= 2'b10;  // NONSEQ
-          vif.HSIZE  <= 3'b001;
-          vif.HBURST <= 3'b000;
+          vif.HTRANS <= req_trans;  
+          vif.HSIZE  <= req_size;
+          vif.HBURST <= req_burst;
           vif.HSEL   <= 1'b1;
-          `uvm_info("AHB_M_DRV", $sformatf("REQ_ADDR=%0h, REQ_WR=%0h, VIF.HADDR=%0h, VIF.HWR=%0h",
-                                           req_addr, req_write, vif.HADDR, vif.HWRITE), UVM_MEDIUM)
+          `uvm_info("AHB_M_DRV", $sformatf("--------------- VIF.HADDR=%0h, VIF.HWR=%0h------------",
+                                           vif.HADDR, vif.HWRITE), UVM_MEDIUM)
 
           // Update Pipeline Stage
+          if(req_trans[1])begin
           pipe_stage.valid <= 1;
           `uvm_info("AHB_M_DRV", "MADE STAGE VALID -- 1", UVM_HIGH)
           pipe_stage.addr  <= req_addr;
           pipe_stage.data  <= req_data;
           pipe_stage.write <= req_write;
+          end else begin
+
+          pipe_stage.valid <= 0;
+          end
+
+
 
           // Handshake back to get_and_drive task
           ->addr_phase_accepted;
         end else begin
-          `uvm_info("AHB_M_DRV", "Req Pending -- 0", UVM_MEDIUM)
+          `uvm_info("AHB_M_DRV", "Req Pending -- 0", UVM_HIGH)
           // IDLE
           vif.HTRANS <= 2'b00;
           vif.HADDR  <= 32'h0;
