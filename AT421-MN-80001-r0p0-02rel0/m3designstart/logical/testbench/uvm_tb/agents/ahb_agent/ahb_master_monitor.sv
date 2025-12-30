@@ -61,7 +61,13 @@ class ahb_master_monitor extends uvm_monitor;
           // Capture Data
           if (pending.write) trans_obj.data = vif.HWDATA;
           else trans_obj.data = vif.HRDATA;  // Using HRDATA for reads
-
+`uvm_info("AHB_M_MON",
+  $sformatf("MON_CAPTURE : %s  ADDR=0x%08h  DATA=0x%08h  SIZE=%0d",
+            (trans_obj.write ? "WRITE" : "READ"),
+            trans_obj.addr,
+            trans_obj.data,
+            trans_obj.size),
+  UVM_LOW)
           // Send to Analysis Port
           item_collected_port.write(trans_obj);
 

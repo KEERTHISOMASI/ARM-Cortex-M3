@@ -29,7 +29,7 @@ class sram_monitor extends uvm_monitor;
 
     forever begin
       @(posedge vif.CLK);
-      #1ns;  // Sampling Delay
+      //  #1ns;  // Sampling Delay
 
       // A. Capture WRITE (Current Cycle)
       if (vif.CS && (|vif.WREN)) begin
@@ -39,6 +39,9 @@ class sram_monitor extends uvm_monitor;
         item.wren = vif.WREN;
         item.is_write = 1;
         ap.write(item);
+
+        `uvm_info("SRAM_MON_WR", $sformatf("OBS WRITE: addr=0x%0h data=0x%0h wren=%b", vif.ADDR,
+                                           vif.WDATA, vif.WREN), UVM_MEDIUM)
       end
 
       // B. Capture READ (Previous Cycle Result)
@@ -49,6 +52,8 @@ class sram_monitor extends uvm_monitor;
         item.wren = 0;
         item.is_write = 0;
         ap.write(item);
+        `uvm_info("SRAM_MON_RD", $sformatf("OBS READ: addr=0x%0h data=0x%0h", mon_prev_addr,
+                                           vif.RDATA), UVM_MEDIUM)
       end
 
       // C. Update Pipeline

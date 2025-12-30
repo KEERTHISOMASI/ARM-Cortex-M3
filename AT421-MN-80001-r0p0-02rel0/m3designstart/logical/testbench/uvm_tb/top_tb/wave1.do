@@ -141,22 +141,6 @@ add wave -noupdate {/tb_top/apb_vif[8]/pready}
 add wave -noupdate {/tb_top/apb_vif[8]/pslverr}
 add wave -noupdate {/tb_top/apb_vif[8]/pstrb}
 add wave -noupdate {/tb_top/apb_vif[8]/pprot}
-TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {135000 ps} 0}
-quietly wave cursor active 1
-configure wave -namecolwidth 216
-configure wave -valuecolwidth 100
-configure wave -justifyvalue left
-configure wave -signalnamewidth 1
-configure wave -snapdistance 10
-configure wave -datasetprefix 0
-configure wave -rowmargin 4
-configure wave -childrowmargin 2
-configure wave -gridoffset 0
-configure wave -gridperiod 1
-configure wave -griddelta 40
-configure wave -timeline 0
-configure wave -timelineunits ps
 add wave -noupdate -divider {sram 2}
 add wave -noupdate {/tb_top/sram_vif[2]/CLK}
 add wave -noupdate {/tb_top/sram_vif[2]/CS}
@@ -198,9 +182,33 @@ add wave -noupdate /tb_top/initexp1_vif/HSEL
 add wave -noupdate /tb_top/initexp1_vif/HREADYMUX
 add wave -noupdate /tb_top/initexp1_vif/HMASTLOCK
 add wave -noupdate /tb_top/initexp1_vif/HREADY
+add wave -noupdate {/tb_top/sram_vif[0]/CLK}
+add wave -noupdate {/tb_top/sram_vif[0]/CS}
+add wave -noupdate {/tb_top/sram_vif[0]/ADDR}
+add wave -noupdate {/tb_top/sram_vif[0]/WREN}
+add wave -noupdate {/tb_top/sram_vif[0]/WDATA}
+add wave -noupdate {/tb_top/sram_vif[0]/RDATA}
+add wave -noupdate {/tb_top/sram_vif[1]/CLK}
+add wave -noupdate {/tb_top/sram_vif[1]/CS}
+add wave -noupdate {/tb_top/sram_vif[1]/ADDR}
+add wave -noupdate {/tb_top/sram_vif[1]/WREN}
+add wave -noupdate {/tb_top/sram_vif[1]/WDATA}
+add wave -noupdate {/tb_top/sram_vif[1]/RDATA}
+add wave -noupdate {/tb_top/sram_vif[2]/CLK}
+add wave -noupdate {/tb_top/sram_vif[2]/CS}
+add wave -noupdate {/tb_top/sram_vif[2]/ADDR}
+add wave -noupdate {/tb_top/sram_vif[2]/WREN}
+add wave -noupdate {/tb_top/sram_vif[2]/WDATA}
+add wave -noupdate {/tb_top/sram_vif[2]/RDATA}
+add wave -noupdate {/tb_top/sram_vif[3]/CLK}
+add wave -noupdate {/tb_top/sram_vif[3]/CS}
+add wave -noupdate {/tb_top/sram_vif[3]/ADDR}
+add wave -noupdate {/tb_top/sram_vif[3]/WREN}
+add wave -noupdate {/tb_top/sram_vif[3]/WDATA}
+add wave -noupdate {/tb_top/sram_vif[3]/RDATA}
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {0 ps} 0}
-quietly wave cursor active 0
+WaveRestoreCursors {{Cursor 1} {68250 ps} 0}
+quietly wave cursor active 1
 configure wave -namecolwidth 384
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
@@ -214,6 +222,5 @@ configure wave -gridperiod 1
 configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
-
 update
-WaveRestoreZoom {0 ps} {1395723 ps}
+WaveRestoreZoom {0 ps} {456750 ps}

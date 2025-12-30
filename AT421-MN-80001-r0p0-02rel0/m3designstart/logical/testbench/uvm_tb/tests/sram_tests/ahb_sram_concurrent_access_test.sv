@@ -36,7 +36,7 @@ class ahb_sram_concurrent_access_test extends iot_test_base;
     // -----------------------------------------
     // Wait for reset deassertion
     // -----------------------------------------
-//    wait (tb_top.sys_reset_n == 1);
+    //    wait (tb_top.sys_reset_n == 1);
 
     // Target SRAM0 base address
     test_addr = SRAM_BASE[0];
@@ -73,7 +73,7 @@ class ahb_sram_concurrent_access_test extends iot_test_base;
     join
 
     `uvm_info("TEST", "Concurrent SRAM access arbitration test completed", UVM_LOW)
-
+    #1000ns;
     phase.drop_objection(this);
   endtask
 endclass

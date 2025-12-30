@@ -42,7 +42,7 @@ test_addr=32'h2001_8004;
     // SPI WRITE
     wr = ahb_sram_single_write_seq::type_id::create("wr");
     wr.wr_addr = test_addr;
-    wr.wr_data = 32'hDEAD_BEEF;
+    wr.wr_data = 32'hc001c0de;
     wr.start(env.master_agent_spi.sequencer);
     #100ns;
     // DMA READ again
